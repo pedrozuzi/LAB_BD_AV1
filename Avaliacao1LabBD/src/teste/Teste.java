@@ -5,7 +5,8 @@ import javax.swing.JOptionPane;
 public class Teste {
 	
 	public static void main(String[] args) {
-		JOptionPane.showMessageDialog(null, "SE É LOCO CACHUERA");
+		JOptionPane.showMessageDialog(null, "SE Ã‰ LOIRO CACHUERA 7x1");
+		
 	}
 
 }
