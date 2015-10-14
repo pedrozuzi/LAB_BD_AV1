@@ -61,7 +61,7 @@ drop procedure sp_sorteiogrupos
 delete grupos
 	
 -----------------------------------------------------------
-
+/**
 create procedure sp_sorteiogrupos(@id int)
 as
 	declare @tabela table (id int)
@@ -152,6 +152,7 @@ select top 20 codigoTime from times order by newid()
 --select top 1 codigoTime from times order by newid()
 
 ----
+*/
 -----------------------------------------------------------------------------------------------
 --FUNCIONANDO--
 exec sp_sorteioGrupos 
@@ -160,9 +161,6 @@ alter procedure sp_sorteioGrupos
 as
     declare @grupo varchar(1)
 	declare @cod int
-	declare @aux int
-	declare @tabela table(grupo varchar(1), id int, asd int )
-    declare @tabelaTimesChave table (grupo varchar(1), id int)
 	
 	set @grupo = 'A'
 	--cabeça de grupo
@@ -175,29 +173,26 @@ as
 
 		if not ( exists(select codigoTime from grupos where codigoTime = @cod) )
 		begin
-		insert into grupos values (@grupo, @cod)
+			insert into grupos values (@grupo, @cod)
 
-		if(@grupo like 'A')
-		begin
-			set @grupo = 'B'
+			if(@grupo like 'A')
+			begin
+				set @grupo = 'B'
+			end
+			else if(@grupo like 'B')
+			begin
+				set @grupo = 'C'
+			end
+			else if(@grupo like 'C')
+			begin
+				set @grupo = 'D'
+			end
+			else if(@grupo like 'D')
+			begin
+				set @grupo = 'A'
+			end
 		end
-		else if(@grupo like 'B')
-		begin
-			set @grupo = 'C'
-		end
-		else if(@grupo like 'C')
-		begin
-			set @grupo = 'D'
-		end
-		else if(@grupo like 'D')
-		begin
-			set @grupo = 'A'
-		end
-		end
-		else
-		begin
-			print ';s'
-		end
+
 	end
 
 	--grupo
@@ -230,7 +225,7 @@ as
 
 	select * from grupos 
 
-	--fim da sp
+----------------------fim da sp
 
 	select * from grupos where grupo like 'A'
 	select * from grupos where grupo like 'B'
@@ -239,7 +234,7 @@ as
 
 	 truncate table grupos
 --------------------------------------------------------------------------------------------------	
-
+/*
 alter procedure sp_test()
 as
     declare @tabela table(grupo varchar(1), id int, asd int )
@@ -288,3 +283,4 @@ ORDER BY NOME
 
 
 exec sp_test
+*/
