@@ -12,7 +12,7 @@ estadio varchar(100) not null
 primary key (codigoTime))
 
 create table grupos(
-id int identity primary key,
+id int,
 grupo varchar(1) check (grupo = 'A' or grupo = 'B'
 				 or grupo = 'C' or grupo = 'D') not null,
 codigoTime int not null
@@ -161,8 +161,10 @@ alter procedure sp_sorteioGrupos
 as
     declare @grupo varchar(1)
 	declare @cod int
+	declare @id int
 	
 	set @grupo = 'A'
+	set @id = 1
 	--cabeça de grupo
 
 	while ( (select count(codigoTime) from grupos) < 4 )
@@ -173,23 +175,27 @@ as
 
 		if not ( exists(select codigoTime from grupos where codigoTime = @cod) )
 		begin
-			insert into grupos values (@grupo, @cod)
+			insert into grupos values (@id,@grupo, @cod)
 
 			if(@grupo like 'A')
 			begin
 				set @grupo = 'B'
+				set @id = 2
 			end
 			else if(@grupo like 'B')
 			begin
 				set @grupo = 'C'
+				set @id = 3
 			end
 			else if(@grupo like 'C')
 			begin
 				set @grupo = 'D'
+				set @id = 4
 			end
 			else if(@grupo like 'D')
 			begin
 				set @grupo = 'A'
+				set @id = 1
 			end
 		end
 
@@ -202,23 +208,27 @@ as
 		set @cod = (select top 1 codigoTime from times order by newid())
 		if not ( exists(select codigoTime from grupos where codigoTime = @cod) )
 		begin
-		   insert into grupos values (@grupo, @cod)
+		   insert into grupos values (@id,@grupo, @cod)
 
 		   	if(@grupo like 'A')
 			begin
 				set @grupo = 'B'
+				set @id = 2
 			end
 			else if(@grupo like 'B')
 			begin
 				set @grupo = 'C'
+				set @id = 3
 			end
 			else if(@grupo like 'C')
 			begin
 				set @grupo = 'D'
+				set @id = 4
 			end
 			else if(@grupo like 'D')
 			begin
 				set @grupo = 'A'
+				set @id = 1
 			end
 		end
 	end
