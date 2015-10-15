@@ -20,7 +20,7 @@ primary key(id,codigoTime)
 foreign key ( codigoTime ) references times(codigoTime)) 
 
 create table jogos(
-codigoJogo int not null,
+codigoJogo int identity not null,
 codigoTimeA int not null,
 codigoTimeB int not null,
 golsTimeA int not null,
@@ -245,14 +245,41 @@ as
 
 	 truncate table grupos
 --------------------------------------------------------------------------------------------------	
+--cada time joga 1 vez por rodada
+-- o time não pode jogar com os times do seu grupo
+--cada time deve joga com todos os times que possa jogar
+--10 jogos por rodada
+-- 15 rodadas
+--quarta e domingo são dias de jogo
+--criar as rodadas
+
 
 create procedute sp_jogos
 as
 declare @pivo int
+declare @timeA int, @timeB int
+
+set @pivo = 1
+if  not( exists(select codigoTimeA from jogos where codigotimeA = @pivo) and exists(select codigoTimeB from jogos where codigotimeA = @pivo) )
+begin
+print 'não tem'
+end
+else
+begin
+print 'tem'
+end
+
+insert into jogos values (@timeA, @timeb, 0, 0, '10/10/2010')
 
 
-
-
+create table jogos(
+codigoJogo int identity not null,
+codigoTimeA int not null,
+codigoTimeB int not null,
+golsTimeA int not null,
+golsTimeB int not null,
+data datetime not null	
+primary key (codigoJogo))
 
 /*
 alter procedure sp_test()
