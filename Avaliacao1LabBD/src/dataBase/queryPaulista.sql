@@ -16,6 +16,7 @@ id int,
 grupo varchar(1) check (grupo = 'A' or grupo = 'B'
 				 or grupo = 'C' or grupo = 'D') not null,
 codigoTime int not null
+primary key(id,codigoTime)
 foreign key ( codigoTime ) references times(codigoTime)) 
 
 create table jogos(
