@@ -235,7 +235,7 @@ as
 	end
 
 	select * from grupos 
-	select * from jogos
+	
 
 ----------------------fim da sp
 
@@ -292,6 +292,8 @@ begin
 			
 			insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
 			print 'inserido'
+
+			--verica se ambos times já se enfrentaram  (FALTANDO)
 
 		end
 		else -- já jogou
