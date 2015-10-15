@@ -255,7 +255,12 @@ as
 
 declare @data datetime
 set @data = '10/10/2010'
-create procedute sp_jogos(@data datetime)
+exec sp_jogos @data
+
+truncate table jogos
+
+-----------------------------------------
+alter procedure sp_jogos(@data datetime)
 as
 declare @pivo int
 declare @timeA int, @timeB int
@@ -266,18 +271,25 @@ set @pivo = 1
 while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
 begin
 
-	declare @timeA int, @timeB int
-		set @timeA = 7
-		set @timeB = 12
+    --randomiza os 2 times e verifica se não são iguais
+	set @timeA = (select top 1 codigoTime from times order by newid())
+	set @timeB = (select top 1 codigoTime from times order by newid())
+	while (@timeA = @timeB)
+	begin
+		set @timeB = (select top 1 codigoTime from times order by newid())
+	end
 
-	--verifica se é do mesmo grupo
+	--verifica se são do mesmo grupo
 	if not((select id from grupos where codigoTime = @timeA) like (select id from grupos where codigoTime = @timeB) )
 	begin -- grupos diferentes
 
-		--verifica se já jogou
+		--verifica se já jogaram
 		if  not( exists(select codigoTimeA from jogos where codigotimeA = @pivo) or exists(select codigoTimeB from jogos where codigotimeB = @pivo) )
 		begin -- Ainda não jogou
-			print 'Ainda não jogou'
+			
+			insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
+			print 'inserido'
+
 		end
 		else -- já jogou
 		begin
@@ -287,13 +299,14 @@ begin
 	end
 	else 
 	begin --mesmo grupo
-		print 'else'
+		print 'mesmo grupo'
 	end
 	--7 e 12 a, 7a 2b
-
 end
 
+select * from jogos
 
+------------------------
 
 declare @timeA int, @timeB int
 set @timeA =1
