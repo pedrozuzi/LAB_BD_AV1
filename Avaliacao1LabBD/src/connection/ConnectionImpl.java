@@ -28,7 +28,7 @@ public class ConnectionImpl implements GenericConnection {
 					.getConnection(
 							"jdbc:jtds:sqlserver://localhost:1433;"
 							+"DatabaseName=paulista;namedPipe=true",
-							"sa", "123456");
+							"sa", "senha");
 		} catch (ClassNotFoundException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", 
 					JOptionPane.ERROR_MESSAGE);
