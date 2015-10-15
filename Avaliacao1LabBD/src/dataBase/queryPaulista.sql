@@ -258,9 +258,12 @@ as
 truncate table jogos
 
 declare @data datetime
-set @data = '10/10/2010'
+set @data = '12/10/2010'
 exec sp_jogos @data
 
+select * from jogos where data = '10/10/2010'
+select * from jogos where data = '11/10/2010'
+select * from jogos where data = '12/10/2010'
 -----------------------------------------
 --FUNCIONANDO
 alter procedure sp_jogos(@data datetime)
@@ -287,18 +290,26 @@ begin
 	begin -- grupos diferentes
 
 		--verifica se já jogaram
-		if  not( exists(select codigoTimeA from jogos where codigotimeA = @timeA) or exists(select codigoTimeB from jogos where codigotimeB = @timeB) )
-		begin -- Ainda não jogou
+		if  not( exists(select codigoTimeA from jogos where codigotimeA = @timeA and data = @data) or
+		 exists(select codigoTimeB from jogos where codigotimeB = @timeB and data=@data) )
+		begin -- Ainda não jogou na data
 			
-			insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
-			print 'inserido'
-
 			--verica se ambos times já se enfrentaram  (FALTANDO)
+			if  not( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
+			exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) )
+			begin --não se enfrentaram
+				insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
+				print 'inserido'
+			end
+			else
+			begin--já se enfrentaram
+				print 'já se enfrentaram'
+			end		
 
 		end
-		else -- já jogou
+		else -- já jogou na data
 		begin
-			print 'já jogou'
+			print 'já jogou na data'
 		end
 
 	end
@@ -309,7 +320,7 @@ begin
 	--7 e 12 a, 7a 2b
 end
 
-select * from jogos
+select * from jogos where data = @data
 
 ------------------------ fim da sp
 
