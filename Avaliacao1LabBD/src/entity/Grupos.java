@@ -3,7 +3,7 @@ package entity;
 public class Grupos {
 	
 	private int codigo;
-	private Times codigoTime;
+	private Times time;
 	
 	public int getCodigo() {
 		return codigo;
@@ -12,10 +12,10 @@ public class Grupos {
 		this.codigo = codigo;
 	}
 	public Times getCodigoTime() {
-		return codigoTime;
+		return time;
 	}
 	public void setCodigoTime(Times codigoTime) {
-		this.codigoTime = codigoTime;
+		this.time = codigoTime;
 	}
 
 }
