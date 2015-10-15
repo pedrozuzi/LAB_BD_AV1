@@ -31,26 +31,26 @@ primary key (codigoJogo))
 select datename(w, getdate()) as Dia_da_Semana
 
 insert into times values
-( 1, 'Audax', 'S„o Paulo', 'JosÈ Liberatti' ),
-( 2, 'Botafogo', 'Ribeir„o Preto', 'Santa Cruz' ),
-( 3, 'Bragantino', 'BraganÁa Paulista', 'Nabi Abi Chedid' ),
+( 1, 'Audax', 'S√£o Paulo', 'Jos√© Liberatti' ),
+( 2, 'Botafogo', 'Ribeir√£o Preto', 'Santa Cruz' ),
+( 3, 'Bragantino', 'Bragan√ßa Paulista', 'Nabi Abi Chedid' ),
 ( 4, 'Capivariano', 'Capivari', 'Arena Capivari' ),
-( 5, 'Corinthians', 'S„o Paulo', 'Arena Corinthians' ),
-( 6, 'Ituano', 'Itu', 'Novelli J˙nior' ),
+( 5, 'Corinthians', 'S√£o Paulo', 'Arena Corinthians' ),
+( 6, 'Ituano', 'Itu', 'Novelli J√∫nior' ),
 ( 7, 'Linense', 'Lins', 'Gilberto Siqueira Lopes' ),
-( 8, 'MarÌlia', 'MarÌlia', 'Bento de Abreu' ),
+( 8, 'Mar√≠lia', 'Mar√≠lia', 'Bento de Abreu' ),
 ( 9, 'Mogi Mirim', 'Mogi Mirim', 'Vail Chaves' ),
-( 10, 'Palmeiras', 'S„o Paulo', 'Allians Parque' ),
-( 11, 'Penapolense', 'Pen·polis', 'Tenente CarriÁo' ),
-( 12, 'Ponte Preta', 'Campinas', 'MoisÈs Lucarelli' ),
-( 13, 'Portuguesa', 'S„o Paulo', 'CanindÈ' ),
-( 14, 'Red Bull Brasil', 'Campinas', 'MoisÈs Lucarelli' ),
+( 10, 'Palmeiras', 'S√£o Paulo', 'Allians Parque' ),
+( 11, 'Penapolense', 'Pen√°polis', 'Tenente Carri√ßo' ),
+( 12, 'Ponte Preta', 'Campinas', 'Mois√©s Lucarelli' ),
+( 13, 'Portuguesa', 'S√£o Paulo', 'Canind√©' ),
+( 14, 'Red Bull Brasil', 'Campinas', 'Mois√©s Lucarelli' ),
 ( 15, 'Rio Claro', 'Rio Claro', 'Augusto Schmidt Filho' ),
 ( 16, 'Santos', 'Santos', 'Vila Belmiro' ),
-( 17, 'S„o Bento', 'Sorocaba', 'Walter Ribeiro' ),
-( 18, 'S„o bernardo', 'S„o Bernardo do Campo', 'Primeiro de Maio' ),
-( 19, 'S„o Paulo', 'S„o Paulo', 'Morumbi' ),
-( 20, 'XV de Piracicaba', 'Piracicaba', 'Bar„o de Serra Negra' )
+( 17, 'S√£o Bento', 'Sorocaba', 'Walter Ribeiro' ),
+( 18, 'S√£o bernardo', 'S√£o Bernardo do Campo', 'Primeiro de Maio' ),
+( 19, 'S√£o Paulo', 'S√£o Paulo', 'Morumbi' ),
+( 20, 'XV de Piracicaba', 'Piracicaba', 'Bar√£o de Serra Negra' )
 	
 	--------------------
 select * from times	order by newid()
@@ -121,7 +121,7 @@ as
 	
 	if not ( exists(select codigoTime from times where codigoTime = 1 ) )
 	begin
-		print 'n„o existe'
+		print 'n√£o existe'
 	end	
 		
 select * from grupos
@@ -166,12 +166,12 @@ as
 	
 	set @grupo = 'A'
 	set @id = 1
-	--cabeÁa de grupo
+	--cabe√ßa de grupo
 
 	while ( (select count(codigoTime) from grupos) < 4 )
 	begin
 
-		set @cod = (select top 1 codigoTime from times where nomeTime like 'S„o Paulo' or
+		set @cod = (select top 1 codigoTime from times where nomeTime like 'S√£o Paulo' or
 	    nomeTime like 'Santos' or nomeTime like 'Palmeiras' or nomeTime like 'Corinthians' order by newid())
 
 		if not ( exists(select codigoTime from grupos where codigoTime = @cod) )
@@ -245,17 +245,26 @@ as
 
 	 truncate table grupos
 --------------------------------------------------------------------------------------------------	
+
+create procedute sp_jogos
+as
+declare @pivo int
+
+
+
+
+
 /*
 alter procedure sp_test()
 as
     declare @tabela table(grupo varchar(1), id int, asd int )
     declare @tabelaTimesChave table (grupo varchar(1), id int)
 	
-	insert into @tabela (id) select top 4 codigoTime from times where nomeTime like 'S„o Paulo' or
+	insert into @tabela (id) select top 4 codigoTime from times where nomeTime like 'S√£o Paulo' or
 	nomeTime like 'Santos' or nomeTime like 'Palmeiras' or nomeTime like 'Corinthians' order by NEWID()
 	select * from @tabela
 
-	insert into @tabelaTimesChave (id) select top 16 codigoTime from times where nomeTime not like 'S„o Paulo' and
+	insert into @tabelaTimesChave (id) select top 16 codigoTime from times where nomeTime not like 'S√£o Paulo' and
 	nomeTime not like 'Santos' and nomeTime not like 'Palmeiras' and nomeTime not like 'Corinthians' order by NEWID()
 	select * from @tabelaTimesChave
 
@@ -282,7 +291,7 @@ SELECT top 1 NOME FROM
 (SELECT TOP 50 NOME FROM PFUNC ORDER BY NOME) X
 ORDER BY NOME DESC
 
-Para trazer da 50 atÈ a 70: (Obs.: 50 AT… 70 = 21)
+Para trazer da 50 at√© a 70: (Obs.: 50 AT√â 70 = 21)
 SELECT * FROM (SELECT TOP 21 NOME FROM 
 (SELECT TOP 70 NOME FROM PFUNC ORDER BY NOME) X
 ORDER BY NOME DESC ) YY
