@@ -1,14 +1,21 @@
 package boundary;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JButton;
+
+import util.ModeloTabela;
+import control.CtrlGrupos;
+import entity.Grupos;
 
 public class FrmGrupos {
 	
@@ -29,6 +36,7 @@ public class FrmGrupos {
 	private JLabel lblTabelaDeGrupos;
 	private JLabel lblGrupoA;
 	private JButton btnVoltar;
+	private ModeloTabela modelo;
 	
 	public FrmGrupos() {
 		janela = new JFrame("Grupos Paulistão");
@@ -44,7 +52,7 @@ public class FrmGrupos {
 		scrollPaneA = new JScrollPane();
 		scrollPaneA.getViewport().setBorder(null);
 		scrollPaneA.setViewportView(grupoA);
-		scrollPaneA.setBounds(10, 112, 327, 163);
+		scrollPaneA.setBounds(10, 112, 327, 123);
 		panPrincipal.add(scrollPaneA);
 		
 		grupoB = new JTable();
@@ -117,6 +125,17 @@ public class FrmGrupos {
         janela.setResizable(false);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		janela.setVisible(true);
+		
+		CtrlGrupos controle = new CtrlGrupos();
+		List<Grupos> lista = new ArrayList<Grupos>();
+		lista = controle.buscaGrupos("A");
+		System.out.println(lista.get(0).getTime().getNome());
+		
+		if (!lista.isEmpty()) {
+			modelo = new ModeloTabela(lista);
+			grupoA.getTableHeader().setReorderingAllowed(false);
+			grupoA.setModel(modelo);
+		}
 		
 	}
 }

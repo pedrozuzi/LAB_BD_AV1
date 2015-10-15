@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import persistence.GruposDao;
@@ -10,11 +11,16 @@ public class CtrlGrupos {
 	
 	private GruposDao gDao;
 	
-	public List<Grupos> sortearGrupos(){
+	public void sortearGrupos(){
 		gDao = new GruposDaoImpl();
 		gDao.sorteiaGrupos();
-		return null;
-		
+	}
+	
+	public List<Grupos> buscaGrupos(String grupo){
+		List<Grupos> lista = new ArrayList<Grupos>();
+		gDao = new GruposDaoImpl();
+		lista = gDao.buscaGrupos(grupo);
+		return lista;
 	}
 
 }
