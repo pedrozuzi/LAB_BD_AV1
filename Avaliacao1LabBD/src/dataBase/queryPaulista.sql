@@ -235,6 +235,7 @@ as
 	end
 
 	select * from grupos 
+	select * from jogos
 
 ----------------------fim da sp
 
@@ -253,13 +254,15 @@ as
 --quarta e domingo são dias de jogo
 --criar as rodadas
 
+
+truncate table jogos
+
 declare @data datetime
 set @data = '10/10/2010'
 exec sp_jogos @data
 
-truncate table jogos
-
 -----------------------------------------
+--FUNCIONANDO
 alter procedure sp_jogos(@data datetime)
 as
 declare @pivo int
@@ -284,7 +287,7 @@ begin
 	begin -- grupos diferentes
 
 		--verifica se já jogaram
-		if  not( exists(select codigoTimeA from jogos where codigotimeA = @pivo) or exists(select codigoTimeB from jogos where codigotimeB = @pivo) )
+		if  not( exists(select codigoTimeA from jogos where codigotimeA = @timeA) or exists(select codigoTimeB from jogos where codigotimeB = @timeB) )
 		begin -- Ainda não jogou
 			
 			insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
@@ -306,23 +309,8 @@ end
 
 select * from jogos
 
-------------------------
+------------------------ fim da sp
 
-declare @timeA int, @timeB int
-set @timeA =1
-set @timeB =2
-
-insert into jogos values (@timeA, @timeb, 0, 0, @data)
-
-
-create table jogos(
-codigoJogo int identity not null,
-codigoTimeA int not null,
-codigoTimeB int not null,
-golsTimeA int not null,
-golsTimeB int not null,
-data datetime not null	
-primary key (codigoJogo))
 
 /*
 alter procedure sp_test()
