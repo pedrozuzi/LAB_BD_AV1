@@ -20,7 +20,7 @@ primary key(id,codigoTime)
 foreign key ( codigoTime ) references times(codigoTime)) 
 
 create table jogos(
-codigoJogo int not null,
+codigoJogo int identity not null,
 codigoTimeA int not null,
 codigoTimeB int not null,
 golsTimeA int not null,
@@ -245,14 +245,71 @@ as
 
 	 truncate table grupos
 --------------------------------------------------------------------------------------------------	
+--cada time joga 1 vez por rodada
+-- o time não pode jogar com os times do seu grupo
+--cada time deve joga com todos os times que possa jogar
+--10 jogos por rodada
+-- 15 rodadas
+--quarta e domingo são dias de jogo
+--criar as rodadas
 
-create procedute sp_jogos
+declare @data datetime
+set @data = '10/10/2010'
+create procedute sp_jogos(@data datetime)
 as
 declare @pivo int
+declare @timeA int, @timeB int
+
+set @pivo = 1
+
+--enquanto não acontecer 10 jogos nesta data
+while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
+begin
+
+	declare @timeA int, @timeB int
+		set @timeA = 7
+		set @timeB = 12
+
+	--verifica se é do mesmo grupo
+	if not((select id from grupos where codigoTime = @timeA) like (select id from grupos where codigoTime = @timeB) )
+	begin -- grupos diferentes
+
+		--verifica se já jogou
+		if  not( exists(select codigoTimeA from jogos where codigotimeA = @pivo) or exists(select codigoTimeB from jogos where codigotimeB = @pivo) )
+		begin -- Ainda não jogou
+			print 'Ainda não jogou'
+		end
+		else -- já jogou
+		begin
+			print 'já jogou'
+		end
+
+	end
+	else 
+	begin --mesmo grupo
+		print 'else'
+	end
+	--7 e 12 a, 7a 2b
+
+end
 
 
 
+declare @timeA int, @timeB int
+set @timeA =1
+set @timeB =2
 
+insert into jogos values (@timeA, @timeb, 0, 0, @data)
+
+
+create table jogos(
+codigoJogo int identity not null,
+codigoTimeA int not null,
+codigoTimeB int not null,
+golsTimeA int not null,
+golsTimeB int not null,
+data datetime not null	
+primary key (codigoJogo))
 
 /*
 alter procedure sp_test()
