@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+
 import util.ModeloTabela;
 import control.CtrlGrupos;
 import entity.Grupos;
@@ -144,6 +146,7 @@ public class FrmGrupos {
 				&& !listaGrupoB.isEmpty()
 				&& !listaGrupoC.isEmpty()
 				&& !listaGrupoD.isEmpty()) {
+			
 			modeloGrupoA = new ModeloTabela(listaGrupoA);
 			modeloGrupoB = new ModeloTabela(listaGrupoB);
 			modeloGrupoC = new ModeloTabela(listaGrupoC);
@@ -165,7 +168,11 @@ public class FrmGrupos {
 			grupoD.setModel(modeloGrupoD);
 		}
 		
-		btnVoltar.addActionListener(l -> new FrmPrincipal());
+		btnVoltar.addActionListener(l -> {
+			janela.dispose();
+			janela = null;
+			new FrmPrincipal();
+		});
 		
 	}
 }

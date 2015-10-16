@@ -10,7 +10,7 @@ import entity.Coluna;
  * @author Pedro Zuzi
  *
  */
-public class ModeloTabela extends AbstractTableModel {
+public class ModeloTabela extends AbstractTableModel implements Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -24,14 +24,6 @@ public class ModeloTabela extends AbstractTableModel {
 	public ModeloTabela(List<?> lista) {
 		this.lista = lista;
 		this.classe = lista.get(0).getClass();
-	}
-
-	/**
-	 * Método para limpar a Tabela
-	 */
-	public void clear(){
-		lista.clear();
-		fireTableRowsDeleted(0, lista.size());
 	}
 	
 	/**
@@ -106,25 +98,14 @@ public class ModeloTabela extends AbstractTableModel {
 	 */
 	@Override
 	public boolean isCellEditable(int linha, int coluna) {
-		if (classe.getName().equalsIgnoreCase("entity.Agenda")) {
-			if (coluna == 1) {
-				return coluna == 1;
-			}
-		}
 		return false;
 	}
-	
-	/**
-	 * Método para retorno da classe da coluna através do seu
-	 * índice 
-	 * @return classe
-	 */
+
 	@Override
-	public Class<?> getColumnClass(int coluna) {
-		if (classe.getName().equalsIgnoreCase("entity.Agenda")) {
-			return getValueAt(0, coluna).getClass();
-		}
-		return classe;
+	public void run() {
+		getRowCount();
+		getColumnCount();
+		
 	}
 	
 }

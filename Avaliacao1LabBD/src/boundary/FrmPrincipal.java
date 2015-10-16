@@ -82,7 +82,11 @@ public class FrmPrincipal {
 		janela.setVisible(true);
 		
 		
-		btnGrupos.addActionListener(a -> new FrmGrupos());
+		btnGrupos.addActionListener(a -> {
+			janela.dispose();
+			janela = null;
+			new FrmGrupos();
+		});
 	}
 	
 	public static void main(String[] args) {
