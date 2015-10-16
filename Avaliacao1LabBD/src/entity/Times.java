@@ -32,4 +32,9 @@ public class Times {
 		this.estadio = estadio;
 	}
 	
+	@Override
+	public String toString() {
+		return this.nome;
+	}
+	
 }
