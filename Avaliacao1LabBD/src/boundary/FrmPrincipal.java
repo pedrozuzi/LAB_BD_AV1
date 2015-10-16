@@ -80,5 +80,12 @@ public class FrmPrincipal {
         janela.setResizable(false);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		janela.setVisible(true);
+		
+		
+		btnGrupos.addActionListener(a -> new FrmGrupos());
+	}
+	
+	public static void main(String[] args) {
+		new FrmPrincipal();
 	}
 }

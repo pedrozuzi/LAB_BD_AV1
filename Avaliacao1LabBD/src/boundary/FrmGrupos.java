@@ -136,36 +136,36 @@ public class FrmGrupos {
 		List<Grupos> listaGrupoD = new ArrayList<Grupos>();
 		
 		listaGrupoA = controle.buscaGrupos("A");
-		
-		if (!listaGrupoA.isEmpty()) {
-			modeloGrupoA = new ModeloTabela(listaGrupoA);
-			grupoA.getTableHeader().setReorderingAllowed(false);
-			grupoA.setModel(modeloGrupoA);
-		}
-		
 		listaGrupoB = controle.buscaGrupos("B");
-		
-		if (!listaGrupoB.isEmpty()) {
-			modeloGrupoB = new ModeloTabela(listaGrupoB);
-			grupoB.getTableHeader().setReorderingAllowed(false);
-			grupoB.setModel(modeloGrupoB);
-		}
-		
 		listaGrupoC = controle.buscaGrupos("C");
-		
-		if (!listaGrupoC.isEmpty()) {
-			modeloGrupoC = new ModeloTabela(listaGrupoC);
-			grupoC.getTableHeader().setReorderingAllowed(false);
-			grupoC.setModel(modeloGrupoC);
-		}
-		
 		listaGrupoD = controle.buscaGrupos("D");
 		
-		if (!listaGrupoD.isEmpty()) {
+		if (!listaGrupoA.isEmpty() 
+				&& !listaGrupoB.isEmpty()
+				&& !listaGrupoC.isEmpty()
+				&& !listaGrupoD.isEmpty()) {
+			modeloGrupoA = new ModeloTabela(listaGrupoA);
+			modeloGrupoB = new ModeloTabela(listaGrupoB);
+			modeloGrupoC = new ModeloTabela(listaGrupoC);
 			modeloGrupoD = new ModeloTabela(listaGrupoD);
+			
+			grupoA.getTableHeader().setReorderingAllowed(false);
+			grupoA.setModel(modeloGrupoA);
+			
+			
+			grupoB.getTableHeader().setReorderingAllowed(false);
+			grupoB.setModel(modeloGrupoB);
+			
+			
+			grupoC.getTableHeader().setReorderingAllowed(false);
+			grupoC.setModel(modeloGrupoC);
+			
+			
 			grupoD.getTableHeader().setReorderingAllowed(false);
 			grupoD.setModel(modeloGrupoD);
 		}
+		
+		btnVoltar.addActionListener(l -> new FrmPrincipal());
 		
 	}
 }
