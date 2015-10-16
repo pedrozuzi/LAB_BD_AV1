@@ -23,6 +23,10 @@ public class FrmPrincipal {
 	private JLabel lblSortearGrupos;
 	private JButton btnGrupos;
 	private JLabel lblGrupos;
+	private JButton btnSortearJogos;
+	private JLabel lblSortearJogos;
+	private JButton btnPesquisaRodada;
+	private JLabel lblPesquisarRodada;
 	
 	public FrmPrincipal() {
 		janela = new JFrame("Campeonato Paulista");
@@ -44,37 +48,60 @@ public class FrmPrincipal {
 		panPrincipal.add(lblCampeonatoPaulista);
 		
 		btnSortearGrupos = new JButton("");
-		btnSortearGrupos.setBounds(513, 144, 89, 45);
+		btnSortearGrupos.setBounds(513, 83, 89, 60);
 		panPrincipal.add(btnSortearGrupos);
 		btnSortearGrupos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Sorteio.png")));
 		
 		btnJogos = new JButton("");
-		btnJogos.setBounds(24, 144, 89, 41);
+		btnJogos.setBounds(24, 83, 89, 56);
 		panPrincipal.add(btnJogos);
 		btnJogos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Jogos.png")));
 		
 		lblJogos = new JLabel("Jogos");
 		lblJogos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblJogos.setBounds(45, 186, 55, 24);
+		lblJogos.setBounds(45, 140, 55, 24);
 		panPrincipal.add(lblJogos);
 		
 		lblSortearGrupos = new JLabel("Sortear Grupos");
 		lblSortearGrupos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSortearGrupos.setBounds(508, 189, 130, 19);
+		lblSortearGrupos.setBounds(508, 143, 130, 19);
 		panPrincipal.add(lblSortearGrupos);
 		
 		btnGrupos = new JButton("");
-		btnGrupos.setBounds(24, 252, 89, 41);
+		btnGrupos.setBounds(24, 191, 89, 56);
 		panPrincipal.add(btnGrupos);
 		btnGrupos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Grupos.png")));
 		
 		lblGrupos = new JLabel("Grupos");
 		lblGrupos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblGrupos.setBounds(45, 292, 68, 24);
+		lblGrupos.setBounds(45, 246, 68, 24);
 		panPrincipal.add(lblGrupos);
+		
+		btnSortearJogos = new JButton("");
+		btnSortearJogos.setBounds(515, 191, 89, 56);
+		panPrincipal.add(btnSortearJogos);
+		btnSortearJogos.setIcon(new ImageIcon(this.getClass().getResource
+				("/img/SorteioJogos.png")));
+		
+		lblSortearJogos = new JLabel("Sortear Jogos");
+		lblSortearJogos.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblSortearJogos.setBounds(508, 250, 106, 17);
+		panPrincipal.add(lblSortearJogos);
+		
+		btnPesquisaRodada = new JButton("");
+		btnPesquisaRodada.setBounds(24, 287, 89, 56);
+		panPrincipal.add(btnPesquisaRodada);
+		btnPesquisaRodada.setIcon(new ImageIcon(this.getClass().getResource
+				("/img/Rodadas.png")));
+		
+		lblPesquisarRodada = new JLabel("Pesquisar Rodada");
+		lblPesquisarRodada.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblPesquisarRodada.setBounds(10, 343, 147, 24);
+		panPrincipal.add(lblPesquisarRodada);
+		
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);

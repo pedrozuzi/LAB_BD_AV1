@@ -118,18 +118,9 @@ public class FrmGrupos {
 		lblTabelaDeGrupos.setBounds(160, 11, 459, 50);
 		panPrincipal.add(lblTabelaDeGrupos);
 		
-		janela.setSize(749,569);
-		janela.setContentPane( panPrincipal );
-		panPrincipal.setLayout(null);
-		
 		btnVoltar = new JButton("Voltar");
 		btnVoltar.setBounds(644, 477, 89, 34);
 		panPrincipal.add(btnVoltar);
-		
-        janela.setLocationRelativeTo(null);
-        janela.setResizable(false);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		janela.setVisible(true);
 		
 		CtrlGrupos controle = new CtrlGrupos();
 		List<Grupos> listaGrupoA = new ArrayList<Grupos>();
@@ -173,6 +164,15 @@ public class FrmGrupos {
 			janela = null;
 			new FrmPrincipal();
 		});
+		
+		janela.setSize(749,569);
+		janela.setContentPane( panPrincipal );
+		panPrincipal.setLayout(null);
+		
+		janela.setLocationRelativeTo(null);
+        janela.setResizable(false);
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setVisible(true);
 		
 	}
 }
