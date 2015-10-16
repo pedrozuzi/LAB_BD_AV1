@@ -2,14 +2,26 @@ package boundary;
 
 import java.awt.Color;
 
+
+
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+
+
+
 import java.awt.Font;
 
+
+
+
 import javax.swing.JButton;
+
+import control.CtrlGrupos;
 
 public class FrmPrincipal {
 	
@@ -27,6 +39,7 @@ public class FrmPrincipal {
 	private JLabel lblSortearJogos;
 	private JButton btnPesquisaRodada;
 	private JLabel lblPesquisarRodada;
+	private CtrlGrupos controleGrupos;
 	
 	public FrmPrincipal() {
 		janela = new JFrame("Campeonato Paulista");
@@ -38,13 +51,13 @@ public class FrmPrincipal {
 		panPrincipal.setLayout(null);
 		
 		lblLogo = new JLabel("");
-		lblLogo.setBounds(195, 83, 310, 306);
+		lblLogo.setBounds(178, 86, 310, 306);
 		panPrincipal.add(lblLogo);
 		lblLogo.setIcon(new ImageIcon(this.getClass().getResource("/img/FPF.png")));
 		
 		lblCampeonatoPaulista = new JLabel("Campeonato Paulista");
 		lblCampeonatoPaulista.setFont(new Font("Tahoma", Font.BOLD, 22));
-		lblCampeonatoPaulista.setBounds(219, 31, 257, 41);
+		lblCampeonatoPaulista.setBounds(202, 34, 257, 41);
 		panPrincipal.add(lblCampeonatoPaulista);
 		
 		btnSortearGrupos = new JButton("");
@@ -114,6 +127,33 @@ public class FrmPrincipal {
 			janela = null;
 			new FrmGrupos();
 		});
+		
+		btnSortearGrupos.addActionListener(a -> {
+			confirma();
+		});
+		
+	}
+	
+	private void confirma(){
+		Object[] opcoes = {"Sim", "Não"};
+		int escolha = JOptionPane.showOptionDialog(null, ""
+				+ "Deseja sortear novos grupos para o Campeonato ? \n",
+				"Aviso", JOptionPane.DEFAULT_OPTION, 
+				JOptionPane.WARNING_MESSAGE, 
+				null, opcoes, opcoes[1]);
+			
+		if (escolha == JOptionPane.YES_OPTION) {
+			geraGrupos();
+		}
+	}
+	
+	private void geraGrupos(){
+		controleGrupos = new CtrlGrupos();
+		controleGrupos.sortearGrupos();
+		JOptionPane.showMessageDialog(null, "Novos grupos formados");
+		janela.dispose();
+		janela = null;
+		new FrmGrupos();
 	}
 	
 	public static void main(String[] args) {

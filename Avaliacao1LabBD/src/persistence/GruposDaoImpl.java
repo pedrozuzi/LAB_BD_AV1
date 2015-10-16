@@ -28,7 +28,6 @@ public class GruposDaoImpl implements GruposDao{
 			CallableStatement cs = c.prepareCall(query);
 			cs.execute();
 			cs.close();
-			System.out.println("executado com sucesso!");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
