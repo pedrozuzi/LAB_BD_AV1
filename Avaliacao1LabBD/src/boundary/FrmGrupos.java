@@ -19,7 +19,6 @@ public class FrmGrupos {
 	
 	private JFrame janela;
 	private JPanel panPrincipal;
-	//private JPanel panel;
 	private JTable grupoB;
 	private JTable grupoC;
 	private JTable grupoD;
@@ -43,8 +42,7 @@ public class FrmGrupos {
 		janela = new JFrame("Grupos Paulistão");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
-		//panel = new JPanel();
-		
+
 		grupoA = new JTable();
 		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoA.setBorder(new LineBorder(Color.BLACK));
