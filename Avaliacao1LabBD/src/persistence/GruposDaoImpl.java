@@ -20,7 +20,6 @@ public class GruposDaoImpl implements GruposDao{
 	public GruposDaoImpl() {
 		GenericConnection gc = new ConnectionImpl();
 		c = gc.getConnection();
-		System.out.println("conectado");
 	}
 
 	@Override
