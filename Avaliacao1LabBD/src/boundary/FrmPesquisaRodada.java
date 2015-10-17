@@ -2,15 +2,21 @@ package boundary;
 
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import util.TratamentoTextFields;
+
 import javax.swing.JButton;
 
 public class FrmPesquisaRodada {
@@ -23,11 +29,25 @@ public class FrmPesquisaRodada {
 	private JLabel lblRodadasDoDia;
 	private JLabel lblDigiteAData;
 	private JButton btnPesquisar;
+	private JMenuBar menuBarra;
+	private JMenu menu;
+	private JMenuItem menuPrincipal;
 	
 	public FrmPesquisaRodada() {
 		janela = new JFrame("Pesquisa Rodadas");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
+		
+		menuBarra = new JMenuBar();
+		janela.setJMenuBar(menuBarra);
+		
+		menu = new JMenu("Menu");
+		menuBarra.add(menu);
+		
+		menuPrincipal = new JMenuItem("Menu Principal");
+		menuPrincipal.setIcon(new ImageIcon(getClass()
+				.getResource("/img/HomeMenu.png")));
+		menu.add(menuPrincipal);
 		
 		tabela = new JTable();
 		tabela.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -68,6 +88,12 @@ public class FrmPesquisaRodada {
 		panPrincipal.add(btnPesquisar);
 		btnPesquisar.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Lupa.png")));
+		
+		menuPrincipal.addActionListener(l -> {
+			janela.dispose();
+			janela = null;
+			new FrmPrincipal();
+		});
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
