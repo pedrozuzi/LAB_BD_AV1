@@ -2,7 +2,7 @@ package boundary;
 
 import java.awt.Color;
 import java.awt.Font;
-
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -10,8 +10,8 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import util.TratamentoTextFields;
+import javax.swing.JButton;
 
 public class FrmPesquisaRodada {
 	
@@ -22,6 +22,7 @@ public class FrmPesquisaRodada {
 	private JTextField txtDataRodada;
 	private JLabel lblRodadasDoDia;
 	private JLabel lblDigiteAData;
+	private JButton btnPesquisar;
 	
 	public FrmPesquisaRodada() {
 		janela = new JFrame("Pesquisa Rodadas");
@@ -61,6 +62,12 @@ public class FrmPesquisaRodada {
 		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblDigiteAData.setBounds(101, 26, 109, 29);
 		panPrincipal.add(lblDigiteAData);
+		
+		btnPesquisar = new JButton("");
+		btnPesquisar.setBounds(323, 14, 83, 41);
+		panPrincipal.add(btnPesquisar);
+		btnPesquisar.setIcon(new ImageIcon(this.getClass().getResource
+				("/img/Lupa.png")));
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);

@@ -5,6 +5,7 @@ import java.awt.Color;
 
 
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,7 +15,9 @@ import javax.swing.JLabel;
 
 
 
+
 import java.awt.Font;
+
 
 
 
@@ -22,6 +25,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 import control.CtrlGrupos;
+import control.CtrlJogos;
 
 public class FrmPrincipal {
 	
@@ -40,6 +44,7 @@ public class FrmPrincipal {
 	private JButton btnPesquisaRodada;
 	private JLabel lblPesquisarRodada;
 	private CtrlGrupos controleGrupos;
+	private CtrlJogos controleJogos;
 	
 	public FrmPrincipal() {
 		janela = new JFrame("Campeonato Paulista");
@@ -128,26 +133,39 @@ public class FrmPrincipal {
 		});
 		
 		btnSortearGrupos.addActionListener(a -> {
-			confirma();
+			if (confirma("Deseja sortear novos grupos para o Campeonato ? \n") == JOptionPane.YES_OPTION) {
+				geraNovosGrupos();
+			}
 		});
 		
 		btnPesquisaRodada.addActionListener(a -> {
 			new FrmPesquisaRodada();
 		});
 		
+		btnSortearJogos.addActionListener(a -> {
+			if (confirma("Deseja sortear novas Rodadas ? \n") == JOptionPane.YES_OPTION) {
+				geraNovasRodadas();
+			}
+		});
+		
 	}
 	
-	private void confirma(){
+	private void geraNovasRodadas() {
+		controleJogos = new CtrlJogos();
+		controleJogos.sortearJogos();
+		JOptionPane.showMessageDialog(null, "Rodadas sorteadas!");
+		//TODO
+		
+	}
+
+	private int confirma(String msg){
 		Object[] opcoes = {"Sim", "Não"};
 		int escolha = JOptionPane.showOptionDialog(null, ""
-				+ "Deseja sortear novos grupos para o Campeonato ? \n",
+				+ msg,
 				"Aviso", JOptionPane.DEFAULT_OPTION, 
 				JOptionPane.WARNING_MESSAGE, 
 				null, opcoes, opcoes[1]);
-			
-		if (escolha == JOptionPane.YES_OPTION) {
-			geraNovosGrupos();
-		}
+		return escolha;
 	}
 	
 	private void geraNovosGrupos(){
