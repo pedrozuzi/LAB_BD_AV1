@@ -10,7 +10,7 @@ import entity.Coluna;
  * @author Pedro Zuzi
  *
  */
-public class ModeloTabela extends AbstractTableModel implements Runnable {
+public class ModeloTabela extends AbstractTableModel{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -99,13 +99,6 @@ public class ModeloTabela extends AbstractTableModel implements Runnable {
 	@Override
 	public boolean isCellEditable(int linha, int coluna) {
 		return false;
-	}
-
-	@Override
-	public void run() {
-		getRowCount();
-		getColumnCount();
-		
 	}
 	
 }

@@ -115,7 +115,6 @@ public class FrmPrincipal {
 		lblPesquisarRodada.setBounds(10, 343, 147, 24);
 		panPrincipal.add(lblPesquisarRodada);
 		
-		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,6 +131,10 @@ public class FrmPrincipal {
 			confirma();
 		});
 		
+		btnPesquisaRodada.addActionListener(a -> {
+			new FrmPesquisaRodada();
+		});
+		
 	}
 	
 	private void confirma(){
@@ -143,11 +146,11 @@ public class FrmPrincipal {
 				null, opcoes, opcoes[1]);
 			
 		if (escolha == JOptionPane.YES_OPTION) {
-			geraGrupos();
+			geraNovosGrupos();
 		}
 	}
 	
-	private void geraGrupos(){
+	private void geraNovosGrupos(){
 		controleGrupos = new CtrlGrupos();
 		controleGrupos.sortearGrupos();
 		JOptionPane.showMessageDialog(null, "Novos grupos formados");
