@@ -28,7 +28,7 @@ golsTimeB int not null,
 data datetime not null	
 primary key (codigoJogo))
 
-select datename(w, getdate()) as Dia_da_Semana
+select datename(WEEKDAY, getdate()) as Dia_da_Semana
 
 insert into times values
 ( 1, 'Audax', 'São Paulo', 'José Liberatti' ),
@@ -258,69 +258,66 @@ as
 truncate table jogos
 
 declare @data datetime
-set @data = '12/10/2010'
+set @data = '09/10/2010'
 exec sp_jogos @data
 
-select * from jogos where data = '10/10/2010'
-select * from jogos where data = '11/10/2010'
+select * from jogos where codigoTimeA = 2
+union
+select * from jogos where codigoTimeB = 2
+
+
+
+select * from jogos where data = '01/10/2010'
 select * from jogos where data = '12/10/2010'
 -----------------------------------------
 --FUNCIONANDO
 alter procedure sp_jogos(@data datetime)
 as
-declare @pivo int
+
 declare @timeA int, @timeB int
-
-set @pivo = 1
-
+declare @count int
+set @count = 1
 --enquanto não acontecer 10 jogos nesta data
 while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
 begin
-
     --randomiza os 2 times e verifica se não são iguais
 	set @timeA = (select top 1 codigoTime from times order by newid())
 	set @timeB = (select top 1 codigoTime from times order by newid())
-	while (@timeA = @timeB)
-	begin
-		set @timeB = (select top 1 codigoTime from times order by newid())
-	end
 
+	while (@timeA = @timeB or 
+	--verica se ambos times já se enfrentaram  (FALTANDO)
+	( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
+	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) ) )
+	begin
+	    set @timeA = (select top 1 codigoTime from times order by newid())
+		set @timeB = (select top 1 codigoTime from times order by newid())
+		set @count = @count +1
+		print convert(varchar(5), @count)
+		if(@count = 1000) --validação
+		begin
+			delete from jogos where data = @data
+			DBCC CHECKIDENT ('jogos', RESEED, 0)
+			print 'resetado'
+			set @count = 1
+		end
+	end
 	--verifica se são do mesmo grupo
 	if not((select id from grupos where codigoTime = @timeA) like (select id from grupos where codigoTime = @timeB) )
 	begin -- grupos diferentes
-
-		--verifica se já jogaram
-		if  not( exists(select codigoTimeA from jogos where codigotimeA = @timeA and data = @data) or
-		 exists(select codigoTimeB from jogos where codigotimeB = @timeB and data=@data) )
+		--verifica se já jogaram no mesmo dia
+		if  not( exists(select codigoTimeA from jogos where (codigotimeA = @timeA or codigoTimeB = @timeB) and data = @data) or
+		 exists(select codigoTimeB from jogos where (codigotimeA = @timeB or codigoTimeB = @timeA) and data=@data) )
 		begin -- Ainda não jogou na data
-			
-			--verica se ambos times já se enfrentaram  (FALTANDO)
-			if  not( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
-			exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) )
-			begin --não se enfrentaram
 				insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
 				print 'inserido'
-			end
-			else
-			begin--já se enfrentaram
-				print 'já se enfrentaram'
-			end		
-
 		end
-		else -- já jogou na data
-		begin
-			print 'já jogou na data'
-		end
-
+      --else -- já jogou na data
 	end
-	else 
-	begin --mesmo grupo
-		print 'mesmo grupo'
-	end
-	--7 e 12 a, 7a 2b
+    --else --mesmo grupo
 end
 
 select * from jogos where data = @data
+
 
 ------------------------ fim da sp
 
