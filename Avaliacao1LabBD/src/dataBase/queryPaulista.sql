@@ -207,8 +207,8 @@ begin
 		if(@count = 1000) --validação
 		begin
 			delete from jogos where data = @data
-			--set @count = (select count(codigoJogo) from jogos)
-			--DBCC CHECKIDENT ('jogos', RESEED, @count)
+			set @count = (select count(codigoJogo) from jogos)
+			DBCC CHECKIDENT ('jogos', RESEED, @count)
 			print 'resetado'
 			set @count = 1
 		end
