@@ -2,7 +2,6 @@ create database paulista
 go
 use paulista
 
-drop database  paulista
 
 create table times(
 codigoTime int not null,
@@ -27,8 +26,6 @@ golsTimeA int not null,
 golsTimeB int not null,
 data datetime not null	
 primary key (codigoJogo))
-
-select datename(WEEKDAY, getdate()) as Dia_da_Semana
 
 insert into times values
 ( 1, 'Audax', 'São Paulo', 'José Liberatti' ),
@@ -149,7 +146,7 @@ as
 	
 
 ----------------------fim da sp
-
+--teste
 	select * from grupos where grupo like 'A'
 	select * from grupos where grupo like 'B'
 	select * from grupos where grupo like 'C'
@@ -165,16 +162,16 @@ as
 --quarta e domingo são dias de jogo
 --criar as rodadas
 
-
+--teste
 truncate table jogos
 
 declare @data datetime
 set @data = '09/10/2010'
 exec sp_jogos @data
 
-select * from jogos where codigoTimeA = 2
+select * from jogos where codigoTimeA = 4
 union
-select * from jogos where codigoTimeB = 2
+select * from jogos where codigoTimeB = 4
 
 select * from jogos where data = '01/10/2010'
 select * from jogos where data = '12/10/2010'
@@ -196,7 +193,7 @@ begin
 	set @timeB = (select top 1 codigoTime from times order by newid())
 
 	while (@timeA = @timeB or 
-	--verica se ambos times já se enfrentaram  (FALTANDO)
+	--verica se ambos times já se enfrentaram  
 	( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
 	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) ) )
 	begin
@@ -204,11 +201,14 @@ begin
 		set @timeB = (select top 1 codigoTime from times order by newid())
 		set @count = @count +1
 		print convert(varchar(5), @count)
+		--Caso a query entre em loop pelo motivo de
+		--o ultimo confronto, a ser sorteado na rodada,
+		--não pode ser sorteado pq já ocorreu em outra data
 		if(@count = 1000) --validação
 		begin
 			delete from jogos where data = @data
 			set @count = (select count(codigoJogo) from jogos)
-			DBCC CHECKIDENT ('jogos', RESEED, @count)
+			DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
 			print 'resetado'
 			set @count = 1
 		end
@@ -232,6 +232,7 @@ select * from jogos where data = @data
 
 
 ------------------------ fim da sp
+--teste
 truncate table jogos
 exec sp_datasJogos
 select * from jogos
