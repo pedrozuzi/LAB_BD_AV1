@@ -189,16 +189,17 @@ set @count = 1
 while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
 begin
     --randomiza os 2 times e verifica se não são iguais
-	set @timeA = (select top 1 codigoTime from times order by newid())
-	set @timeB = (select top 1 codigoTime from times order by newid())
+	set @timeA = (select cast(RAND()*20+1 as int))
+	set @timeB = (select cast(RAND()*20+1 as int))
 
 	while (@timeA = @timeB or 
 	--verica se ambos times já se enfrentaram  
 	( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
 	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) ) )
 	begin
-	    set @timeA = (select top 1 codigoTime from times order by newid())
-		set @timeB = (select top 1 codigoTime from times order by newid())
+	    --(select top 1 codigoTime from times order by newid())
+	    set @timeA = (select cast(RAND()*20+1 as int))
+		set @timeB = (select cast(RAND()*20+1 as int))
 		set @count = @count +1
 		print convert(varchar(5), @count)
 		--Caso a query entre em loop pelo motivo de
@@ -229,6 +230,7 @@ begin
 end
 
 select * from jogos where data = @data
+
 
 
 ------------------------ fim da sp
