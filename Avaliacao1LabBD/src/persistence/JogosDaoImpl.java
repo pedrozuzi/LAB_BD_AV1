@@ -8,9 +8,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import connection.ConnectionImpl;
 import connection.GenericConnection;
 import entity.Jogos;
@@ -27,10 +25,9 @@ public class JogosDaoImpl implements JogosDao {
 	
 	@Override
 	public void sortearJogos() {
-		String query = "call {sp_datasJogos }";
-		CallableStatement cs;
+		String query = "call {sp_datasJogos}";
 		try {
-			cs = c.prepareCall(query);
+			CallableStatement cs = c.prepareCall(query);
 			cs.execute();
 			cs.close();
 		} catch (SQLException e) {
@@ -66,7 +63,6 @@ public class JogosDaoImpl implements JogosDao {
 		} catch (SQLException | ParseException e) {
 			e.printStackTrace();
 		}
-		
 		
 		return lista;
 	}

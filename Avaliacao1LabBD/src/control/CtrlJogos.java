@@ -1,9 +1,7 @@
 package control;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import persistence.JogosDao;
 import persistence.JogosDaoImpl;
 import entity.Jogos;

@@ -27,6 +27,14 @@ public class ModeloTabela extends AbstractTableModel{
 	}
 	
 	/**
+	 * Método para limpar a Tabela
+	 */
+	public void clear(){
+		lista.clear();
+		fireTableRowsDeleted(0, lista.size());
+	}
+	
+	/**
 	 * Método para retorno do número de linhas da Tabela
 	 * @return quantidade de linhas
 	 */

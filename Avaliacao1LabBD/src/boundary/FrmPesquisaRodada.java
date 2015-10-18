@@ -2,11 +2,8 @@ package boundary;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-
 import util.ModeloTabela;
 import util.TratamentoTextFields;
 import control.CtrlJogos;
@@ -67,8 +63,8 @@ public class FrmPesquisaRodada {
 		scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBorder(null);
 		scrollPane.setViewportView(tabela);
-	    scrollPane.setBounds(116, 142, 525, 184);
-		panPrincipal.add(scrollPane);
+	    scrollPane.setBounds(90, 145, 493, 183);
+	    panPrincipal.add(scrollPane);
 		
 		txtDataRodada = new JTextField();
 		txtDataRodada = TratamentoTextFields.mascara(txtDataRodada, "data");
@@ -78,17 +74,18 @@ public class FrmPesquisaRodada {
 		panPrincipal.add(txtDataRodada);
 		txtDataRodada.setColumns(10);
 		scrollPane.setViewportView(tabela);
-		scrollPane.setBounds(116, 142, 525, 183);
+		scrollPane.setBounds(47, 140, 525, 183);
 		panPrincipal.add(scrollPane);
 		
-		janela.setSize(749,525);
+		janela.setSize(629,446);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
 		
-		lblRodadasDoDia = new JLabel("Rodadas do Dia: \"  \"");
+		lblRodadasDoDia = new JLabel();
 		lblRodadasDoDia.setFont(new Font("Tahoma", Font.BOLD, 26));
-		lblRodadasDoDia.setBounds(116, 90, 290, 24);
+		lblRodadasDoDia.setBounds(116, 90, 456, 39);
 		panPrincipal.add(lblRodadasDoDia);
+		lblRodadasDoDia.setVisible(false);
 		
 		lblDigiteAData = new JLabel("Digite a Data: ");
 		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -110,16 +107,18 @@ public class FrmPesquisaRodada {
 		btnPesquisar.addActionListener(l -> {
 			try {
 				CtrlJogos controleJogos = new CtrlJogos();
-				//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				//Date data = new Date(sdf.parse(txtDataRodada.getText()).getTime());
 				List<Jogos> lista = new ArrayList<Jogos>();
 				lista = controleJogos.buscaRodadas(txtDataRodada.getText());
 				if (!lista.isEmpty()) {
+					lblRodadasDoDia.setText("Rodada do dia: " + txtDataRodada.getText());
+					lblRodadasDoDia.setVisible(true);
 					modelo = new ModeloTabela(lista);
 					tabela.getTableHeader().setReorderingAllowed(false);
 					tabela.setModel(modelo);
 				}else{
-					JOptionPane.showMessageDialog(null, "Não Rodada para o dia: " + txtDataRodada.getText());
+					lblRodadasDoDia.setVisible(false);
+					modelo.clear();
+					JOptionPane.showMessageDialog(null, "Não há Rodada para o dia: " + txtDataRodada.getText());
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
