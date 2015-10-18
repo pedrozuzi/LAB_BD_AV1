@@ -174,10 +174,10 @@ union
 select * from jogos where codigoTimeB = 4
 
 select * from jogos where data = '01/10/2010'
-select * from jogos where data = '12/10/2010'
+select * from jogos where codigoTimeA = 15
+select * from jogos where data = '18/03/2015'
 -----------------------------------------
 --FUNCIONANDO
-
 
 alter procedure sp_jogos(@data datetime)
 as
@@ -188,20 +188,31 @@ set @count = 1
 --enquanto não acontecer 10 jogos nesta data
 while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
 begin
-    --randomiza os 2 times e verifica se não são iguais
-	set @timeA = (select cast(RAND()*20+1 as int))
-	set @timeB = (select cast(RAND()*20+1 as int))
+    --randomiza os 2 times
+	set @timeA = (select cast(RAND()*20 as int)+1)
+	set @timeB = (select cast(RAND()*20 as int)+1)
 
-	while (@timeA = @timeB or 
+	--verifica se são o mesmo time
+	while (@timeA = @timeB or
+
+	--verifica se são do mesmo grupo
+	((select id from grupos where codigoTime = @timeA) = (select id from grupos where codigoTime = @timeB)) or 
+
+	--verifica se já joraram na data
+	(exists(select codigoTimeA from jogos where (codigotimeA = @timeA) and data = @data) or
+	exists(select codigoTimeA from jogos where (codigotimeA = @timeb) and data = @data) or
+	exists(select codigoTimeB from jogos where (codigoTimeB = @timeA) and data = @data) or
+	exists(select codigoTimeB from jogos where (codigoTimeB = @timeB) and data = @data) ) or
+
 	--verica se ambos times já se enfrentaram  
 	( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
-	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA) ) )
+	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA)) 
+	)
 	begin
-	    --(select top 1 codigoTime from times order by newid())
-	    set @timeA = (select cast(RAND()*20+1 as int))
-		set @timeB = (select cast(RAND()*20+1 as int))
+	    set @timeA = (select cast(RAND()*20 as int)+1)
+		set @timeB = (select cast(RAND()*20 as int)+1)
 		set @count = @count +1
-		print convert(varchar(5), @count)
+		--print convert(varchar(5), @count)
 		--Caso a query entre em loop pelo motivo de
 		--o ultimo confronto, a ser sorteado na rodada,
 		--não pode ser sorteado pq já ocorreu em outra data
@@ -209,29 +220,17 @@ begin
 		begin
 			delete from jogos where data = @data
 			set @count = (select count(codigoJogo) from jogos)
-			DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
+			DBCC CHECKIDENT ('jogos', RESEED, 0) --reseta o indice identity das chaves
 			print 'resetado'
 			set @count = 1
 		end
 	end
-	--verifica se são do mesmo grupo
-	if not((select id from grupos where codigoTime = @timeA) like (select id from grupos where codigoTime = @timeB) )
-	begin -- grupos diferentes
-		--verifica se já jogaram no mesmo dia
-		if  not( exists(select codigoTimeA from jogos where (codigotimeA = @timeA or codigoTimeB = @timeB) and data = @data) or
-		 exists(select codigoTimeB from jogos where (codigotimeA = @timeB or codigoTimeB = @timeA) and data=@data) )
-		begin -- Ainda não jogou na data
 				insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
 				print 'inserido'
-		end
-      --else -- já jogou na data
-	end
-    --else --mesmo grupo
 end
 
 select * from jogos where data = @data
-
-
+------------------------
 
 ------------------------ fim da sp
 --teste
@@ -283,3 +282,60 @@ ORDER BY NOME
 
 
 */
+
+CREATE PROCEDURE sp_gerarjogos(@data DATETIME, @contador INT)
+AS
+	DECLARE @idTimePivo INT,
+			@count INT
+	SET @idTimePivo = 1
+	SET @count = 1
+	
+WHILE @idTimePivo <= 20
+BEGIN
+
+	SET @count = 1
+	WHILE @count <= 20 AND @idTimePivo <= 20
+	BEGIN
+		IF  NOT( EXISTS(SELECT codigoTimeA FROM Jogos WHERE
+		 (codigotimeA = @idTimePivo or codigoTimeB = @count) AND data = @data) OR
+		 EXISTS(SELECT codigoTimeB FROM jogos WHERE
+		  (codigotimeA = @count OR codigoTimeB = @idTimePivo) AND data=@data) )
+		 BEGIN
+		IF (SELECT codigoGrupo FROM Grupos WHERE codigoTime = @idTimePivo) <>
+			(SELECT codigoGrupo FROM Grupos WHERE codigoTime = @count) 
+		BEGIN
+		IF NOT EXISTS(SELECT codigoTimeA, codigoTimeB FROM Jogos WHERE
+				codigoTimeA = @idTimePivo AND codigoTimeB = @count) AND
+			NOT EXISTS(SELECT codigoTimeA, codigoTimeB FROM Jogos WHERE
+				codigoTimeA = @count AND codigoTimeB = @idTimePivo)	
+			BEGIN
+				
+			INSERT INTO Jogos VALUES(
+			@idTimePivo, @count,
+			0, 0,
+			 @data)
+			 SET @count = @count + 1
+			END
+			ELSE
+			SET @count = @count + 1
+		END
+		ELSE
+		SET @count = @count + 1
+	END	
+	ELSE
+	SET @idTimePivo = @idTimePivo + 1 
+	END
+		SET @idTimePivo = @idTimePivo + 1 
+	
+END
+	IF(SELECT COUNT(*) FROM Jogos) <> 10 * @contador
+		BEGIN
+			DELETE FROM Jogos WHERE data = @data
+				SET @contador = @contador + 1
+			EXEC sp_gerarjogos @data, @contador
+		END
+		 
+		
+
+
+EXEC sp_gerarjogos '17/10/2015', 1
