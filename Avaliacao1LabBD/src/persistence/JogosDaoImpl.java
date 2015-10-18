@@ -25,7 +25,7 @@ public class JogosDaoImpl implements JogosDao {
 	
 	@Override
 	public void sortearJogos() {
-		String query = "call {sp_datasJogos}";
+		String query = "{call sp_datasJogos()}";
 		try {
 			CallableStatement cs = c.prepareCall(query);
 			cs.execute();

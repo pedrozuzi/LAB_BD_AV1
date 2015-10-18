@@ -6,6 +6,7 @@ import java.awt.Color;
 
 
 
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,7 +17,9 @@ import javax.swing.JLabel;
 
 
 
+
 import java.awt.Font;
+
 
 
 
@@ -142,7 +145,12 @@ public class FrmPrincipal {
 	private void geraNovasRodadas() {
 		controleJogos = new CtrlJogos();
 		controleJogos.sortearJogos();
-		JOptionPane.showMessageDialog(null, "Rodadas sorteadas!");
+		try {
+			Thread.sleep(1000);
+			JOptionPane.showMessageDialog(null, "Rodadas sorteadas!");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

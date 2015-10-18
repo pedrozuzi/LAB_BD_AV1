@@ -71,7 +71,8 @@ as
     declare @grupo varchar(1)
 	declare @cod int
 	declare @id int
-	
+	delete grupos
+	delete jogos
 	set @grupo = 'A'
 	set @id = 1
 	--cabeça de grupo
