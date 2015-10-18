@@ -216,11 +216,11 @@ begin
 		--Caso a query entre em loop pelo motivo de
 		--o ultimo confronto, a ser sorteado na rodada,
 		--não pode ser sorteado pq já ocorreu em outra data
-		if(@count = 1000) --validação
+		if(@count = 1500) --validação
 		begin
 			delete from jogos where data = @data
 			set @count = (select count(codigoJogo) from jogos)
-			DBCC CHECKIDENT ('jogos', RESEED, 0) --reseta o indice identity das chaves
+			DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
 			print 'resetado'
 			set @count = 1
 		end
@@ -283,59 +283,18 @@ ORDER BY NOME
 
 */
 
-CREATE PROCEDURE sp_gerarjogos(@data DATETIME, @contador INT)
-AS
-	DECLARE @idTimePivo INT,
-			@count INT
-	SET @idTimePivo = 1
-	SET @count = 1
-	
-WHILE @idTimePivo <= 20
-BEGIN
 
-	SET @count = 1
-	WHILE @count <= 20 AND @idTimePivo <= 20
-	BEGIN
-		IF  NOT( EXISTS(SELECT codigoTimeA FROM Jogos WHERE
-		 (codigotimeA = @idTimePivo or codigoTimeB = @count) AND data = @data) OR
-		 EXISTS(SELECT codigoTimeB FROM jogos WHERE
-		  (codigotimeA = @count OR codigoTimeB = @idTimePivo) AND data=@data) )
-		 BEGIN
-		IF (SELECT codigoGrupo FROM Grupos WHERE codigoTime = @idTimePivo) <>
-			(SELECT codigoGrupo FROM Grupos WHERE codigoTime = @count) 
-		BEGIN
-		IF NOT EXISTS(SELECT codigoTimeA, codigoTimeB FROM Jogos WHERE
-				codigoTimeA = @idTimePivo AND codigoTimeB = @count) AND
-			NOT EXISTS(SELECT codigoTimeA, codigoTimeB FROM Jogos WHERE
-				codigoTimeA = @count AND codigoTimeB = @idTimePivo)	
-			BEGIN
-				
-			INSERT INTO Jogos VALUES(
-			@idTimePivo, @count,
-			0, 0,
-			 @data)
-			 SET @count = @count + 1
-			END
-			ELSE
-			SET @count = @count + 1
-		END
-		ELSE
-		SET @count = @count + 1
-	END	
-	ELSE
-	SET @idTimePivo = @idTimePivo + 1 
-	END
-		SET @idTimePivo = @idTimePivo + 1 
-	
-END
-	IF(SELECT COUNT(*) FROM Jogos) <> 10 * @contador
-		BEGIN
-			DELETE FROM Jogos WHERE data = @data
-				SET @contador = @contador + 1
-			EXEC sp_gerarjogos @data, @contador
-		END
-		 
 		
 
+select jg.codigoJogo, 
+(select nomeTime from times where codigoTime = jg.codigoTimeA) as codigotimeA,
+(select nomeTime from times where codigoTime = jg.codigoTimeB) as codigotimeB
+ from jogos jg
+ where jg.data = '01/02/2015' 
 
-EXEC sp_gerarjogos '17/10/2015', 1
+
+inner join times tm
+on tm.codigotime = jg.codigotimea and
+tm.codigotime = jg.codigotimeb
+where jg.data = '01/02/2015' 
+order by jg.codigojogo
