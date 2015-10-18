@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,11 @@ public class CtrlJogos {
 		jDao.sortearJogos();
 	}
 	
-	public List<Jogos> buscaRodadas(Date data){
-		//TODO
-		return null;
+	public List<Jogos> buscaRodadas(String data){
+		jDao = new JogosDaoImpl();
+		List<Jogos> lista = new ArrayList<Jogos>();
+		lista = jDao.BuscaRodada(data);
+		return lista;
 	}
 
 }

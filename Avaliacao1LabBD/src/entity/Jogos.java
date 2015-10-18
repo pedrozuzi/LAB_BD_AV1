@@ -10,7 +10,8 @@ public class Jogos {
 	private int golsTimeA;
 	private int golsTimeB;
 	private Date data;
-	private Times time;
+	private Times timeA;
+	private Times timeB;
 	
 	public int getCodigoJogo() {
 		return codigoJogo;
@@ -30,14 +31,12 @@ public class Jogos {
 	public void setCodigoTimeB(int codigoTimeB) {
 		this.codigoTimeB = codigoTimeB;
 	}
-	@Coluna(nome="Gols", posicao=1)
 	public int getGolsTimeA() {
 		return golsTimeA;
 	}
 	public void setGolsTimeA(int golsTimeA) {
 		this.golsTimeA = golsTimeA;
 	}
-	@Coluna(nome="Gols", posicao=2)
 	public int getGolsTimeB() {
 		return golsTimeB;
 	}
@@ -50,12 +49,21 @@ public class Jogos {
 	public void setData(Date data) {
 		this.data = data;
 	}
+	@Coluna(nome="Time", posicao=1)
+	public Times getTimeB() {
+		return timeB;
+	}
+	public void setTimeB(Times timeB) {
+		this.timeB = timeB;
+	}
+	
 	@Coluna(nome="Time", posicao=0)
-	public Times getTime() {
-		return time;
+	public Times getTimeA() {
+		return timeA;
 	}
-	public void setTime(Times time) {
-		this.time = time;
+	public void setTimeA(Times timeA) {
+		this.timeA = timeA;
 	}
+
 
 }

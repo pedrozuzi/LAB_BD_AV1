@@ -9,6 +9,6 @@ public interface JogosDao {
 	
 	void sortearJogos();
 	
-	List<Jogos> BuscaRodada(Date data);
+	List<Jogos> BuscaRodada(String data);
 
 }

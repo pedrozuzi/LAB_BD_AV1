@@ -2,22 +2,30 @@ package boundary;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.LineBorder;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
+import util.ModeloTabela;
 import util.TratamentoTextFields;
+import control.CtrlJogos;
+import entity.Jogos;
 
-import javax.swing.JButton;
 
 public class FrmPesquisaRodada {
 	
@@ -32,6 +40,7 @@ public class FrmPesquisaRodada {
 	private JMenuBar menuBarra;
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
+	private ModeloTabela modelo;
 	
 	public FrmPesquisaRodada() {
 		janela = new JFrame("Pesquisa Rodadas");
@@ -57,6 +66,9 @@ public class FrmPesquisaRodada {
 		
 		scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBorder(null);
+		scrollPane.setViewportView(tabela);
+	    scrollPane.setBounds(116, 142, 525, 184);
+		panPrincipal.add(scrollPane);
 		
 		txtDataRodada = new JTextField();
 		txtDataRodada = TratamentoTextFields.mascara(txtDataRodada, "data");
@@ -66,7 +78,7 @@ public class FrmPesquisaRodada {
 		panPrincipal.add(txtDataRodada);
 		txtDataRodada.setColumns(10);
 		scrollPane.setViewportView(tabela);
-		scrollPane.setBounds(116, 142, 525, 314);
+		scrollPane.setBounds(116, 142, 525, 183);
 		panPrincipal.add(scrollPane);
 		
 		janela.setSize(749,525);
@@ -93,6 +105,25 @@ public class FrmPesquisaRodada {
 			janela.dispose();
 			janela = null;
 			new FrmPrincipal();
+		});
+		
+		btnPesquisar.addActionListener(l -> {
+			try {
+				CtrlJogos controleJogos = new CtrlJogos();
+				//SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				//Date data = new Date(sdf.parse(txtDataRodada.getText()).getTime());
+				List<Jogos> lista = new ArrayList<Jogos>();
+				lista = controleJogos.buscaRodadas(txtDataRodada.getText());
+				if (!lista.isEmpty()) {
+					modelo = new ModeloTabela(lista);
+					tabela.getTableHeader().setReorderingAllowed(false);
+					tabela.setModel(modelo);
+				}else{
+					JOptionPane.showMessageDialog(null, "Não Rodada para o dia: " + txtDataRodada.getText());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 		
 		janela.setLocationRelativeTo(null);
