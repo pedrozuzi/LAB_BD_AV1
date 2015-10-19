@@ -22,8 +22,8 @@ create table jogos(
 codigoJogo int identity not null,
 codigoTimeA int not null,
 codigoTimeB int not null,
-golsTimeA int not null,
-golsTimeB int not null,
+golsTimeA int,
+golsTimeB int,
 data datetime not null	
 primary key (codigoJogo))
 
@@ -178,16 +178,25 @@ begin
 		--Caso a query entre em loop pelo motivo de
 		--o ultimo confronto, a ser sorteado na rodada,
 		--não pode ser sorteado pq já ocorreu em outra data
-		if(@count = 1500) --validação
+		if(@count = 1000) --validação
 		begin
-			delete from jogos where data = @data
-			set @count = (select count(codigoJogo) from jogos)
-			DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
-			print 'resetado'
-			set @count = 1
+			if(not(select count(codigoJogo) from jogos)=149)
+			begin
+				delete from jogos where data = @data
+				set @count = (select count(codigoJogo) from jogos)
+				DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
+				print 'resetado'
+				set @count = 1
+			end
+			else --caso o ultimo jogo não possa ser efetuado
+			begin
+				truncate table jogos
+				DBCC CHECKIDENT ('jogos', RESEED, 0) --reseta o indice identity das chaves
+			end
+			
 		end
 	end
-				insert into jogos values (@timeA, @timeb, 0, 0, @data) -- INSERIDO
+				insert into jogos values (@timeA, @timeb, null, null, @data) -- INSERIDO
 				print 'inserido'
 end
 
@@ -232,9 +241,6 @@ end
 -------------fim da sp
 
 
-
-
-
 /**   P2
 Partindo do domínio da Avaliação 1, criar uma Trigger que não permita INSERT, UPDATE ou
 DELETE nas tabelas TIMES e GRUPOS e uma Trigger semelhante, mas apenas para INSERT e
@@ -264,6 +270,11 @@ as
 begin
 	raiserror('Impossível Inserir ou deletar dados!',16,1)
 end
+
+
+GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
+gols_sofridos, saldo_gols**,pontos***)
+
 
 
 /**
