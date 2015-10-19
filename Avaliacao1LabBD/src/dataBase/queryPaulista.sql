@@ -50,18 +50,6 @@ insert into times values
 ( 20, 'XV de Piracicaba', 'Piracicaba', 'Barão de Serra Negra' )
 	
 	--------------------
-select * from times	order by newid()
-select * from grupos
-select * from jogos
-
-drop procedure sp_sorteiogrupos
-
-delete grupos
-	
------------------------------------------------------------
-/**
-
-*/
 -----------------------------------------------------------------------------------------------
 --FUNCIONANDO--
 exec sp_sorteioGrupos 
@@ -149,36 +137,7 @@ truncate table grupos
 	
 
 ----------------------fim da sp
---teste
-	select * from grupos where grupo like 'A'
-	select * from grupos where grupo like 'B'
-	select * from grupos where grupo like 'C'
-	select * from grupos where grupo like 'D'
 
-	 truncate table grupos
---------------------------------------------------------------------------------------------------	
---cada time joga 1 vez por rodada
--- o time não pode jogar com os times do seu grupo
---cada time deve joga com todos os times que possa jogar
---10 jogos por rodada
--- 15 rodadas
---quarta e domingo são dias de jogo
---criar as rodadas
-
---teste
-truncate table jogos
-
-declare @data datetime
-set @data = '09/10/2010'
-exec sp_jogos @data
-
-select * from jogos where codigoTimeA = 4
-union
-select * from jogos where codigoTimeB = 4
-
-select * from jogos where data = '01/10/2010'
-select * from jogos where codigoTimeA = 15
-select * from jogos where data = '18/03/2015'
 -----------------------------------------
 --FUNCIONANDO
 
@@ -272,36 +231,73 @@ end
 
 -------------fim da sp
 
-/*
-
-	Para trazer apenas a linha 50:
-SELECT top 1 NOME FROM
-(SELECT TOP 50 NOME FROM PFUNC ORDER BY NOME) X
-ORDER BY NOME DESC
-
-Para trazer da 50 até a 70: (Obs.: 50 ATÉ 70 = 21)
-SELECT * FROM (SELECT TOP 21 NOME FROM 
-(SELECT TOP 70 NOME FROM PFUNC ORDER BY NOME) X
-ORDER BY NOME DESC ) YY
-ORDER BY NOME 
 
 
+
+
+/**   P2
+Partindo do domínio da Avaliação 1, criar uma Trigger que não permita INSERT, UPDATE ou
+DELETE nas tabelas TIMES e GRUPOS e uma Trigger semelhante, mas apenas para INSERT e
+DELETE na tabela jogos.
 */
 
+create trigger t_times
+on times
+instead of insert, update, delete
+as
+begin
+	raiserror('Impossível Interagir com os dados',16,1)
+end
 
-		
+create trigger t_grupos
+on grupos
+instead of insert, update, delete
+as
+begin
+	raiserror('Impossível Interagir com os dados',16,1)
+end
 
-select jg.codigoJogo, 
-(select nomeTime from times where codigoTime = jg.codigoTimeA) as codigotimeA,
-(select nomeTime from times where codigoTime = jg.codigoTimeB) as codigotimeB
- from jogos jg
- where jg.data = '01/02/2015' 
+create trigger t_jogos
+on jogos
+instead of insert, delete
+as
+begin
+	raiserror('Impossível Inserir ou deletar dados!',16,1)
+end
 
 
-inner join times tm
-on tm.codigotime = jg.codigotimea and
-tm.codigotime = jg.codigotimeb
-where jg.data = '01/02/2015' 
-order by jg.codigojogo
+/**
+Uma vez determinados os grupos e os jogos, as partidas serão disputadas e terão resultados
+em número de gols (Ex.: TimaA 3 X 0 TimeB). A cada rodada, os 10 jogos terão resultados.
+Fazer uma tela que, pelas datas dos jogos, seja possível inserir os resultados dos jogos, que
+fará um UPDATE na tabela jogos, que já terá os times e data, com os gols marcados por cada
+time.
+Fazer uma tela de consulta com os 4 grupos e 4 JTables, que mostre a saída (para cada JTable)
+de uma UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
+saída:
+GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
+gols_sofridos, saldo_gols**,pontos***)
+O campeão de cada grupo se dará por aquele que tiver maior número de pontos. Em caso de
+empate, a ordem de desempate é por número de vitórias, depois por gols marcados e por fim,
+por saldo de gols.
+O critério de rebaixamento também é pouco convencional.
+Para definir os 4 rebaixados, se considera os times que tem menor pontuação dentre os 20
+times, independente de qual grupo que pertença.
+Na tela com as 4 JTables, deve-se mudar a cor de fundo da linha dos times que estiverem em
+condição de rebaixamento.
+Deve-se fazer, para melhor visualização dos resultados, uma tela com a classificação geral,
+numa UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
+saída, para os 20 times do campeonato:
+CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
+gols_marcados, gols_sofridos, saldo_gols**,pontos***)
+A ordenação da saída se dá pelo mesmo critério anterior.
+Por fim, uma tela deverá ser criada para ver a projeção das quartas de final. As quartas de final
+serão disputadas entre o 1º e o 2º de cada grupo. Gerá-las a partir de UDF.
+A qualquer momento, deve ser possível ver as tabelas e a projeção das quartas de final.
 
-select *from jogos
+* O num_jogos_disputados é o número de jogos feitos por aquele time, até o presente instante. Jogos sem
+resultados não devem ser considerados.
+** Saldo de gols é a diferença entre gols marcados e gols sofridos
+*** O total de pontos se dá somando os resultados, onde:
+(Vitória = 3 pontos, Empate = 1 ponto , Derrota = 0 pontos)
+*/
