@@ -178,9 +178,9 @@ begin
 		--Caso a query entre em loop pelo motivo de
 		--o ultimo confronto, a ser sorteado na rodada,
 		--não pode ser sorteado pq já ocorreu em outra data
-		if(@count = 1000) --validação
+		if(@count = 1500) --validação
 		begin
-			if(not(select count(codigoJogo) from jogos)=149)
+			if(not(select count(codigoJogo) from jogos)=139)
 			begin
 				delete from jogos where data = @data
 				set @count = (select count(codigoJogo) from jogos)
@@ -191,7 +191,7 @@ begin
 			else --caso o ultimo jogo não possa ser efetuado
 			begin
 				truncate table jogos
-				DBCC CHECKIDENT ('jogos', RESEED, 0) --reseta o indice identity das chaves
+				DBCC CHECKIDENT ('jogos', RESEED, 1) --reseta o indice identity das chaves
 			end
 			
 		end
@@ -246,6 +246,13 @@ Partindo do domínio da Avaliação 1, criar uma Trigger que não permita INSERT
 DELETE nas tabelas TIMES e GRUPOS e uma Trigger semelhante, mas apenas para INSERT e
 DELETE na tabela jogos.
 */
+--pausar a trigger
+disable trigger t_jogos on jogos
+
+--voltar a trigger
+enable trigger t_jogos on jogos
+
+
 
 create trigger t_times
 on times
