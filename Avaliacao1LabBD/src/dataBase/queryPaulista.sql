@@ -68,6 +68,8 @@ exec sp_sorteioGrupos
 
 alter procedure sp_sorteioGrupos
 as
+
+truncate table grupos
     declare @grupo varchar(1)
 	declare @cod int
 	declare @id int
@@ -244,6 +246,8 @@ select * from jogos
 --FUNCIONANDO
 alter procedure sp_datasJogos
 as
+
+truncate table jogos
 declare @data date, @dataInicio date, @dataFim date
 
 set @dataInicio = '01/02/2015'
@@ -299,3 +303,5 @@ on tm.codigotime = jg.codigotimea and
 tm.codigotime = jg.codigotimeb
 where jg.data = '01/02/2015' 
 order by jg.codigojogo
+
+select *from jogos

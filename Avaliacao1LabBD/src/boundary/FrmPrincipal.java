@@ -1,11 +1,7 @@
 package boundary;
 
 import java.awt.Color;
-
-
-
-
-
+import java.awt.Cursor;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -48,6 +44,7 @@ public class FrmPrincipal {
 	private CtrlJogos controleJogos;
 	
 	public FrmPrincipal() {
+		
 		janela = new JFrame("Campeonato Paulista");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
@@ -55,6 +52,8 @@ public class FrmPrincipal {
 		janela.setSize(654,456);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
+		
+
 		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(178, 86, 310, 306);
@@ -143,13 +142,17 @@ public class FrmPrincipal {
 	}
 	
 	private void geraNovasRodadas() {
+		janela.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		controleJogos = new CtrlJogos();
 		controleJogos.sortearJogos();
 		try {
+			
 			Thread.sleep(1000);
 			JOptionPane.showMessageDialog(null, "Rodadas sorteadas!");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}finally {
+			janela.setCursor(Cursor.getDefaultCursor());
 		}
 		
 	}
@@ -165,8 +168,10 @@ public class FrmPrincipal {
 	}
 	
 	private void geraNovosGrupos(){
+		janela.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		controleGrupos = new CtrlGrupos();
 		controleGrupos.sortearGrupos();
+		janela.setCursor(Cursor.getDefaultCursor());
 		JOptionPane.showMessageDialog(null, "Novos grupos formados");
 		janela.dispose();
 		janela = null;
