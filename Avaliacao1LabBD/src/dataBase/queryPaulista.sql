@@ -180,19 +180,19 @@ begin
 		--não pode ser sorteado pq já ocorreu em outra data
 		if(@count = 1500) --validação
 		begin
-			if(not(select count(codigoJogo) from jogos)=139)
-			begin
+		--	if(not(select count(codigoJogo) from jogos) = 149 or (select count(codigoJogo) from jogos) = 139)
+		--	begin
 				delete from jogos where data = @data
 				set @count = (select count(codigoJogo) from jogos)
 				DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
 				print 'resetado'
 				set @count = 1
-			end
-			else --caso o ultimo jogo não possa ser efetuado
-			begin
-				truncate table jogos
-				DBCC CHECKIDENT ('jogos', RESEED, 1) --reseta o indice identity das chaves
-			end
+			--end
+			--else --caso o ultimo jogo não possa ser efetuado
+			--begin
+			--	truncate table jogos
+			--	DBCC CHECKIDENT ('jogos', RESEED, 1) --reseta o indice identity das chaves
+		--	end
 			
 		end
 	end
