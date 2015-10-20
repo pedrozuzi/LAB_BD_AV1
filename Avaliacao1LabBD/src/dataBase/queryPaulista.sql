@@ -301,10 +301,42 @@ returns int
 as
 begin
 
-create function fn_gols_marcados(@codigoTime int)
+/**
+create table jogos(
+codigoJogo int identity not null,
+codigoTimeA int not null,
+codigoTimeB int not null,
+golsTimeA int,
+golsTimeB int,
+data datetime not null	
+primary key (codigoJogo))
+*/
+
+--funcionando
+alter function fn_gols_marcados(@codigoTime int)
 returns int
 as
 begin
+	declare @A int
+	declare @B int
+
+	set @A = (select sum(golsTimeA) from jogos where codigoTimeA = @codigoTime and golsTimeA is not null)
+	set @B = (select sum(golsTimeB) from jogos where codigoTimeB = @codigoTime and golsTimeB is not null)
+
+	if(@A is null)
+	begin
+		set @A = 0
+	end
+	if(@B is null)
+	begin
+		set @B = 0
+	end
+
+	return @A+@B
+end
+
+select * from jogos
+update jogos set golsTimeA = 4 where codigoJogo = 5 
 
 create function fn_gols_sofrido(@codigoTime int)
 returns int
@@ -317,9 +349,9 @@ as
 begin
 
 declare @fodase int
-set @fodase = (select dbo.fn_numJogosDisputados(2) )
+set @fodase = (select dbo.fn_gols_marcados(1) )
 print convert(varchar(2), @fodase )
-
+select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
 
 create function fn_grupo(@grupo varchar(2))
 returns varchar
