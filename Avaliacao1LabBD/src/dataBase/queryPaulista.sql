@@ -278,10 +278,24 @@ begin
 	raiserror('Impossível Inserir ou deletar dados!',16,1)
 end
 
+create function fn_grupo(@grupo varchar(1))
+returns varchar
+as
+begin
+GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
+	gols_sofridos, saldo_gols**,pontos***)
 
+	select tm.nomeTime, 
+	((select count(codigoJogo) from jogos jg where jg.codigoTimeA = tm.codigoTime)+
+	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = tm.codigoTime)) as num_jogos_disputados from times tm
+
+return
+end
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
+CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
+gols_marcados, gols_sofridos, saldo_gols**,pontos***)
 
 
 /**
@@ -290,11 +304,13 @@ em número de gols (Ex.: TimaA 3 X 0 TimeB). A cada rodada, os 10 jogos terão r
 Fazer uma tela que, pelas datas dos jogos, seja possível inserir os resultados dos jogos, que
 fará um UPDATE na tabela jogos, que já terá os times e data, com os gols marcados por cada
 time.
-Fazer uma tela de consulta com os 4 grupos e 4 JTables, que mostre a saída (para cada JTable)
-de uma UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
-saída:
-GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
-gols_sofridos, saldo_gols**,pontos***)
+
+	Fazer uma tela de consulta com os 4 grupos e 4 JTables, que mostre a saída (para cada JTable)
+	de uma UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
+	saída:
+	GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
+	gols_sofridos, saldo_gols**,pontos***)
+
 O campeão de cada grupo se dará por aquele que tiver maior número de pontos. Em caso de
 empate, a ordem de desempate é por número de vitórias, depois por gols marcados e por fim,
 por saldo de gols.
@@ -303,19 +319,21 @@ Para definir os 4 rebaixados, se considera os times que tem menor pontuação de
 times, independente de qual grupo que pertença.
 Na tela com as 4 JTables, deve-se mudar a cor de fundo da linha dos times que estiverem em
 condição de rebaixamento.
-Deve-se fazer, para melhor visualização dos resultados, uma tela com a classificação geral,
-numa UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
-saída, para os 20 times do campeonato:
-CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
-gols_marcados, gols_sofridos, saldo_gols**,pontos***)
-A ordenação da saída se dá pelo mesmo critério anterior.
-Por fim, uma tela deverá ser criada para ver a projeção das quartas de final. As quartas de final
-serão disputadas entre o 1º e o 2º de cada grupo. Gerá-las a partir de UDF.
-A qualquer momento, deve ser possível ver as tabelas e a projeção das quartas de final.
 
-* O num_jogos_disputados é o número de jogos feitos por aquele time, até o presente instante. Jogos sem
-resultados não devem ser considerados.
-** Saldo de gols é a diferença entre gols marcados e gols sofridos
-*** O total de pontos se dá somando os resultados, onde:
-(Vitória = 3 pontos, Empate = 1 ponto , Derrota = 0 pontos)
+	Deve-se fazer, para melhor visualização dos resultados, uma tela com a classificação geral,
+	numa UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
+	saída, para os 20 times do campeonato:
+	CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
+	gols_marcados, gols_sofridos, saldo_gols**,pontos***)
+	A ordenação da saída se dá pelo mesmo critério anterior.
+
+	Por fim, uma tela deverá ser criada para ver a projeção das quartas de final. As quartas de final
+	serão disputadas entre o 1º e o 2º de cada grupo. Gerá-las a partir de UDF.
+	A qualquer momento, deve ser possível ver as tabelas e a projeção das quartas de final.
+
+			* O num_jogos_disputados é o número de jogos feitos por aquele time, até o presente instante. Jogos sem
+			resultados não devem ser considerados.
+			** Saldo de gols é a diferença entre gols marcados e gols sofridos
+			*** O total de pontos se dá somando os resultados, onde:
+			(Vitória = 3 pontos, Empate = 1 ponto , Derrota = 0 pontos)
 */
