@@ -278,16 +278,57 @@ begin
 	raiserror('Impossível Inserir ou deletar dados!',16,1)
 end
 
-create function fn_grupo(@grupo varchar(1))
+create function fn_numJogosDisputados(@codigoTime int)
+returns int
+as
+begin
+	return (select count(codigoJogo) from jogos jg where jg.codigoTimeA = @codigoTime)+
+	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = @codigoTime)
+end
+
+create function fn_vitorias(@codigoTime int)
+returns int
+as
+begin
+
+create function fn_empates(@codigoTime int)
+returns int
+as
+begin
+
+create function fn_derrotas(@codigoTime int)
+returns int
+as
+begin
+
+create function fn_gols_marcados(@codigoTime int)
+returns int
+as
+begin
+
+create function fn_gols_sofrido(@codigoTime int)
+returns int
+as
+begin
+
+create function fn_pontos(@codigoTime int)
+returns int
+as
+begin
+
+declare @fodase int
+set @fodase = (select dbo.fn_numJogosDisputados(2) )
+print convert(varchar(2), @fodase )
+
+
+create function fn_grupo(@grupo varchar(2))
 returns varchar
 as
 begin
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 	gols_sofridos, saldo_gols**,pontos***)
 
-	select tm.nomeTime, 
-	((select count(codigoJogo) from jogos jg where jg.codigoTimeA = tm.codigoTime)+
-	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = tm.codigoTime)) as num_jogos_disputados from times tm
+	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados from times tm
 
 return
 end
