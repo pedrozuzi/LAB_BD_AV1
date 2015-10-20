@@ -253,7 +253,7 @@ disable trigger t_jogos on jogos
 enable trigger t_jogos on jogos
 
 
-
+------------------------
 create trigger t_times
 on times
 instead of insert, update, delete
@@ -261,7 +261,7 @@ as
 begin
 	raiserror('Impossível Interagir com os dados',16,1)
 end
-
+------------------------
 create trigger t_grupos
 on grupos
 instead of insert, update, delete
@@ -269,7 +269,7 @@ as
 begin
 	raiserror('Impossível Interagir com os dados',16,1)
 end
-
+------------------------
 create trigger t_jogos
 on jogos
 instead of insert, delete
@@ -278,6 +278,8 @@ begin
 	raiserror('Impossível Inserir ou deletar dados!',16,1)
 end
 
+----------------
+--funcionando
 create function fn_numJogosDisputados(@codigoTime int)
 returns int
 as
@@ -285,22 +287,23 @@ begin
 	return (select count(codigoJogo) from jogos jg where jg.codigoTimeA = @codigoTime)+
 	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = @codigoTime)
 end
+---------------
 
 create function fn_vitorias(@codigoTime int)
 returns int
 as
 begin
-
+------------------------
 create function fn_empates(@codigoTime int)
 returns int
 as
 begin
-
+------------------------
 create function fn_derrotas(@codigoTime int)
 returns int
 as
 begin
-
+------------------------
 /**
 create table jogos(
 codigoJogo int identity not null,
@@ -311,7 +314,7 @@ golsTimeB int,
 data datetime not null	
 primary key (codigoJogo))
 */
-
+------------------------
 --funcionando
 alter function fn_gols_marcados(@codigoTime int)
 returns int
@@ -334,10 +337,11 @@ begin
 
 	return @A+@B
 end
---
+------------------------
 select * from jogos
-update jogos set golsTimeA = 4 where codigoJogo = 5 
---
+update jogos set golsTimeB = 5 where codigoJogo = 5 
+
+------------------------
 --funcionando
 create function fn_gols_sofrido(@codigoTime int)
 returns int
@@ -366,22 +370,39 @@ returns int
 as
 begin
 
+------------------------
+
+declare @D int
+set @d = (select dbo.fn_gols_marcados(1)) - (select dbo.fn_gols_sofrido(1))
+print convert(varchar(2), @D )
+
 declare @fodase int
 set @fodase = (select dbo.fn_gols_marcados(1) )
 print convert(varchar(2), @fodase )
 select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
 
+-------------------
+
 create function fn_grupo(@grupo varchar(2))
-returns varchar
+returns varchar ???
 as
 begin
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 	gols_sofridos, saldo_gols**,pontos***)
 
-	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados from times tm
+	return (select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm)
 
-return
+
 end
+
+-----------------
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
