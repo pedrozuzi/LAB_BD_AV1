@@ -467,7 +467,7 @@ begin
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
 	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
 	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm where ???????? = @grupo
 
 	return
 
@@ -480,6 +480,7 @@ gols_sofridos, saldo_gols**,pontos***)
 CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
 gols_marcados, gols_sofridos, saldo_gols**,pontos***)
 
+quartas de final
 
 /**
 Uma vez determinados os grupos e os jogos, as partidas serão disputadas e terão resultados
