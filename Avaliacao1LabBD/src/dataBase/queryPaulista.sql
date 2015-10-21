@@ -293,16 +293,67 @@ create function fn_vitorias(@codigoTime int)
 returns int
 as
 begin
+	declare @A int
+	declare @B int
+	set @A = (select count(codigoJogo) from jogos where codigoTimeA = @codigoTime and golsTimeA is not null and golsTimeA > golsTimeB)
+	set @B = (select count(codigoJogo) from jogos where codigoTimeB = @codigoTime and golsTimeB is not null and golsTimeB > golsTimeA)
+	
+	if(@A is null)
+	begin
+		set @A = 0
+	end
+	if(@B is null)
+	begin
+		set @B = 0
+	end
+
+	return @A+@B
+
+end
 ------------------------
 create function fn_empates(@codigoTime int)
 returns int
 as
 begin
+	declare @A int
+	declare @B int
+	set @A = (select count(codigoJogo) from jogos where codigoTimeA = @codigoTime and golsTimeA is not null and golsTimeA = golsTimeB)
+	set @B = (select count(codigoJogo) from jogos where codigoTimeB = @codigoTime and golsTimeB is not null and golsTimeB = golsTimeA)
+	
+	if(@A is null)
+	begin
+		set @A = 0
+	end
+	if(@B is null)
+	begin
+		set @B = 0
+	end
+
+	return @A+@B
+
+end
 ------------------------
 create function fn_derrotas(@codigoTime int)
 returns int
 as
 begin
+	declare @A int
+	declare @B int
+	set @A = (select count(codigoJogo) from jogos where codigoTimeA = @codigoTime and golsTimeA is not null and golsTimeA < golsTimeB)
+	set @B = (select count(codigoJogo) from jogos where codigoTimeB = @codigoTime and golsTimeB is not null and golsTimeB < golsTimeA)
+	
+	if(@A is null)
+	begin
+		set @A = 0
+	end
+	if(@B is null)
+	begin
+		set @B = 0
+	end
+
+	return @A+@B
+
+end
 ------------------------
 /**
 create table jogos(
@@ -364,11 +415,21 @@ begin
 
 	return @A+@B
 end
-
+--------------------------------
 create function fn_pontos(@codigoTime int)
 returns int
 as
 begin
+	declare @vitoria int
+	declare @empate int
+	declare @derrota int
+	set @vitoria = (select dbo.fn_vitorias(@codigoTime)) 
+	set @empate = (select dbo.fn_empates(@codigoTime))
+	set @derrota= (select dbo.fn_derrotas(@codigoTime))
+
+	return ((@vitoria*3)+@empate)
+--(Vitória = 3 pontos, Empate = 1 ponto , Derrota = 0 pontos)
+end
 
 ------------------------
 
@@ -383,22 +444,32 @@ select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
 
 -------------------
 
-create function fn_grupo(@grupo varchar(2))
-returns varchar ???
+create function fn_grupo(@grupo varchar(1))
+returns @tabela table(
+nome_time varchar(100),
+num_jogos_disputados int,
+vitorias int,
+empates int,
+derrotas int,
+gols_marcados int,
+gols_sofridos int,
+saldo_gols int,
+pontos int)
 as
-begin
-GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
-	gols_sofridos, saldo_gols**,pontos***)
 
-	return (select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+begin
+
+	insert into @tabela
+	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
 	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
 	(select dbo.fn_empates(tm.codigoTime)) as empates,
 	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
 	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
 	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm)
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
 
+	return
 
 end
 
