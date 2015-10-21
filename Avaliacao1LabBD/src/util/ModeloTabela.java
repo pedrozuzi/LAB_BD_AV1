@@ -130,7 +130,6 @@ public class ModeloTabela extends AbstractTableModel{
 		}
 		
 		if (coluna == 2) {
-			//Jogos j = (Jogos) lista.get(linha);
 			int novoValor = Integer.parseInt(valor.toString());
 			j.setGolsTimeB(novoValor);
 			fireTableCellUpdated(linha, coluna);
