@@ -467,7 +467,7 @@ begin
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
 	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
 	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm where ???????? = @grupo
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm where  = @grupo order by pontos
 
 	return
 
