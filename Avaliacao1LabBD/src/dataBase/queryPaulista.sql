@@ -248,6 +248,9 @@ DELETE na tabela jogos.
 */
 --pausar a trigger
 disable trigger t_jogos on jogos
+disable trigger t_times on times
+disable trigger t_grupos on grupos
+
 
 --voltar a trigger
 enable trigger t_jogos on jogos
@@ -391,7 +394,7 @@ end
 ------------------------
 select * from jogos
 update jogos set golsTimeB = 5 where codigoJogo = 5 
-
+update jogos set golsTimeA = 3 where codigoJogo = 5 
 ------------------------
 --funcionando
 create function fn_gols_sofrido(@codigoTime int)
@@ -444,7 +447,7 @@ select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
 
 -------------------
 
-create function fn_grupo(@grupo varchar(1))
+alter function fn_grupo(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -465,9 +468,13 @@ begin
 	(select dbo.fn_empates(tm.codigoTime)) as empates,
 	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
-	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
-	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm where  = @grupo order by pontos
+	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofrido,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+	inner join grupos gp
+	on gp.codigoTime = tm.codigoTime 
+	where gp.grupo like @grupo
+	order by pontos
 
 	return
 
@@ -496,8 +503,8 @@ begin
 	(select dbo.fn_empates(tm.codigoTime)) as empates,
 	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
-	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
-	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofrido,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
 	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
 
 	return
@@ -505,7 +512,7 @@ begin
 end
 
 -----------------
-create function fn_quartasdefinal()
+alter function fn_quartasdefinal()
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -520,34 +527,29 @@ as
 begin 
 
 	insert into @tabela
-	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	select top 4 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
 	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
 	(select dbo.fn_empates(tm.codigoTime)) as empates,
 	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
-	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
-	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm order by pontos 
 	return
-	
-	/**
-	
-
-SELECT * FROM (SELECT TOP 4 ??? FROM 
-(SELECT TOP 20 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
-	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
-	(select dbo.fn_empates(tm.codigoTime)) as empates,
-	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
-	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
-	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
-	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm) X
-ORDER BY pontos DESC ) YY
-ORDER BY pontos ASC 
-	*/
-end
 
 -----------------
+--rebaixados
+	select top 4 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm order by pontos 
+----------------
+
+
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
