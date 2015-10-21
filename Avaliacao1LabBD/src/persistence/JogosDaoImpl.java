@@ -9,6 +9,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import connection.ConnectionImpl;
 import connection.GenericConnection;
 import entity.Jogos;
@@ -61,7 +64,7 @@ public class JogosDaoImpl implements JogosDao {
 				lista.add(j);
 			}
 		} catch (SQLException | ParseException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Data Incorreta");
 		}
 		
 		return lista;

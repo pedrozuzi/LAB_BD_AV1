@@ -31,12 +31,14 @@ public class Jogos {
 	public void setCodigoTimeB(int codigoTimeB) {
 		this.codigoTimeB = codigoTimeB;
 	}
+	@Coluna(nome="Gols", posicao=1)
 	public int getGolsTimeA() {
 		return golsTimeA;
 	}
 	public void setGolsTimeA(int golsTimeA) {
 		this.golsTimeA = golsTimeA;
 	}
+	@Coluna(nome="Gols", posicao=2)
 	public int getGolsTimeB() {
 		return golsTimeB;
 	}
@@ -49,7 +51,7 @@ public class Jogos {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	@Coluna(nome="Time", posicao=1)
+	@Coluna(nome="Time", posicao=3)
 	public Times getTimeB() {
 		return timeB;
 	}
