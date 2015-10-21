@@ -19,7 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import control.CtrlJogos;
 import entity.Jogos;
-import util.ModeloTabela;
+import util.ModeloTabelaEditavel;
 import util.TratamentoTextFields;
 
 public class FrmInsereResultado {
@@ -35,10 +35,10 @@ public class FrmInsereResultado {
 	private JMenuBar menuBarra;
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
-	private ModeloTabela modelo;
+	private ModeloTabelaEditavel modelo;
 	
 	public FrmInsereResultado() {
-		janela = new JFrame("Pesquisa Rodadas");
+		janela = new JFrame("Insere Resultados");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
 		
@@ -109,7 +109,7 @@ public class FrmInsereResultado {
 				List<Jogos> lista = new ArrayList<Jogos>();
 				lista = controleJogos.buscaRodadas(txtDataRodada.getText());
 				if (!lista.isEmpty()) {
-					modelo = new ModeloTabela(lista);
+					modelo = new ModeloTabelaEditavel(lista);
 					lblRodadasDoDia.setText("Rodada do dia: " + txtDataRodada.getText());
 					lblRodadasDoDia.setVisible(true);
 					tabela.getTableHeader().setReorderingAllowed(false);
@@ -117,13 +117,11 @@ public class FrmInsereResultado {
 				}else{
 					lblRodadasDoDia.setVisible(false);
 					try {
-						modelo = new ModeloTabela(lista);
+						modelo = new ModeloTabelaEditavel(lista);
 						modelo.clear();
 					} catch (IndexOutOfBoundsException e) {
 						JOptionPane.showMessageDialog(null, "Não há Rodada para o dia: " + txtDataRodada.getText());
 					}
-					
-					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

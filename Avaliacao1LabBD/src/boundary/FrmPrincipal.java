@@ -42,6 +42,7 @@ public class FrmPrincipal {
 	private JLabel lblPesquisarRodada;
 	private CtrlGrupos controleGrupos;
 	private CtrlJogos controleJogos;
+	private JLabel lblBackGround;
 	
 	public FrmPrincipal() {
 		
@@ -77,14 +78,14 @@ public class FrmPrincipal {
 		panPrincipal.add(lblSortearGrupos);
 		
 		btnGrupos = new JButton("");
-		btnGrupos.setBounds(24, 86, 89, 56);
+		btnGrupos.setBounds(35, 86, 89, 56);
 		panPrincipal.add(btnGrupos);
 		btnGrupos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Grupos.png")));
 		
 		lblGrupos = new JLabel("Grupos");
 		lblGrupos.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblGrupos.setBounds(45, 140, 68, 24);
+		lblGrupos.setBounds(56, 140, 68, 24);
 		panPrincipal.add(lblGrupos);
 		
 		btnSortearJogos = new JButton("");
@@ -99,15 +100,20 @@ public class FrmPrincipal {
 		panPrincipal.add(lblSortearJogos);
 		
 		btnPesquisaRodada = new JButton("");
-		btnPesquisaRodada.setBounds(24, 191, 89, 56);
+		btnPesquisaRodada.setBounds(35, 191, 89, 56);
 		panPrincipal.add(btnPesquisaRodada);
 		btnPesquisaRodada.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Rodadas.png")));
 		
 		lblPesquisarRodada = new JLabel("Pesquisar Rodada");
 		lblPesquisarRodada.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPesquisarRodada.setBounds(10, 247, 147, 24);
+		lblPesquisarRodada.setBounds(21, 247, 147, 24);
 		panPrincipal.add(lblPesquisarRodada);
+		
+		lblBackGround = new JLabel("");
+		lblBackGround.setBounds(0, 0, 648, 428);
+		panPrincipal.add(lblBackGround);
+		lblBackGround.setIcon(new ImageIcon(this.getClass().getResource("/img/background.jpg")));
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);

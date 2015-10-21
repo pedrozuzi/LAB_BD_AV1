@@ -2,15 +2,18 @@ package util;
 
 import java.lang.reflect.Method;
 import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
+
 import entity.Coluna;
+import entity.Jogos;
 
 /**
  * Classe para montar o modelo das Tabelas dinamicamente
  * @author Pedro Zuzi
  *
  */
-public class ModeloTabela extends AbstractTableModel{
+public class ModeloTabelaEditavel extends AbstractTableModel{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -21,7 +24,7 @@ public class ModeloTabela extends AbstractTableModel{
 	 * Construtor
 	 * @param lista, recebe uma lista de uma determinada classe
 	 */
-	public ModeloTabela(List<?> lista) {
+	public ModeloTabelaEditavel(List<?> lista) {
 		this.lista = lista;
 		this.classe = lista.get(0).getClass();
 	}
@@ -106,7 +109,32 @@ public class ModeloTabela extends AbstractTableModel{
 	 */
 	@Override
 	public boolean isCellEditable(int linha, int coluna) {
+		if (classe.getName().equalsIgnoreCase("entity.Jogos")) {
+			if (coluna == 1) {
+				return true;
+			}
+			if (coluna == 2) {
+				return true;
+			}
+		}
 		return false;
+	}
+	
+	@Override
+	public void setValueAt(Object valor, int linha, int coluna) {
+		Jogos j = (Jogos) lista.get(linha);
+		if (coluna == 1) {
+			int novoValor = Integer.parseInt(valor.toString());
+			j.setGolsTimeA(novoValor);
+			fireTableCellUpdated(linha, coluna);
+		}
+		
+		if (coluna == 2) {
+			int novoValor = Integer.parseInt(valor.toString());
+			j.setGolsTimeB(novoValor);
+			fireTableCellUpdated(linha, coluna);
+		}
+		
 	}
 	
 }

@@ -42,11 +42,13 @@ public class JogosDaoImpl implements JogosDao {
 	@Override
 	public List<Jogos> BuscaRodada(String data) {
 		List<Jogos> lista = new ArrayList<Jogos>();
-		String query = "select "
-						+ "(select nomeTime from times where codigoTime = jg.codigoTimeA) as codigotimeA, "
-						+ "(select nomeTime from times where codigoTime = jg.codigoTimeB) as codigotimeB "
-						+ "from jogos jg "
-						+ "where jg.data = ? ";
+		String query = "select codigoJogo as cod, "
+				+ "(select nomeTime from times where codigoTime = jg.codigoTimeA) as TimeA, "
+				+ "(select golsTimeA from times where codigoTime = jg.codigoTimeA) as golsTimeA, "
+				+ "(select golsTimeB from times where codigoTime = jg.codigoTimeB) as golsTimeB, "
+				+ "(select nomeTime from times where codigoTime = jg.codigoTimeB) as TimeB "
+				+ "from jogos jg "
+				+ "where jg.data = ?";
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			PreparedStatement ps = c.prepareStatement( query );
@@ -57,9 +59,11 @@ public class JogosDaoImpl implements JogosDao {
 				Jogos j = new Jogos();
 				Times timeA = new Times();
 				Times timeB = new Times();
-				timeA.setNome(rs.getString("codigotimeA"));
+				timeA.setNome(rs.getString("TimeA"));
 				j.setTimeA(timeA);
-				timeB.setNome(rs.getString("codigotimeB"));
+				j.setGolsTimeA(rs.getInt("golsTimeA"));
+				j.setGolsTimeB(rs.getInt("golsTimeB"));
+				timeB.setNome(rs.getString("TimeB"));
 				j.setTimeB(timeB);
 				lista.add(j);
 			}
