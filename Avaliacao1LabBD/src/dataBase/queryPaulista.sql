@@ -474,6 +474,56 @@ begin
 end
 
 -----------------
+
+create function fn_campeonato(@grupo varchar(1))
+returns @tabela table(
+nome_time varchar(100),
+num_jogos_disputados int,
+vitorias int,
+empates int,
+derrotas int,
+gols_marcados int,
+gols_sofridos int,
+saldo_gols int,
+pontos int)
+as
+
+begin
+
+	insert into @tabela
+	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+
+	return
+
+end
+
+-----------------
+create function fn_quartasdefinal()
+returns @tabela table(
+nome_time varchar(100),
+num_jogos_disputados int,
+vitorias int,
+empates int,
+derrotas int,
+gols_marcados int,
+gols_sofridos int,
+saldo_gols int,
+pontos int)
+as
+begin 
+
+	insert into @tabela
+	return
+end
+
+-----------------
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
