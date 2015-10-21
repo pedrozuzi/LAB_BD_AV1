@@ -520,7 +520,31 @@ as
 begin 
 
 	insert into @tabela
+	select tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
 	return
+	
+	/**
+	
+
+SELECT * FROM (SELECT TOP 4 ??? FROM 
+(SELECT TOP 20 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofridos(tm.codigoTime)) as gols_sofridos,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofridos(tm.codigoTime))) as saldo_gols,
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm) X
+ORDER BY pontos DESC ) YY
+ORDER BY pontos ASC 
+	*/
 end
 
 -----------------
