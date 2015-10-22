@@ -505,7 +505,7 @@ begin
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
 	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofrido,
 	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm order by pontos desc
 
 	return
 
@@ -527,14 +527,21 @@ as
 begin 
 
 	insert into @tabela
-	select top 4 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	select top 2 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
 	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
 	(select dbo.fn_empates(tm.codigoTime)) as empates,
 	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
 	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
 	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofridos,
 	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
-	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm order by pontos 
+	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
+		inner join grupos gp
+	on gp.codigoTime = tm.codigoTime 
+	where gp.grupo like 'A'
+	order by pontos desc
+
+
+
 	return
 
 -----------------
