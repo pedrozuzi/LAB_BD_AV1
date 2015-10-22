@@ -1,12 +1,10 @@
 package boundary;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,13 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
-
 import control.CtrlJogos;
 import entity.Jogos;
 import util.ModeloTabelaEditavel;
 import util.TratamentoTextFields;
 
-public class FrmInsereResultado extends MouseAdapter{
+public class FrmInsereResultado{
 	
 	private JFrame janela;
 	private JPanel panPrincipal;
@@ -40,6 +37,10 @@ public class FrmInsereResultado extends MouseAdapter{
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
 	private ModeloTabelaEditavel modelo;
+	private JLabel lblAdicioneOsGols;
+	private JButton btnSalvar;
+	private List<Jogos> lista;
+	private CtrlJogos controleJogos = new CtrlJogos();
 	
 	public FrmInsereResultado() {
 		janela = new JFrame("Insere Resultados");
@@ -62,45 +63,57 @@ public class FrmInsereResultado extends MouseAdapter{
 		tabela.setBorder(new LineBorder(Color.BLACK));
 		tabela.setGridColor(Color.BLACK);
 		tabela.setShowGrid(true);
-		tabela.addMouseListener(this);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBorder(null);
 		scrollPane.setViewportView(tabela);
-	    scrollPane.setBounds(90, 145, 493, 183);
+	    scrollPane.setBounds(47, 28, 493, 183);
 	    panPrincipal.add(scrollPane);
 		
 		txtDataRodada = new JTextField();
 		txtDataRodada = TratamentoTextFields.mascara(txtDataRodada, "data");
 		txtDataRodada.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtDataRodada.setToolTipText("Digite a data");
-		txtDataRodada.setBounds(198, 27, 109, 24);
+		txtDataRodada.setBounds(361, 273, 109, 24);
 		panPrincipal.add(txtDataRodada);
 		txtDataRodada.setColumns(10);
 		scrollPane.setViewportView(tabela);
-		scrollPane.setBounds(47, 140, 525, 183);
+		scrollPane.setBounds(49, 62, 525, 183);
 		panPrincipal.add(scrollPane);
 		
-		janela.setSize(629,446);
+		janela.setSize(629,494);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
 		
 		lblRodadasDoDia = new JLabel();
 		lblRodadasDoDia.setFont(new Font("Tahoma", Font.BOLD, 26));
-		lblRodadasDoDia.setBounds(116, 90, 456, 39);
+		lblRodadasDoDia.setBounds(89, 330, 456, 39);
 		panPrincipal.add(lblRodadasDoDia);
 		lblRodadasDoDia.setVisible(false);
 		
 		lblDigiteAData = new JLabel("Digite a Data: ");
 		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDigiteAData.setBounds(101, 26, 109, 29);
+		lblDigiteAData.setBounds(242, 272, 109, 29);
 		panPrincipal.add(lblDigiteAData);
 		
 		btnPesquisar = new JButton("");
-		btnPesquisar.setBounds(323, 14, 83, 41);
+		btnPesquisar.setBounds(491, 256, 83, 41);
 		panPrincipal.add(btnPesquisar);
 		btnPesquisar.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Lupa.png")));
+		
+		lblAdicioneOsGols = new JLabel("Adicione os Gols para cada partida");
+		lblAdicioneOsGols.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAdicioneOsGols.setBounds(190, 11, 281, 24);
+		panPrincipal.add(lblAdicioneOsGols);
+		lblAdicioneOsGols.setVisible(false);
+		
+		btnSalvar = new JButton("Salvar");
+		btnSalvar.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnSalvar.setBounds(491, 380, 89, 38);
+		panPrincipal.add(btnSalvar);
+		btnSalvar.setEnabled(false);
+		
 		
 		menuPrincipal.addActionListener(l -> {
 			janela.dispose();
@@ -108,19 +121,32 @@ public class FrmInsereResultado extends MouseAdapter{
 			new FrmPrincipal();
 		});
 		
+		btnSalvar.addActionListener(a -> {
+			janela.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			lista.forEach(j -> {
+				controleJogos.atualizaRodada(j);
+			});
+			janela.setCursor(Cursor.getDefaultCursor());
+			JOptionPane.showMessageDialog(null, "Dados Salvos");
+		});
+		
 		btnPesquisar.addActionListener(l -> {
 			try {
 				CtrlJogos controleJogos = new CtrlJogos();
-				List<Jogos> lista = new ArrayList<Jogos>();
+				lista = new ArrayList<Jogos>();
 				lista = controleJogos.buscaRodadas(txtDataRodada.getText());
 				if (!lista.isEmpty()) {
 					modelo = new ModeloTabelaEditavel(lista);
 					lblRodadasDoDia.setText("Rodada do dia: " + txtDataRodada.getText());
 					lblRodadasDoDia.setVisible(true);
+					lblAdicioneOsGols.setVisible(true);
+					btnSalvar.setEnabled(true);
 					tabela.getTableHeader().setReorderingAllowed(false);
 					tabela.setModel(modelo);
 				}else{
 					lblRodadasDoDia.setVisible(false);
+					lblAdicioneOsGols.setVisible(false);
+					btnSalvar.setEnabled(false);
 					try {
 						modelo = new ModeloTabelaEditavel(lista);
 						modelo.clear();
@@ -139,13 +165,7 @@ public class FrmInsereResultado extends MouseAdapter{
 		janela.setVisible(true);
 	}
 	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO
-	}
-	
 	public static void main(String[] args) {
 		new FrmInsereResultado();
 	}
-
 }

@@ -21,5 +21,10 @@ public class CtrlJogos {
 		lista = jDao.BuscaRodada(data);
 		return lista;
 	}
+	
+	public void atualizaRodada(Jogos j) {
+		jDao = new JogosDaoImpl();
+		jDao.atualizaRodada(j);
+	}
 
 }

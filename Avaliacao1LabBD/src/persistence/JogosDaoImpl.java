@@ -82,7 +82,6 @@ public class JogosDaoImpl implements JogosDao {
 			ps.setInt(2, j.getGolsTimeB());
 			ps.setInt(3, j.getCodigoJogo());
 			ps.execute();
-			JOptionPane.showMessageDialog(null, "Dados Salvos");
 			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
