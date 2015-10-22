@@ -43,6 +43,8 @@ public class FrmPrincipal {
 	private CtrlGrupos controleGrupos;
 	private CtrlJogos controleJogos;
 	private JLabel lblBackGround;
+	private JButton btnInsereGols;
+	private JLabel lblInserirGols;
 	
 	public FrmPrincipal() {
 		
@@ -53,6 +55,16 @@ public class FrmPrincipal {
 		janela.setSize(654,456);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
+		
+		lblInserirGols = new JLabel("Inserir Gols");
+		lblInserirGols.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblInserirGols.setBounds(35, 359, 96, 33);
+		panPrincipal.add(lblInserirGols);
+		
+		btnInsereGols = new JButton("");
+		btnInsereGols.setBounds(35, 302, 89, 56);
+		panPrincipal.add(btnInsereGols);
+		btnInsereGols.setIcon(new ImageIcon(this.getClass().getResource("/img/gols.png")));
 		
 
 		
@@ -67,7 +79,7 @@ public class FrmPrincipal {
 		panPrincipal.add(lblCampeonatoPaulista);
 		
 		btnSortearGrupos = new JButton("");
-		btnSortearGrupos.setBounds(513, 83, 89, 60);
+		btnSortearGrupos.setBounds(513, 83, 89, 56);
 		panPrincipal.add(btnSortearGrupos);
 		btnSortearGrupos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/SorteioJogos.png")));
@@ -143,6 +155,12 @@ public class FrmPrincipal {
 			if (confirma("Deseja sortear novas Rodadas ? \n") == JOptionPane.YES_OPTION) {
 				geraNovasRodadas();
 			}
+		});
+		
+		btnInsereGols.addActionListener(a -> {
+			janela.dispose();
+			janela = null;
+			new FrmInsereResultado();
 		});
 		
 	}

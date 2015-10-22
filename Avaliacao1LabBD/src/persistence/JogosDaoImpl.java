@@ -9,9 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import connection.ConnectionImpl;
 import connection.GenericConnection;
 import entity.Jogos;
@@ -59,6 +57,7 @@ public class JogosDaoImpl implements JogosDao {
 				Jogos j = new Jogos();
 				Times timeA = new Times();
 				Times timeB = new Times();
+				j.setCodigoJogo(rs.getInt("cod"));
 				timeA.setNome(rs.getString("TimeA"));
 				j.setTimeA(timeA);
 				j.setGolsTimeA(rs.getInt("golsTimeA"));
@@ -72,6 +71,23 @@ public class JogosDaoImpl implements JogosDao {
 		}
 		
 		return lista;
+	}
+
+	@Override
+	public void atualizaRodada(Jogos j) {
+		String query = "update Jogos set golsTimeA = ?, golsTimeB = ? where codigoJogo = ?";
+		try {
+			PreparedStatement ps = c.prepareStatement(query);
+			ps.setInt(1, j.getGolsTimeA());
+			ps.setInt(2, j.getGolsTimeB());
+			ps.setInt(3, j.getCodigoJogo());
+			ps.execute();
+			JOptionPane.showMessageDialog(null, "Dados Salvos");
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

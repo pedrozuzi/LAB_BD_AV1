@@ -8,5 +8,7 @@ public interface JogosDao {
 	void sortearJogos();
 	
 	List<Jogos> BuscaRodada(String data);
+	
+	void atualizaRodada(Jogos j);
 
 }

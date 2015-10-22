@@ -2,8 +2,11 @@ package boundary;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,12 +20,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
 import control.CtrlJogos;
 import entity.Jogos;
 import util.ModeloTabelaEditavel;
 import util.TratamentoTextFields;
 
-public class FrmInsereResultado {
+public class FrmInsereResultado extends MouseAdapter{
 	
 	private JFrame janela;
 	private JPanel panPrincipal;
@@ -58,6 +62,7 @@ public class FrmInsereResultado {
 		tabela.setBorder(new LineBorder(Color.BLACK));
 		tabela.setGridColor(Color.BLACK);
 		tabela.setShowGrid(true);
+		tabela.addMouseListener(this);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.getViewport().setBorder(null);
@@ -132,6 +137,11 @@ public class FrmInsereResultado {
         janela.setResizable(false);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		janela.setVisible(true);
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO
 	}
 	
 	public static void main(String[] args) {
