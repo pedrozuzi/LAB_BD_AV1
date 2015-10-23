@@ -286,12 +286,12 @@ end
 ----------------
 --funcionando (falta o where dos gols=null)
 --calcula a quantidade do jogos disputados
-create function fn_numJogosDisputados(@codigoTime int)
+alter function fn_numJogosDisputados(@codigoTime int)
 returns int
 as
 begin
-	return (select count(codigoJogo) from jogos jg where jg.codigoTimeA = @codigoTime)+
-	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = @codigoTime)
+	return (select count(codigoJogo) from jogos jg where jg.codigoTimeA = @codigoTime and jg.golsTimeA is not null)+
+	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = @codigoTime and jg.golsTimeB is not null)
 end
 ---------------
 --calcula as vitorias de um determinado time

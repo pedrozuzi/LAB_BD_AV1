@@ -9,17 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-
-
-
-
-
 import java.awt.Font;
-
-
-
-
-
 
 import javax.swing.JButton;
 
@@ -57,6 +47,8 @@ public class FrmPrincipal {
 		panPrincipal.setLayout(null);
 		
 		lblInserirGols = new JLabel("Inserir Gols");
+		lblInserirGols.setBackground(Color.WHITE);
+		lblInserirGols.setForeground(Color.WHITE);
 		lblInserirGols.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblInserirGols.setBounds(35, 359, 96, 33);
 		panPrincipal.add(lblInserirGols);
