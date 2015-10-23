@@ -254,6 +254,8 @@ disable trigger t_grupos on grupos
 
 --voltar a trigger
 enable trigger t_jogos on jogos
+enable trigger t_times on times
+enable trigger t_grupos on grupos
 
 
 ------------------------
@@ -474,7 +476,7 @@ begin
 	inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
 	where gp.grupo like @grupo
-	order by pontos
+	order by pontos desc
 
 	return
 
@@ -546,12 +548,23 @@ begin
 
 -----------------
 --rebaixados
+create function fn_rebaixados()
+returns @tabela table(
+codigoTime int,
+nomeTime varchar(100),
+pontos int)
+as
+
+begin
+	insert into @tabela
 	select top 4 tm.codigoTime, tm.nomeTime, 
 	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
-	inner order by pontos 
+	order by pontos 
+	return
+end
 ----------------
 
-
+select * from jogos
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
