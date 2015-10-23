@@ -7,9 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 import connection.ConnectionImpl;
 import connection.GenericConnection;
 import entity.Grupos;
+import entity.GruposResultados;
 import entity.Times;
 
 public class GruposDaoImpl implements GruposDao{
@@ -60,6 +62,37 @@ public class GruposDaoImpl implements GruposDao{
 			e.printStackTrace();
 		}
 		
+		return lista;
+	}
+
+	@Override
+	public List<GruposResultados> buscarGruposResultados(String grupo) {
+		List<GruposResultados> lista = new ArrayList<GruposResultados>();
+		String query ="select * from dbo.fn_grupo(?)";
+		try {
+			PreparedStatement ps = c.prepareStatement( query );
+			ps.setString(1, grupo);
+			ResultSet rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+				GruposResultados gr = new GruposResultados();
+				Times t = new Times();
+				t.setNome( rs.getString("nome_Time"));
+				gr.setTime(t);
+				gr.setJogos(rs.getInt("num_jogos_disputados"));
+				gr.setVitorias(rs.getInt("vitorias"));
+				gr.setEmpates(rs.getInt("empates"));
+				gr.setDerrotas(rs.getInt("derrotas"));
+				gr.setGolsMarcados(rs.getInt("gols_marcados"));
+				gr.setGolsSofridos(rs.getInt("gols_sofridos"));
+				gr.setSaldoGols(rs.getInt("saldo_gols"));
+				gr.setPontos(rs.getInt("pontos"));
+				lista.add(gr);
+			}
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return lista;
 	}
 
