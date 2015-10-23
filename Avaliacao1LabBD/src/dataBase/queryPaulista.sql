@@ -284,7 +284,8 @@ begin
 end
 
 ----------------
---funcionando
+--funcionando (falta o where dos gols=null)
+--calcula a quantidade do jogos disputados
 create function fn_numJogosDisputados(@codigoTime int)
 returns int
 as
@@ -293,7 +294,7 @@ begin
 	(select count(codigoJogo) from jogos jg where jg.codigoTimeB = @codigoTime)
 end
 ---------------
-
+--calcula as vitorias de um determinado time
 create function fn_vitorias(@codigoTime int)
 returns int
 as
@@ -316,6 +317,7 @@ begin
 
 end
 ------------------------
+--calcula os empates de um determinado time
 create function fn_empates(@codigoTime int)
 returns int
 as
@@ -338,6 +340,7 @@ begin
 
 end
 ------------------------
+--calcula as derrotas de um determinado time
 create function fn_derrotas(@codigoTime int)
 returns int
 as
@@ -372,6 +375,7 @@ primary key (codigoJogo))
 */
 ------------------------
 --funcionando
+--calcula a quantidade de gols marcados por um determinado time
 alter function fn_gols_marcados(@codigoTime int)
 returns int
 as
@@ -398,6 +402,7 @@ select * from jogos
 update jogos set golsTimeB = 5 where codigoJogo = 5 
 update jogos set golsTimeA = 3 where codigoJogo = 5 
 ------------------------
+--calcula a quantidade de gols sofridos por um determinado time
 --funcionando
 create function fn_gols_sofrido(@codigoTime int)
 returns int
@@ -421,6 +426,7 @@ begin
 	return @A+@B
 end
 --------------------------------
+--calcula os pontos
 create function fn_pontos(@codigoTime int)
 returns int
 as
@@ -448,7 +454,7 @@ print convert(varchar(2), @fodase )
 select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
 
 -------------------
-
+--retorna um grupo ordenado pelos pontos
 alter function fn_grupo(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
@@ -483,7 +489,7 @@ begin
 end
 
 -----------------
-
+--retorna o rank do campeonato a partir dos pontos
 create function fn_campeonato(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
@@ -514,7 +520,9 @@ begin
 end
 
 -----------------
-alter function fn_quartasdefinal()
+--retorna os 2 times que irão particiar de quarta de final(por grupo)
+--ou seja, deve ser executada 4 vezes, uma para cara grupo como parametro
+alter function fn_quartasdefinal(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -539,7 +547,7 @@ begin
 	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
 		inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
-	where gp.grupo like 'A'
+	where gp.grupo like @grupo
 	order by pontos desc
 
 
@@ -548,6 +556,7 @@ begin
 
 -----------------
 --rebaixados
+--retorna os 4 times rebaixados
 create function fn_rebaixados()
 returns @tabela table(
 codigoTime int,
