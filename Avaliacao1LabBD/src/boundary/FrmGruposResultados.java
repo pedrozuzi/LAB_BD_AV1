@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,11 +19,10 @@ import util.ModeloTabela;
 import control.CtrlGrupos;
 import entity.GruposResultados;
 
-public class FrmGruposPontos {
+public class FrmGruposResultados {
 	
 	private JFrame janela;
 	private JPanel panPrincipal;
-	private JPanel panel;
 	private JScrollPane scrollPaneA;
 	private JScrollPane scrollPaneB;
 	private JScrollPane scrollPaneC;
@@ -30,41 +32,35 @@ public class FrmGruposPontos {
 	private JTable grupoC;
 	private JTable grupoD;
 	private CtrlGrupos controleGrupos;
-	private JButton btnVoltar;
 	private JComponent lblGrupoA;
-	private ModeloTabela modelo;
+	private ModeloTabela modeloA;
 	private JPanel panel_1;
 	private JScrollPane scrollPane;
+	private ModeloTabela modeloB;
+	private ModeloTabela modeloC;
+	private ModeloTabela modeloD;
+	private JMenuBar menuBarra;
+	private JMenu menu;
+	private JMenuItem menuPrincipal;
 	
-	public FrmGruposPontos() {
+	public FrmGruposResultados() {
 		controleGrupos = new CtrlGrupos();
 		janela = new JFrame("Grupos Paulistão");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
 		
-		lblGrupoA = new JLabel("Grupo A");
-		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoA.setBounds(369, 11, 100, 33);
-		panPrincipal.add(lblGrupoA);
+		menuBarra = new JMenuBar();
+		janela.setJMenuBar(menuBarra);
+		
+		menu = new JMenu("Menu");
+		menuBarra.add(menu);
+		
+		menuPrincipal = new JMenuItem("Menu Principal");
+		menuPrincipal.setIcon(new ImageIcon(getClass()
+				.getResource("/img/HomeMenu.png")));
+		menu.add(menuPrincipal);
 		
 
-		List<GruposResultados> listaGrupo = new ArrayList<GruposResultados>();
-		
-		listaGrupo = controleGrupos.buscaGruposResultados("A");
-//		listaGrupo = controle.buscaGrupos("B");
-//		listaGrupo = controle.buscaGrupos("C");
-//		listaGrupo = controle.buscaGrupos("D");
-		
-		if ( !listaGrupo.isEmpty() ) {
-			modelo = new ModeloTabela(listaGrupo);
-			grupoA.getTableHeader().setReorderingAllowed(false);
-			grupoA.setModel(modelo);
-		}
-
-		janela.setSize(811,612);
-		janela.setContentPane( panPrincipal );
-		panPrincipal.setLayout(null);
-		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 0, 805, 583);
 		panPrincipal.add(scrollPane);
@@ -80,7 +76,7 @@ public class FrmGruposPontos {
 		grupoA.setShowGrid(true);
 		
 		scrollPaneA = new JScrollPane();
-		scrollPaneA.setBounds(10, 61, 785, 103);
+		scrollPaneA.setBounds(10, 40, 785, 103);
 		panel_1.add(scrollPaneA);
 		scrollPaneA.getViewport().setBorder(null);
 		scrollPaneA.setViewportView(grupoA);
@@ -92,7 +88,7 @@ public class FrmGruposPontos {
 		grupoB.setShowGrid(true);
 		
 		scrollPaneB = new JScrollPane();
-		scrollPaneB.setBounds(10, 203, 785, 103);
+		scrollPaneB.setBounds(10, 177, 785, 103);
 		panel_1.add(scrollPaneB);
 		scrollPaneB.getViewport().setBorder(null);
 		scrollPaneB.setViewportView(grupoB);
@@ -104,7 +100,7 @@ public class FrmGruposPontos {
 		grupoC.setShowGrid(true);
 		
 		scrollPaneC = new JScrollPane();
-		scrollPaneC.setBounds(10, 336, 785, 103);
+		scrollPaneC.setBounds(10, 310, 785, 103);
 		panel_1.add(scrollPaneC);
 		scrollPaneC.getViewport().setBorder(null);
 		scrollPaneC.setViewportView(grupoC);
@@ -116,37 +112,77 @@ public class FrmGruposPontos {
 		grupoD.setShowGrid(true);
 		
 		scrollPaneD = new JScrollPane();
-		scrollPaneD.setBounds(10, 467, 785, 103);
+		scrollPaneD.setBounds(10, 441, 785, 103);
 		panel_1.add(scrollPaneD);
 		scrollPaneD.getViewport().setBorder(null);
 		scrollPaneD.setViewportView(grupoD);
 		
-		btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(704, 25, 89, 34);
-		panel_1.add(btnVoltar);
-		
 		JLabel lblGrupoB = new JLabel("Grupo B");
 		lblGrupoB.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoB.setBounds(366, 169, 100, 33);
+		lblGrupoB.setBounds(366, 143, 100, 33);
 		panel_1.add(lblGrupoB);
 		
 		JLabel lblGrupoC = new JLabel("Grupo C");
 		lblGrupoC.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoC.setBounds(366, 305, 100, 33);
+		lblGrupoC.setBounds(366, 279, 100, 33);
 		panel_1.add(lblGrupoC);
 		
 		JLabel lblGrupoD = new JLabel("Grupo D");
 		lblGrupoD.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoD.setBounds(366, 437, 100, 33);
+		lblGrupoD.setBounds(366, 411, 100, 33);
 		panel_1.add(lblGrupoD);
+		
+		lblGrupoA = new JLabel("Grupo A");
+		lblGrupoA.setBounds(366, 11, 100, 33);
+		panel_1.add(lblGrupoA);
+		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		List<GruposResultados> listaGrupoA = new ArrayList<GruposResultados>();
+		List<GruposResultados> listaGrupoB = new ArrayList<GruposResultados>();
+		List<GruposResultados> listaGrupoC = new ArrayList<GruposResultados>();
+		List<GruposResultados> listaGrupoD = new ArrayList<GruposResultados>();
+		
+		listaGrupoA = controleGrupos.buscaGruposResultados("A");
+		listaGrupoB = controleGrupos.buscaGruposResultados("B");
+		listaGrupoC= controleGrupos.buscaGruposResultados("C");
+		listaGrupoD = controleGrupos.buscaGruposResultados("D");
+		
+		if ( !listaGrupoA.isEmpty() &&
+				!listaGrupoB.isEmpty() &&
+				!listaGrupoC.isEmpty() &&
+				!listaGrupoD.isEmpty()) {
+			
+			modeloA = new ModeloTabela(listaGrupoA);
+			modeloB = new ModeloTabela(listaGrupoB);
+			modeloC = new ModeloTabela(listaGrupoC);
+			modeloD = new ModeloTabela(listaGrupoD);
+			
+			grupoA.getTableHeader().setReorderingAllowed(false);
+			grupoA.setModel(modeloA);
+			
+			grupoB.getTableHeader().setReorderingAllowed(false);
+			grupoB.setModel(modeloB);
+			
+			grupoC.getTableHeader().setReorderingAllowed(false);
+			grupoC.setModel(modeloC);
+			
+			grupoD.getTableHeader().setReorderingAllowed(false);
+			grupoD.setModel(modeloD);
+		}
+		
+		menuPrincipal.addActionListener(l -> {
+			janela.dispose();
+			janela = null;
+			new FrmPrincipal();
+		});
+		
+		janela.setSize(811,602);
+		janela.setContentPane( panPrincipal );
+		panPrincipal.setLayout(null);
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		janela.setVisible(true);
-	}
-	
-	public static void main(String[] args) {
-		new FrmGruposPontos();
 	}
 }

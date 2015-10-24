@@ -37,6 +37,8 @@ public class FrmPrincipal {
 	private JLabel lblInserirGols;
 	private JButton btnClassificacaoGeral;
 	private JLabel lblClassificaoGeral;
+	private JButton btnGruposResultados;
+	private JLabel lblGruposResultados;
 	
 	public FrmPrincipal() {
 		
@@ -47,6 +49,17 @@ public class FrmPrincipal {
 		janela.setSize(664,500);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
+		
+		lblGruposResultados = new JLabel("Grupos Resultados");
+		lblGruposResultados.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblGruposResultados.setForeground(Color.WHITE);
+		lblGruposResultados.setBackground(Color.WHITE);
+		lblGruposResultados.setBounds(489, 364, 149, 22);
+		panPrincipal.add(lblGruposResultados);
+		
+		btnGruposResultados = new JButton("");
+		btnGruposResultados.setBounds(515, 302, 89, 56);
+		panPrincipal.add(btnGruposResultados);
 		
 		lblInserirGols = new JLabel("Inserir Gols");
 		lblInserirGols.setBackground(Color.WHITE);
@@ -67,7 +80,7 @@ public class FrmPrincipal {
 		panPrincipal.add(lblCampeonatoPaulista);
 		
 		btnSortearGrupos = new JButton("");
-		btnSortearGrupos.setBounds(513, 83, 89, 56);
+		btnSortearGrupos.setBounds(515, 86, 89, 56);
 		panPrincipal.add(btnSortearGrupos);
 		btnSortearGrupos.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/SorteioJogos.png")));
@@ -178,6 +191,12 @@ public class FrmPrincipal {
 			janela.dispose();
 			janela = null;
 			new FrmClassificacaoGeral();
+		});
+		
+		btnGruposResultados.addActionListener(a -> {
+			janela.dispose();
+			janela = null;
+			new FrmGruposResultados();
 		});
 		
 	}
