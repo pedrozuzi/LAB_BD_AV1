@@ -33,6 +33,8 @@ public class FrmGruposPontos {
 	private JButton btnVoltar;
 	private JComponent lblGrupoA;
 	private ModeloTabela modelo;
+	private JPanel panel_1;
+	private JScrollPane scrollPane;
 	
 	public FrmGruposPontos() {
 		controleGrupos = new CtrlGrupos();
@@ -40,62 +42,10 @@ public class FrmGruposPontos {
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
 		
-		grupoA = new JTable();
-		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		grupoA.setBorder(new LineBorder(Color.BLACK));
-		grupoA.setGridColor(Color.BLACK);
-		grupoA.setShowGrid(true);
-		
-		scrollPaneA = new JScrollPane();
-		scrollPaneA.getViewport().setBorder(null);
-		scrollPaneA.setViewportView(grupoA);
-		scrollPaneA.setBounds(10, 72, 785, 103);
-		panPrincipal.add(scrollPaneA);
-		
-		grupoB = new JTable();
-		grupoB.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		grupoB.setBorder(new LineBorder(Color.BLACK));
-		grupoB.setGridColor(Color.BLACK);
-		grupoB.setShowGrid(true);
-		
-		scrollPaneB = new JScrollPane();
-		scrollPaneB.getViewport().setBorder(null);
-		scrollPaneB.setViewportView(grupoB);
-		scrollPaneB.setBounds(10, 217, 785, 103);
-		panPrincipal.add(scrollPaneB);
-		
-		grupoC = new JTable();
-		grupoC.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		grupoC.setBorder(new LineBorder(Color.BLACK));
-		grupoC.setGridColor(Color.BLACK);
-		grupoC.setShowGrid(true);
-		
-		scrollPaneC = new JScrollPane();
-		scrollPaneC.getViewport().setBorder(null);
-		scrollPaneC.setViewportView(grupoC);
-		scrollPaneC.setBounds(10, 361, 785, 103);
-		panPrincipal.add(scrollPaneC);
-		
-		grupoD = new JTable();
-		grupoD.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		grupoD.setBorder(new LineBorder(Color.BLACK));
-		grupoD.setGridColor(Color.BLACK);
-		grupoD.setShowGrid(true);
-		
-		scrollPaneD = new JScrollPane();
-		scrollPaneD.getViewport().setBorder(null);
-		scrollPaneD.setViewportView(grupoD);
-		scrollPaneD.setBounds(10, 502, 785, 103);
-		panPrincipal.add(scrollPaneD);
-		
 		lblGrupoA = new JLabel("Grupo A");
 		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoA.setBounds(369, 11, 100, 50);
+		lblGrupoA.setBounds(369, 11, 100, 33);
 		panPrincipal.add(lblGrupoA);
-		
-		btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(706, 456, 89, 34);
-		panPrincipal.add(btnVoltar);
 		
 
 		List<GruposResultados> listaGrupo = new ArrayList<GruposResultados>();
@@ -111,9 +61,84 @@ public class FrmGruposPontos {
 			grupoA.setModel(modelo);
 		}
 
-		janela.setSize(811,684);
+		janela.setSize(811,612);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(0, 0, 805, 583);
+		panPrincipal.add(scrollPane);
+		
+		panel_1 = new JPanel();
+		scrollPane.setViewportView(panel_1);
+		panel_1.setLayout(null);
+		
+		grupoA = new JTable();
+		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoA.setBorder(new LineBorder(Color.BLACK));
+		grupoA.setGridColor(Color.BLACK);
+		grupoA.setShowGrid(true);
+		
+		scrollPaneA = new JScrollPane();
+		scrollPaneA.setBounds(10, 61, 785, 103);
+		panel_1.add(scrollPaneA);
+		scrollPaneA.getViewport().setBorder(null);
+		scrollPaneA.setViewportView(grupoA);
+		
+		grupoB = new JTable();
+		grupoB.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoB.setBorder(new LineBorder(Color.BLACK));
+		grupoB.setGridColor(Color.BLACK);
+		grupoB.setShowGrid(true);
+		
+		scrollPaneB = new JScrollPane();
+		scrollPaneB.setBounds(10, 203, 785, 103);
+		panel_1.add(scrollPaneB);
+		scrollPaneB.getViewport().setBorder(null);
+		scrollPaneB.setViewportView(grupoB);
+		
+		grupoC = new JTable();
+		grupoC.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoC.setBorder(new LineBorder(Color.BLACK));
+		grupoC.setGridColor(Color.BLACK);
+		grupoC.setShowGrid(true);
+		
+		scrollPaneC = new JScrollPane();
+		scrollPaneC.setBounds(10, 336, 785, 103);
+		panel_1.add(scrollPaneC);
+		scrollPaneC.getViewport().setBorder(null);
+		scrollPaneC.setViewportView(grupoC);
+		
+		grupoD = new JTable();
+		grupoD.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoD.setBorder(new LineBorder(Color.BLACK));
+		grupoD.setGridColor(Color.BLACK);
+		grupoD.setShowGrid(true);
+		
+		scrollPaneD = new JScrollPane();
+		scrollPaneD.setBounds(10, 467, 785, 103);
+		panel_1.add(scrollPaneD);
+		scrollPaneD.getViewport().setBorder(null);
+		scrollPaneD.setViewportView(grupoD);
+		
+		btnVoltar = new JButton("Voltar");
+		btnVoltar.setBounds(704, 25, 89, 34);
+		panel_1.add(btnVoltar);
+		
+		JLabel lblGrupoB = new JLabel("Grupo B");
+		lblGrupoB.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoB.setBounds(366, 169, 100, 33);
+		panel_1.add(lblGrupoB);
+		
+		JLabel lblGrupoC = new JLabel("Grupo C");
+		lblGrupoC.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoC.setBounds(366, 305, 100, 33);
+		panel_1.add(lblGrupoC);
+		
+		JLabel lblGrupoD = new JLabel("Grupo D");
+		lblGrupoD.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoD.setBounds(366, 437, 100, 33);
+		panel_1.add(lblGrupoD);
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
