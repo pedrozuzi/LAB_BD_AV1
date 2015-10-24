@@ -10,7 +10,7 @@ public interface ResultadosDao {
 
 	List<Resultados> resultadosGrupos(String grupo);
 	
-	List<Resultados> resultadosGeral(String grupo);
+	List<Resultados> resultadosGeral();
 	
 	List<Resultados> quartasDeFinal(String grupo);
 	

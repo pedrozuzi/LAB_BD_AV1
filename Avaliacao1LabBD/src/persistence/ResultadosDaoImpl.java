@@ -38,12 +38,12 @@ public class ResultadosDaoImpl implements ResultadosDao {
 			r.setNome_time(rs.getString("nome_time"));
 			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
 			r.setVitorias(rs.getInt("vitorias"));
-			r.setVitorias(rs.getInt("empates"));
-			r.setVitorias(rs.getInt("derrotas"));
-			r.setVitorias(rs.getInt("gols_marcados"));
-			r.setVitorias(rs.getInt("gols_sofridos"));
-			r.setVitorias(rs.getInt("saldo_gols"));
-			r.setVitorias(rs.getInt("pontos"));
+			r.setEmpates(rs.getInt("empates"));
+			r.setDerrotas(rs.getInt("derrotas"));
+			r.setGols_marcados(rs.getInt("gols_marcados"));
+			r.setGols_sofridos(rs.getInt("gols_sofridos"));
+			r.setSaldo_gols(rs.getInt("saldo_gols"));
+			r.setPontos(rs.getInt("pontos"));
 			lista.add(r);
 			}
 		} catch (SQLException e) {
@@ -56,11 +56,36 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	}
 
 	@Override
-	public List<Resultados> resultadosGeral(String grupo) {
+	public List<Resultados> resultadosGeral() {
 		List<Resultados> lista = new ArrayList<>(); 
-		String query = "";
+		String query = "select dbo.fn_campeonato()";
+		PreparedStatement ps;
+		try {
+			ps = c.prepareStatement( query );
+			ResultSet rs = ps.executeQuery();
+			
+			
+			while( rs.next() ) {
+			Resultados r = new Resultados();
+
+			r.setNome_time(rs.getString("nome_time"));
+			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
+			r.setVitorias(rs.getInt("vitorias"));
+			r.setEmpates(rs.getInt("empates"));
+			r.setDerrotas(rs.getInt("derrotas"));
+			r.setGols_marcados(rs.getInt("gols_marcados"));
+			r.setGols_sofridos(rs.getInt("gols_sofridos"));
+			r.setSaldo_gols(rs.getInt("saldo_gols"));
+			r.setPontos(rs.getInt("pontos"));
+			lista.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		// TODO Auto-generated method stub
-		return null;
+		return lista;
 	}
 
 	@Override

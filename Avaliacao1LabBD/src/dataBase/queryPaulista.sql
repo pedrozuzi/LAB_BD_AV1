@@ -490,7 +490,7 @@ end
 
 -----------------
 --retorna o rank do campeonato a partir dos pontos
-create function fn_campeonato(@grupo varchar(1))
+alter function fn_campeonato()
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,

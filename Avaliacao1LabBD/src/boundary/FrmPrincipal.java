@@ -35,6 +35,8 @@ public class FrmPrincipal {
 	private JLabel lblBackGround;
 	private JButton btnInsereGols;
 	private JLabel lblInserirGols;
+	private JButton btnClassificacaoGeral;
+	private JLabel lblClassificaoGeral;
 	
 	public FrmPrincipal() {
 		
@@ -119,6 +121,17 @@ public class FrmPrincipal {
 		lblPesquisarRodada.setBounds(21, 247, 147, 24);
 		panPrincipal.add(lblPesquisarRodada);
 		
+		btnClassificacaoGeral = new JButton("New button");
+		btnClassificacaoGeral.setBounds(513, 302, 96, 56);
+		panPrincipal.add(btnClassificacaoGeral);
+		
+		lblClassificaoGeral = new JLabel("Classifica\u00E7\u00E3o Geral");
+		lblClassificaoGeral.setForeground(Color.WHITE);
+		lblClassificaoGeral.setBackground(Color.WHITE);
+		lblClassificaoGeral.setFont(new Font("Arial", Font.BOLD, 13));
+		lblClassificaoGeral.setBounds(487, 356, 139, 41);
+		panPrincipal.add(lblClassificaoGeral);
+		
 		lblBackGround = new JLabel("");
 		lblBackGround.setBounds(-284, -83, 978, 554);
 		panPrincipal.add(lblBackGround);
@@ -158,6 +171,12 @@ public class FrmPrincipal {
 			janela.dispose();
 			janela = null;
 			new FrmInsereResultado();
+		});
+		
+		btnClassificacaoGeral.addActionListener(a -> {
+			janela.dispose();
+			janela = null;
+			new FrmClassificacaoGeral();
 		});
 		
 	}

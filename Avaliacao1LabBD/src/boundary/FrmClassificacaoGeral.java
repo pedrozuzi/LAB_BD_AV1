@@ -6,8 +6,16 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import control.CtrlResultados;
+import entity.Resultados;
+import util.ModeloTabela;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -15,8 +23,9 @@ import javax.swing.JButton;
 public class FrmClassificacaoGeral extends JFrame {
 
 	private JPanel panPrincipal;
-	private JTable table;
+	private JTable tabelaResultadoGeral;
 	private JFrame janela;
+	private ModeloTabela modelo;
 
 	/**
 	 * Create the frame.
@@ -38,12 +47,25 @@ public class FrmClassificacaoGeral extends JFrame {
 		scrollPane.setBounds(30, 82, 592, 321);
 		panPrincipal.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
+		tabelaResultadoGeral = new JTable();
+		scrollPane.setViewportView(tabelaResultadoGeral);
 		
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.setBounds(535, 409, 89, 23);
 		panPrincipal.add(btnNewButton);
+		
+		CtrlResultados ctrl = new CtrlResultados();
+		List<Resultados> listaResultados = new ArrayList<Resultados>();
+		listaResultados = ctrl.resultadoGeral();
+		
+		modelo = new ModeloTabela(listaResultados);
+		
+		tabelaResultadoGeral.getTableHeader().setReorderingAllowed(false);
+		tabelaResultadoGeral.setModel(modelo);
+		
+		
+		
+		
 	}
 	
 }
