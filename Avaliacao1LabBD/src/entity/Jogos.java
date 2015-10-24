@@ -31,6 +31,7 @@ public class Jogos {
 	public void setCodigoTimeB(int codigoTimeB) {
 		this.codigoTimeB = codigoTimeB;
 	}
+	
 	@Coluna(nome="Gols", posicao=1)
 	public int getGolsTimeA() {
 		return golsTimeA;
