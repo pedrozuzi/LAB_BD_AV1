@@ -488,6 +488,7 @@ begin
 
 end
 
+select * from dbo.fn_campeonato()
 -----------------
 --retorna o rank do campeonato a partir dos pontos
 alter function fn_campeonato()

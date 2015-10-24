@@ -60,13 +60,6 @@ public class FrmPrincipal {
 		panPrincipal.add(btnInsereGols);
 		btnInsereGols.setIcon(new ImageIcon(this.getClass().getResource("/img/gols.png")));
 		
-
-		
-		lblLogo = new JLabel("");
-		lblLogo.setBounds(178, 86, 310, 306);
-		panPrincipal.add(lblLogo);
-		lblLogo.setIcon(new ImageIcon(this.getClass().getResource("/img/FPF.png")));
-		
 		lblCampeonatoPaulista = new JLabel("Campeonato Paulista");
 		lblCampeonatoPaulista.setForeground(Color.WHITE);
 		lblCampeonatoPaulista.setFont(new Font("Tahoma", Font.BOLD, 22));
@@ -123,15 +116,22 @@ public class FrmPrincipal {
 		
 		btnClassificacaoGeral = new JButton("");
 		btnClassificacaoGeral.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/classificacao.png")));
-		btnClassificacaoGeral.setBounds(513, 285, 96, 73);
+		btnClassificacaoGeral.setBounds(282, 361, 89, 60);
 		panPrincipal.add(btnClassificacaoGeral);
 		
 		lblClassificaoGeral = new JLabel("Classifica\u00E7\u00E3o Geral");
 		lblClassificaoGeral.setForeground(Color.WHITE);
 		lblClassificaoGeral.setBackground(Color.WHITE);
-		lblClassificaoGeral.setFont(new Font("Arial", Font.BOLD, 13));
-		lblClassificaoGeral.setBounds(487, 356, 139, 41);
+		lblClassificaoGeral.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblClassificaoGeral.setBounds(259, 419, 139, 41);
 		panPrincipal.add(lblClassificaoGeral);
+		
+
+		
+		lblLogo = new JLabel("");
+		lblLogo.setBounds(187, 65, 292, 306);
+		panPrincipal.add(lblLogo);
+		lblLogo.setIcon(new ImageIcon(this.getClass().getResource("/img/FPF.png")));
 		
 		lblBackGround = new JLabel("");
 		lblBackGround.setBounds(-284, -83, 978, 554);

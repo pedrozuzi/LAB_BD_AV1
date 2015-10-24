@@ -58,7 +58,7 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	@Override
 	public List<Resultados> resultadosGeral() {
 		List<Resultados> lista = new ArrayList<>(); 
-		String query = "select * from dbo.fn_campeonato()";
+		String query = "select * from dbo.fn_campeonato() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement( query );
