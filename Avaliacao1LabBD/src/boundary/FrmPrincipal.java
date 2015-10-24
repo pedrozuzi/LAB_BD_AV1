@@ -42,7 +42,7 @@ public class FrmPrincipal {
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
 		
-		janela.setSize(654,456);
+		janela.setSize(664,500);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
 		
@@ -66,6 +66,7 @@ public class FrmPrincipal {
 		lblLogo.setIcon(new ImageIcon(this.getClass().getResource("/img/FPF.png")));
 		
 		lblCampeonatoPaulista = new JLabel("Campeonato Paulista");
+		lblCampeonatoPaulista.setForeground(Color.WHITE);
 		lblCampeonatoPaulista.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblCampeonatoPaulista.setBounds(202, 34, 257, 41);
 		panPrincipal.add(lblCampeonatoPaulista);
@@ -77,6 +78,7 @@ public class FrmPrincipal {
 				("/img/SorteioJogos.png")));
 		
 		lblSortearGrupos = new JLabel("Sortear Grupos");
+		lblSortearGrupos.setForeground(Color.WHITE);
 		lblSortearGrupos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSortearGrupos.setBounds(508, 143, 130, 19);
 		panPrincipal.add(lblSortearGrupos);
@@ -88,6 +90,7 @@ public class FrmPrincipal {
 				("/img/Grupos.png")));
 		
 		lblGrupos = new JLabel("Grupos");
+		lblGrupos.setForeground(Color.WHITE);
 		lblGrupos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblGrupos.setBounds(56, 140, 68, 24);
 		panPrincipal.add(lblGrupos);
@@ -99,6 +102,7 @@ public class FrmPrincipal {
 				("/img/Jogos.png")));
 		
 		lblSortearJogos = new JLabel("Sortear Jogos");
+		lblSortearJogos.setForeground(Color.WHITE);
 		lblSortearJogos.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblSortearJogos.setBounds(508, 250, 106, 17);
 		panPrincipal.add(lblSortearJogos);
@@ -110,14 +114,15 @@ public class FrmPrincipal {
 				("/img/Rodadas.png")));
 		
 		lblPesquisarRodada = new JLabel("Pesquisar Rodada");
+		lblPesquisarRodada.setForeground(Color.WHITE);
 		lblPesquisarRodada.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblPesquisarRodada.setBounds(21, 247, 147, 24);
 		panPrincipal.add(lblPesquisarRodada);
 		
 		lblBackGround = new JLabel("");
-		lblBackGround.setBounds(0, 0, 648, 428);
+		lblBackGround.setBounds(-284, -83, 978, 554);
 		panPrincipal.add(lblBackGround);
-		lblBackGround.setIcon(new ImageIcon(this.getClass().getResource("/img/background.jpg")));
+		lblBackGround.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/blackback.jpg")));
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
