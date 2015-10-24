@@ -20,14 +20,18 @@ public class FrmGruposPontos {
 	
 	private JFrame janela;
 	private JPanel panPrincipal;
+	private JPanel panel;
 	private JScrollPane scrollPaneA;
-	private JTable tabela;
+	private JScrollPane scrollPaneB;
+	private JScrollPane scrollPaneC;
+	private JScrollPane scrollPaneD;
+	private JTable grupoA;
+	private JTable grupoB;
+	private JTable grupoC;
+	private JTable grupoD;
 	private CtrlGrupos controleGrupos;
-	private JLabel lblTabelaDeGrupos;
 	private JButton btnVoltar;
 	private JComponent lblGrupoA;
-	private JButton btnProximGrupo;
-	private JButton btnGrupoAnterior;
 	private ModeloTabela modelo;
 	
 	public FrmGruposPontos() {
@@ -36,30 +40,61 @@ public class FrmGruposPontos {
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
 		
-		tabela = new JTable();
-		tabela.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		tabela.setBorder(new LineBorder(Color.BLACK));
-		tabela.setGridColor(Color.BLACK);
-		tabela.setShowGrid(true);
+		grupoA = new JTable();
+		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoA.setBorder(new LineBorder(Color.BLACK));
+		grupoA.setGridColor(Color.BLACK);
+		grupoA.setShowGrid(true);
 		
 		scrollPaneA = new JScrollPane();
 		scrollPaneA.getViewport().setBorder(null);
-		scrollPaneA.setViewportView(tabela);
-		scrollPaneA.setBounds(10, 127, 785, 103);
+		scrollPaneA.setViewportView(grupoA);
+		scrollPaneA.setBounds(10, 72, 785, 103);
 		panPrincipal.add(scrollPaneA);
+		
+		grupoB = new JTable();
+		grupoB.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoB.setBorder(new LineBorder(Color.BLACK));
+		grupoB.setGridColor(Color.BLACK);
+		grupoB.setShowGrid(true);
+		
+		scrollPaneB = new JScrollPane();
+		scrollPaneB.getViewport().setBorder(null);
+		scrollPaneB.setViewportView(grupoB);
+		scrollPaneB.setBounds(10, 217, 785, 103);
+		panPrincipal.add(scrollPaneB);
+		
+		grupoC = new JTable();
+		grupoC.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoC.setBorder(new LineBorder(Color.BLACK));
+		grupoC.setGridColor(Color.BLACK);
+		grupoC.setShowGrid(true);
+		
+		scrollPaneC = new JScrollPane();
+		scrollPaneC.getViewport().setBorder(null);
+		scrollPaneC.setViewportView(grupoC);
+		scrollPaneC.setBounds(10, 361, 785, 103);
+		panPrincipal.add(scrollPaneC);
+		
+		grupoD = new JTable();
+		grupoD.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		grupoD.setBorder(new LineBorder(Color.BLACK));
+		grupoD.setGridColor(Color.BLACK);
+		grupoD.setShowGrid(true);
+		
+		scrollPaneD = new JScrollPane();
+		scrollPaneD.getViewport().setBorder(null);
+		scrollPaneD.setViewportView(grupoD);
+		scrollPaneD.setBounds(10, 502, 785, 103);
+		panPrincipal.add(scrollPaneD);
 		
 		lblGrupoA = new JLabel("Grupo A");
 		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblGrupoA.setBounds(366, 62, 100, 50);
+		lblGrupoA.setBounds(369, 11, 100, 50);
 		panPrincipal.add(lblGrupoA);
 		
-		lblTabelaDeGrupos = new JLabel("Tabelas Resultados Grupos Paulist\u00E3o");
-		lblTabelaDeGrupos.setFont(new Font("Tahoma", Font.BOLD, 32));
-		lblTabelaDeGrupos.setBounds(88, 11, 645, 50);
-		panPrincipal.add(lblTabelaDeGrupos);
-		
 		btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(706, 369, 89, 34);
+		btnVoltar.setBounds(706, 456, 89, 34);
 		panPrincipal.add(btnVoltar);
 		
 
@@ -72,21 +107,13 @@ public class FrmGruposPontos {
 		
 		if ( !listaGrupo.isEmpty() ) {
 			modelo = new ModeloTabela(listaGrupo);
-			tabela.getTableHeader().setReorderingAllowed(false);
-			tabela.setModel(modelo);
+			grupoA.getTableHeader().setReorderingAllowed(false);
+			grupoA.setModel(modelo);
 		}
 
-		janela.setSize(811,442);
+		janela.setSize(811,684);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
-		
-		btnProximGrupo = new JButton("Pr\u00F3xima Grupo");
-		btnProximGrupo.setBounds(629, 254, 166, 34);
-		panPrincipal.add(btnProximGrupo);
-		
-		btnGrupoAnterior = new JButton("Grupo Anterior");
-		btnGrupoAnterior.setBounds(10, 254, 126, 34);
-		panPrincipal.add(btnGrupoAnterior);
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
