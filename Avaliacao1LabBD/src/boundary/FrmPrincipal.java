@@ -121,8 +121,9 @@ public class FrmPrincipal {
 		lblPesquisarRodada.setBounds(21, 247, 147, 24);
 		panPrincipal.add(lblPesquisarRodada);
 		
-		btnClassificacaoGeral = new JButton("New button");
-		btnClassificacaoGeral.setBounds(513, 302, 96, 56);
+		btnClassificacaoGeral = new JButton("");
+		btnClassificacaoGeral.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/classificacao.png")));
+		btnClassificacaoGeral.setBounds(513, 285, 96, 73);
 		panPrincipal.add(btnClassificacaoGeral);
 		
 		lblClassificaoGeral = new JLabel("Classifica\u00E7\u00E3o Geral");

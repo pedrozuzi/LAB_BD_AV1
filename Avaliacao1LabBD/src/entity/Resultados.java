@@ -15,7 +15,7 @@ public class Resultados {
 	/**
 	 * @return the nome_time
 	 */
-	@Coluna(nome="Nome_time", posicao=1)
+	@Coluna(nome="Nome_time", posicao=0)
 	public String getNome_time() {
 		return nome_time;
 	}
@@ -28,7 +28,7 @@ public class Resultados {
 	/**
 	 * @return the num_jogos_disputados
 	 */
-	@Coluna(nome="Num_jogos_disputados", posicao=2)
+	@Coluna(nome="Num_jogos_disputados", posicao=1)
 	public int getNum_jogos_disputados() {
 		return num_jogos_disputados;
 	}
@@ -41,7 +41,7 @@ public class Resultados {
 	/**
 	 * @return the vitorias
 	 */
-	@Coluna(nome="Vitorias", posicao=3)
+	@Coluna(nome="Vitorias", posicao=2)
 	public int getVitorias() {
 		return vitorias;
 	}
@@ -54,7 +54,7 @@ public class Resultados {
 	/**
 	 * @return the empates
 	 */
-	@Coluna(nome="Empates", posicao=4)
+	@Coluna(nome="Empates", posicao=3)
 	public int getEmpates() {
 		return empates;
 	}
@@ -67,7 +67,7 @@ public class Resultados {
 	/**
 	 * @return the derrotas
 	 */
-	@Coluna(nome="Derrotas", posicao=5)
+	@Coluna(nome="Derrotas", posicao=4)
 	public int getDerrotas() {
 		return derrotas;
 	}
@@ -80,7 +80,7 @@ public class Resultados {
 	/**
 	 * @return the gols_marcados
 	 */
-	@Coluna(nome="Gols_marcados", posicao=6)
+	@Coluna(nome="Gols_marcados", posicao=5)
 	public int getGols_marcados() {
 		return gols_marcados;
 	}
@@ -93,7 +93,7 @@ public class Resultados {
 	/**
 	 * @return the gols_sofridos
 	 */
-	@Coluna(nome="Gols_sofridos", posicao=7)
+	@Coluna(nome="Gols_sofridos", posicao=6)
 	public int getGols_sofridos() {
 		return gols_sofridos;
 	}
@@ -106,7 +106,7 @@ public class Resultados {
 	/**
 	 * @return the saldo_gols
 	 */
-	@Coluna(nome="Saldo_gols", posicao=8)
+	@Coluna(nome="Saldo_gols", posicao=7)
 	public int getSaldo_gols() {
 		return saldo_gols;
 	}
@@ -119,7 +119,7 @@ public class Resultados {
 	/**
 	 * @return the pontos
 	 */
-	@Coluna(nome="Pontos", posicao=9)
+	@Coluna(nome="Pontos", posicao=8)
 	public int getPontos() {
 		return pontos;
 	}
