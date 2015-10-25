@@ -5,23 +5,20 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import control.CtrlResultados;
 import entity.QuartasdeFinal;
-import entity.Resultados;
 import util.ModeloTabela;
 import javax.swing.JLabel;
 
-public class FrmQuartasdeFinal  extends JFrame {
+public class FrmQuartasdeFinal {
 
 	private JPanel panPrincipal;
-	private JTable tabelaResultadoGeral;
+	//private JTable tabelaResultadoGeral;
 	private JFrame janela;
 	private ModeloTabela modeloA;
 	private ModeloTabela modeloB;
