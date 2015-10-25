@@ -22,6 +22,7 @@ import javax.swing.table.TableCellRenderer;
 
 import util.ModeloTabela;
 import control.CtrlGrupos;
+import control.CtrlResultados;
 import entity.GruposResultados;
 
 public class FrmGruposResultados {
@@ -166,8 +167,8 @@ public class FrmGruposResultados {
 //			linha.setForeground(Color.WHITE);
 //			linha.setBackground(Color.RED);
 //			grupoA.getColumnModel().getColumn(0).setCellRenderer(linha);
-			
-			
+		
+
 			
 		menuPrincipal.addActionListener(l -> {
 			janela.dispose();
@@ -219,6 +220,13 @@ public class FrmGruposResultados {
 			
 			grupoD.getTableHeader().setReorderingAllowed(false);
 			grupoD.setModel(modeloD);
+			
+			//pinta as linhas
+			CtrlResultados ctrl = new CtrlResultados();
+			grupoA = ctrl.rebaixados(5, grupoA);
+			grupoB = ctrl.rebaixados(5, grupoB);
+			grupoC = ctrl.rebaixados(5, grupoC);
+			grupoD = ctrl.rebaixados(5, grupoD);
 			
 		}
 	}
