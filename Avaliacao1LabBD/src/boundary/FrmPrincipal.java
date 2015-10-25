@@ -139,8 +139,6 @@ public class FrmPrincipal {
 		lblClassificaoGeral.setBounds(259, 419, 139, 41);
 		panPrincipal.add(lblClassificaoGeral);
 		
-
-		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(187, 65, 292, 306);
 		panPrincipal.add(lblLogo);

@@ -10,7 +10,7 @@ import entity.Coluna;
  * @author Pedro Zuzi
  *
  */
-public class ModeloTabela extends AbstractTableModel{
+public class ModeloTabela extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -108,5 +108,7 @@ public class ModeloTabela extends AbstractTableModel{
 	public boolean isCellEditable(int linha, int coluna) {
 		return false;
 	}
+	
+	
 	
 }

@@ -1,9 +1,11 @@
 package boundary;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -15,6 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+
 import util.ModeloTabela;
 import control.CtrlGrupos;
 import entity.GruposResultados;
@@ -69,7 +74,25 @@ public class FrmGruposResultados {
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(null);
 		
-		grupoA = new JTable();
+		grupoA = new JTable() {
+			
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				System.out.println((grupoA.getValueAt(column, 0).toString().toLowerCase()));
+				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase("Ituano")) {
+					System.out.println("IF");
+					c.setBackground(new Color(192,0,0));
+					c.setForeground(Color.WHITE);
+				}else{
+					c.setForeground(getForeground());
+					System.out.println("ELSE");
+				}
+				return c;
+			}
+		};
+		
 		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoA.setBorder(new LineBorder(Color.BLACK));
 		grupoA.setGridColor(Color.BLACK);
@@ -137,6 +160,32 @@ public class FrmGruposResultados {
 		panel_1.add(lblGrupoA);
 		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
+		carregaTabelas();
+			
+//			DefaultTableCellRenderer linha = new DefaultTableCellRenderer();
+//			linha.setForeground(Color.WHITE);
+//			linha.setBackground(Color.RED);
+//			grupoA.getColumnModel().getColumn(0).setCellRenderer(linha);
+			
+			
+			
+		menuPrincipal.addActionListener(l -> {
+			janela.dispose();
+			janela = null;
+			new FrmPrincipal();
+		});
+		
+		janela.setSize(811,602);
+		janela.setContentPane( panPrincipal );
+		panPrincipal.setLayout(null);
+		
+		janela.setLocationRelativeTo(null);
+        janela.setResizable(false);
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setVisible(true);
+	}
+
+	private void carregaTabelas() {
 		List<GruposResultados> listaGrupoA = new ArrayList<GruposResultados>();
 		List<GruposResultados> listaGrupoB = new ArrayList<GruposResultados>();
 		List<GruposResultados> listaGrupoC = new ArrayList<GruposResultados>();
@@ -146,6 +195,8 @@ public class FrmGruposResultados {
 		listaGrupoB = controleGrupos.buscaGruposResultados("B");
 		listaGrupoC= controleGrupos.buscaGruposResultados("C");
 		listaGrupoD = controleGrupos.buscaGruposResultados("D");
+		
+		
 		
 		if ( !listaGrupoA.isEmpty() &&
 				!listaGrupoB.isEmpty() &&
@@ -168,21 +219,7 @@ public class FrmGruposResultados {
 			
 			grupoD.getTableHeader().setReorderingAllowed(false);
 			grupoD.setModel(modeloD);
+			
 		}
-		
-		menuPrincipal.addActionListener(l -> {
-			janela.dispose();
-			janela = null;
-			new FrmPrincipal();
-		});
-		
-		janela.setSize(811,602);
-		janela.setContentPane( panPrincipal );
-		panPrincipal.setLayout(null);
-		
-		janela.setLocationRelativeTo(null);
-        janela.setResizable(false);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		janela.setVisible(true);
 	}
 }
