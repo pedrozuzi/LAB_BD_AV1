@@ -16,10 +16,15 @@ import util.ModeloTabela;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
+/**
+ * Classe Responsável pela exibição do formulario das quartas de final
+ * @author hury
+ *
+ */
+
 public class FrmQuartasdeFinal {
 
 	private JPanel panPrincipal;
-	//private JTable tabelaResultadoGeral;
 	private JFrame janela;
 	private ModeloTabela modeloA;
 	private ModeloTabela modeloB;
@@ -151,7 +156,6 @@ public class FrmQuartasdeFinal {
 			new FrmPrincipal();
 		});
 		
-
 		
 	}
 }

@@ -566,7 +566,7 @@ begin
 end
 
 -----------------
-select * from dbo.fn_quartasdefinal('A')
+
 --Retorna em 1 linha os times de um determinado grupo que irão se enfrentar nas quartas
 create function fn_quartas(@grupo varchar(1))
 returns @tabela table(

@@ -9,8 +9,10 @@ import java.util.List;
 
 import connection.ConnectionImpl;
 import connection.GenericConnection;
+import entity.GruposResultados;
 import entity.QuartasdeFinal;
-import entity.Resultados;
+//import entity.Resultados;
+import entity.Times;
 
 public class ResultadosDaoImpl implements ResultadosDao {
 
@@ -23,8 +25,8 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	
 	
 	@Override
-	public List<Resultados> resultadosGrupos(String grupo) {
-		List<Resultados> lista = new ArrayList<>(); 
+	public List<GruposResultados> resultadosGrupos(String grupo) {
+		List<GruposResultados> lista = new ArrayList<>(); 
 		String query = "select * from dbo.grupo(?) ";
 		PreparedStatement ps;
 		try {
@@ -33,20 +35,22 @@ public class ResultadosDaoImpl implements ResultadosDao {
 			ResultSet rs = ps.executeQuery();
 			
 			
-			while( rs.next() ) {
-			Resultados r = new Resultados();
-
-			r.setNome_time(rs.getString("nome_time"));
-			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
-			r.setVitorias(rs.getInt("vitorias"));
-			r.setEmpates(rs.getInt("empates"));
-			r.setDerrotas(rs.getInt("derrotas"));
-			r.setGols_marcados(rs.getInt("gols_marcados"));
-			r.setGols_sofridos(rs.getInt("gols_sofridos"));
-			r.setSaldo_gols(rs.getInt("saldo_gols"));
-			r.setPontos(rs.getInt("pontos"));
-			lista.add(r);
+			while ( rs.next() ) {
+				GruposResultados gr = new GruposResultados();
+				Times t = new Times();
+				t.setNome( rs.getString("nome_Time"));
+				gr.setTime(t);
+				gr.setJogos(rs.getInt("num_jogos_disputados"));
+				gr.setVitorias(rs.getInt("vitorias"));
+				gr.setEmpates(rs.getInt("empates"));
+				gr.setDerrotas(rs.getInt("derrotas"));
+				gr.setGolsMarcados(rs.getInt("gols_marcados"));
+				gr.setGolsSofridos(rs.getInt("gols_sofridos"));
+				gr.setSaldoGols(rs.getInt("saldo_gols"));
+				gr.setPontos(rs.getInt("pontos"));
+				lista.add(gr);
 			}
+			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -57,8 +61,8 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	}
 
 	@Override
-	public List<Resultados> resultadosGeral() {
-		List<Resultados> lista = new ArrayList<>(); 
+	public List<GruposResultados> resultadosGeral() {
+		List<GruposResultados> lista = new ArrayList<>(); 
 		String query = "select * from dbo.fn_campeonato() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
 		PreparedStatement ps;
 		try {
@@ -66,20 +70,22 @@ public class ResultadosDaoImpl implements ResultadosDao {
 			ResultSet rs = ps.executeQuery();
 			
 			
-			while( rs.next() ) {
-			Resultados r = new Resultados();
-
-			r.setNome_time(rs.getString("nome_time"));
-			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
-			r.setVitorias(rs.getInt("vitorias"));
-			r.setEmpates(rs.getInt("empates"));
-			r.setDerrotas(rs.getInt("derrotas"));
-			r.setGols_marcados(rs.getInt("gols_marcados"));
-			r.setGols_sofridos(rs.getInt("gols_sofridos"));
-			r.setSaldo_gols(rs.getInt("saldo_gols"));
-			r.setPontos(rs.getInt("pontos"));
-			lista.add(r);
+			while ( rs.next() ) {
+				GruposResultados gr = new GruposResultados();
+				Times t = new Times();
+				t.setNome( rs.getString("nome_Time"));
+				gr.setTime(t);
+				gr.setJogos(rs.getInt("num_jogos_disputados"));
+				gr.setVitorias(rs.getInt("vitorias"));
+				gr.setEmpates(rs.getInt("empates"));
+				gr.setDerrotas(rs.getInt("derrotas"));
+				gr.setGolsMarcados(rs.getInt("gols_marcados"));
+				gr.setGolsSofridos(rs.getInt("gols_sofridos"));
+				gr.setSaldoGols(rs.getInt("saldo_gols"));
+				gr.setPontos(rs.getInt("pontos"));
+				lista.add(gr);
 			}
+			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -119,8 +125,8 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	}
 
 	@Override
-	public List<Resultados> rebaixados() {
-		List<Resultados> lista = new ArrayList<>(); 
+	public List<GruposResultados> rebaixados() {
+		List<GruposResultados> lista = new ArrayList<>(); 
 		String query = "select * from dbo.fn_rebaixados() ";
 		PreparedStatement ps;
 		try {
@@ -128,20 +134,22 @@ public class ResultadosDaoImpl implements ResultadosDao {
 			ResultSet rs = ps.executeQuery();
 			
 			
-			while( rs.next() ) {
-			Resultados r = new Resultados();
-
-			r.setNome_time(rs.getString("nome_time"));
-			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
-			r.setVitorias(rs.getInt("vitorias"));
-			r.setEmpates(rs.getInt("empates"));
-			r.setDerrotas(rs.getInt("derrotas"));
-			r.setGols_marcados(rs.getInt("gols_marcados"));
-			r.setGols_sofridos(rs.getInt("gols_sofridos"));
-			r.setSaldo_gols(rs.getInt("saldo_gols"));
-			r.setPontos(rs.getInt("pontos"));
-			lista.add(r);
+			while ( rs.next() ) {
+				GruposResultados gr = new GruposResultados();
+				Times t = new Times();
+				t.setNome( rs.getString("nome_Time"));
+				gr.setTime(t);
+				gr.setJogos(rs.getInt("num_jogos_disputados"));
+				gr.setVitorias(rs.getInt("vitorias"));
+				gr.setEmpates(rs.getInt("empates"));
+				gr.setDerrotas(rs.getInt("derrotas"));
+				gr.setGolsMarcados(rs.getInt("gols_marcados"));
+				gr.setGolsSofridos(rs.getInt("gols_sofridos"));
+				gr.setSaldoGols(rs.getInt("saldo_gols"));
+				gr.setPontos(rs.getInt("pontos"));
+				lista.add(gr);
 			}
+			ps.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
