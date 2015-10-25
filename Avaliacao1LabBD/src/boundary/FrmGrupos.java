@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import util.ModeloTabela;
 import control.CtrlGrupos;
 import entity.Grupos;
+import javax.swing.ImageIcon;
 
 public class FrmGrupos {
 	
@@ -39,6 +40,7 @@ public class FrmGrupos {
 	private ModeloTabela modeloGrupoB;
 	private ModeloTabela modeloGrupoC;
 	private ModeloTabela modeloGrupoD;
+	private JLabel lblNewLabel;
 	
 	public FrmGrupos() {
 		janela = new JFrame("Grupos Paulistão");
@@ -94,28 +96,28 @@ public class FrmGrupos {
 		panPrincipal.add(scrollPaneD);
 		
 		lblGrupoA = new JLabel("Grupo A");
-		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoA.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoA.setBounds(120, 71, 100, 50);
 		panPrincipal.add(lblGrupoA);
 		
 		lblGrupoB = new JLabel("Grupo B");
-		lblGrupoB.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoB.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoB.setBounds(534, 71, 100, 50);
 		panPrincipal.add(lblGrupoB);
 		
 		lblGrupoC = new JLabel("Grupo C");
-		lblGrupoC.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoC.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoC.setBounds(120, 286, 100, 50);
 		panPrincipal.add(lblGrupoC);
 		
 		lblGrupoD = new JLabel("Grupo D");
-		lblGrupoD.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoD.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoD.setBounds(534, 286, 100, 50);
 		panPrincipal.add(lblGrupoD);
 		
 		lblTabelaDeGrupos = new JLabel("Tabela de Grupos Paulist\u00E3o");
-		lblTabelaDeGrupos.setFont(new Font("Tahoma", Font.BOLD, 32));
-		lblTabelaDeGrupos.setBounds(160, 11, 459, 50);
+		lblTabelaDeGrupos.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblTabelaDeGrupos.setBounds(229, 11, 285, 50);
 		panPrincipal.add(lblTabelaDeGrupos);
 		
 		btnVoltar = new JButton("Voltar");
@@ -168,6 +170,11 @@ public class FrmGrupos {
 		janela.setSize(749,569);
 		janela.setContentPane( panPrincipal );
 		panPrincipal.setLayout(null);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(FrmGrupos.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblNewLabel.setBounds(-487, -17, 1254, 557);
+		panPrincipal.add(lblNewLabel);
 		
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);

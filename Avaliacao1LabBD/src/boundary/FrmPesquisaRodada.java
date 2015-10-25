@@ -37,6 +37,7 @@ public class FrmPesquisaRodada {
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
 	private ModeloTabela modelo;
+	private JLabel lblbackground;
 	
 	public FrmPesquisaRodada() {
 		janela = new JFrame("Pesquisa Rodadas");
@@ -88,8 +89,8 @@ public class FrmPesquisaRodada {
 		lblRodadasDoDia.setVisible(false);
 		
 		lblDigiteAData = new JLabel("Digite a Data: ");
-		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDigiteAData.setBounds(101, 26, 109, 29);
+		lblDigiteAData.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblDigiteAData.setBounds(85, 26, 109, 29);
 		panPrincipal.add(lblDigiteAData);
 		
 		btnPesquisar = new JButton("");
@@ -97,6 +98,11 @@ public class FrmPesquisaRodada {
 		panPrincipal.add(btnPesquisar);
 		btnPesquisar.setIcon(new ImageIcon(this.getClass().getResource
 				("/img/Lupa.png")));
+		
+		lblbackground = new JLabel("");
+		lblbackground.setIcon(new ImageIcon(FrmPesquisaRodada.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblbackground.setBounds(-533, 0, 1245, 508);
+		panPrincipal.add(lblbackground);
 		
 		menuPrincipal.addActionListener(l -> {
 			janela.dispose();

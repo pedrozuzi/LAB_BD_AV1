@@ -41,6 +41,7 @@ public class FrmInsereResultado{
 	private JButton btnSalvar;
 	private List<Jogos> lista;
 	private CtrlJogos controleJogos = new CtrlJogos();
+	private JLabel lblNewLabel;
 	
 	public FrmInsereResultado() {
 		janela = new JFrame("Insere Resultados");
@@ -92,7 +93,7 @@ public class FrmInsereResultado{
 		lblRodadasDoDia.setVisible(false);
 		
 		lblDigiteAData = new JLabel("Digite a Data: ");
-		lblDigiteAData.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDigiteAData.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblDigiteAData.setBounds(242, 272, 109, 29);
 		panPrincipal.add(lblDigiteAData);
 		
@@ -103,8 +104,8 @@ public class FrmInsereResultado{
 				("/img/Lupa.png")));
 		
 		lblAdicioneOsGols = new JLabel("Adicione os Gols para cada partida");
-		lblAdicioneOsGols.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblAdicioneOsGols.setBounds(190, 11, 281, 24);
+		lblAdicioneOsGols.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblAdicioneOsGols.setBounds(157, 11, 322, 24);
 		panPrincipal.add(lblAdicioneOsGols);
 		lblAdicioneOsGols.setVisible(false);
 		
@@ -113,6 +114,11 @@ public class FrmInsereResultado{
 		btnSalvar.setBounds(491, 380, 89, 38);
 		panPrincipal.add(btnSalvar);
 		btnSalvar.setEnabled(false);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(FrmInsereResultado.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblNewLabel.setBounds(-558, -40, 1248, 484);
+		panPrincipal.add(lblNewLabel);
 		
 		
 		menuPrincipal.addActionListener(l -> {
