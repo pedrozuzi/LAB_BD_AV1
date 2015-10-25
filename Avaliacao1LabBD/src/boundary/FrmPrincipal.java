@@ -58,6 +58,7 @@ public class FrmPrincipal {
 		panPrincipal.add(lblGruposResultados);
 		
 		btnGruposResultados = new JButton("");
+		btnGruposResultados.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/Quartas.png")));
 		btnGruposResultados.setBounds(515, 302, 89, 56);
 		panPrincipal.add(btnGruposResultados);
 		
@@ -129,20 +130,31 @@ public class FrmPrincipal {
 		
 		btnClassificacaoGeral = new JButton("");
 		btnClassificacaoGeral.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/classificacao.png")));
-		btnClassificacaoGeral.setBounds(282, 361, 89, 60);
+		btnClassificacaoGeral.setBounds(210, 364, 89, 60);
 		panPrincipal.add(btnClassificacaoGeral);
 		
 		lblClassificaoGeral = new JLabel("Classifica\u00E7\u00E3o Geral");
 		lblClassificaoGeral.setForeground(Color.WHITE);
 		lblClassificaoGeral.setBackground(Color.WHITE);
 		lblClassificaoGeral.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblClassificaoGeral.setBounds(259, 419, 139, 41);
+		lblClassificaoGeral.setBounds(187, 422, 139, 41);
 		panPrincipal.add(lblClassificaoGeral);
 		
 		lblLogo = new JLabel("");
 		lblLogo.setBounds(187, 65, 292, 306);
 		panPrincipal.add(lblLogo);
 		lblLogo.setIcon(new ImageIcon(this.getClass().getResource("/img/FPF.png")));
+		
+		JButton btnQuartasdeFinal = new JButton("");
+		btnQuartasdeFinal.setIcon(new ImageIcon(FrmPrincipal.class.getResource("/img/versus-48.png")));
+		btnQuartasdeFinal.setBounds(355, 366, 89, 60);
+		panPrincipal.add(btnQuartasdeFinal);
+		
+		JLabel lblQuartasdeFinal = new JLabel("Quartas de Final");
+		lblQuartasdeFinal.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblQuartasdeFinal.setForeground(Color.WHITE);
+		lblQuartasdeFinal.setBounds(336, 435, 130, 14);
+		panPrincipal.add(lblQuartasdeFinal);
 		
 		lblBackGround = new JLabel("");
 		lblBackGround.setBounds(-284, -83, 978, 554);

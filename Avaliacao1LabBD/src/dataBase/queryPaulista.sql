@@ -558,18 +558,32 @@ begin
 -----------------
 --rebaixados
 --retorna os 4 times rebaixados
-create function fn_rebaixados()
+create function fn_rebaixados(@grupo varchar(1))
 returns @tabela table(
-codigoTime int,
-nomeTime varchar(100),
+nome_time varchar(100),
+num_jogos_disputados int,
+vitorias int,
+empates int,
+derrotas int,
+gols_marcados int,
+gols_sofridos int,
+saldo_gols int,
 pontos int)
-as
 
 begin
 	insert into @tabela
-	select top 4 tm.codigoTime, tm.nomeTime, 
+	select top 4 tm.nomeTime, (select dbo.fn_numJogosDisputados(tm.codigoTime)) as num_jogos_disputados,
+	(select dbo.fn_vitorias(tm.codigoTime)) as vitorias,
+	(select dbo.fn_empates(tm.codigoTime)) as empates,
+	(select dbo.fn_derrotas(tm.codigoTime)) as derrotas,
+	(select dbo.fn_gols_marcados(tm.codigoTime)) as gols_marcados,
+	(select dbo.fn_gols_sofrido(tm.codigoTime)) as gols_sofrido,
+	((select dbo.fn_gols_marcados(tm.codigoTime)) - (select dbo.fn_gols_sofrido(tm.codigoTime))) as saldo_gols,
 	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
-	order by pontos 
+    inner join grupos gp
+	on gp.codigoTime = tm.codigoTime 
+	where gp.grupo like @grupo
+	order by pontos, vitorias, gols_marcados, saldo_gols
 	return
 end
 ----------------
