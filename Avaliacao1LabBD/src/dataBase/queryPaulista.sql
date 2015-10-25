@@ -566,7 +566,7 @@ begin
 end
 
 -----------------
-
+select * from dbo.fn_quartasdefinal('A')
 --Retorna em 1 linha os times de um determinado grupo que irão se enfrentar nas quartas
 create function fn_quartas(@grupo varchar(1))
 returns @tabela table(
@@ -615,7 +615,7 @@ begin
 		inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
 	where gp.grupo like @grupo
-	order by pontos asc, vitorias asc, gols_marcados asc, saldo_gols asc
+	order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc
 	return
 end
 -----------------
