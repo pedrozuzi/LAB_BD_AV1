@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class FrmClassificacaoGeral extends JFrame {
 
@@ -42,19 +43,20 @@ public class FrmClassificacaoGeral extends JFrame {
 
 		
 		JLabel lblClassificaoGeral = new JLabel("Classifica\u00E7\u00E3o Geral");
-		lblClassificaoGeral.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblClassificaoGeral.setBounds(274, 27, 167, 36);
+		lblClassificaoGeral.setForeground(Color.WHITE);
+		lblClassificaoGeral.setFont(new Font("Verdana", Font.BOLD, 18));
+		lblClassificaoGeral.setBounds(272, 23, 205, 36);
 		panPrincipal.add(lblClassificaoGeral);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(30, 82, 682, 348);
+		scrollPane.setBounds(33, 84, 682, 346);
 		panPrincipal.add(scrollPane);
 		
 		tabelaResultadoGeral = new JTable();
 		scrollPane.setViewportView(tabelaResultadoGeral);
 		
 		JButton btnVoltar = new JButton("Voltar");
-		btnVoltar.setBounds(623, 453, 89, 23);
+		btnVoltar.setBounds(626, 451, 89, 23);
 		panPrincipal.add(btnVoltar);
 		
 		CtrlResultados ctrl = new CtrlResultados();
@@ -70,6 +72,11 @@ public class FrmClassificacaoGeral extends JFrame {
 		tabelaResultadoGeral = ctrl.rebaixados(20, tabelaResultadoGeral);
 		
 		janela.setContentPane(panPrincipal);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(FrmClassificacaoGeral.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblNewLabel.setBounds(-474, -124, 1421, 690);
+		panPrincipal.add(lblNewLabel);
 		janela.setSize(755,569);
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
@@ -84,5 +91,4 @@ public class FrmClassificacaoGeral extends JFrame {
 		
 
 	}
-	
 }

@@ -61,6 +61,7 @@ public class CtrlResultados {
 				//	setBackground(Color.RED);
 				} else {
 					setBackground(null);
+					setForeground(null);
 				}
 
 				for (int j = 0; j < tamanhodaTable; j++) {
@@ -68,9 +69,12 @@ public class CtrlResultados {
 
 						if (row == j && rebaixados[i].equals(tabelaResultadoGeral.getValueAt(j, 0))) {
 							setBackground(Color.RED);
+							setForeground(Color.white);
+							
 						} else {
 							if(getBackground()!=Color.RED){
 								setBackground(null);
+								setForeground(null);
 							}
 							
 						}

@@ -47,6 +47,7 @@ public class FrmGruposResultados {
 	private JMenuItem menuPrincipal;
 	private CtrlResultados controleResultados;
 	private String[] rebaixados = new String[4];
+	private JLabel lblNewLabel;
 
 	public FrmGruposResultados() {
 		controleGrupos = new CtrlGrupos();
@@ -206,24 +207,29 @@ public class FrmGruposResultados {
 		scrollPaneD.setViewportView(grupoD);
 
 		JLabel lblGrupoB = new JLabel("Grupo B");
-		lblGrupoB.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoB.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoB.setBounds(366, 143, 100, 33);
 		panel_1.add(lblGrupoB);
 
 		JLabel lblGrupoC = new JLabel("Grupo C");
-		lblGrupoC.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoC.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoC.setBounds(366, 279, 100, 33);
 		panel_1.add(lblGrupoC);
 
 		JLabel lblGrupoD = new JLabel("Grupo D");
-		lblGrupoD.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoD.setFont(new Font("Verdana", Font.BOLD, 18));
 		lblGrupoD.setBounds(366, 411, 100, 33);
 		panel_1.add(lblGrupoD);
 
 		lblGrupoA = new JLabel("Grupo A");
 		lblGrupoA.setBounds(366, 11, 100, 33);
 		panel_1.add(lblGrupoA);
-		lblGrupoA.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblGrupoA.setFont(new Font("Verdana", Font.BOLD, 18));
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(FrmGruposResultados.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblNewLabel.setBounds(-441, -17, 1279, 570);
+		panel_1.add(lblNewLabel);
 
 		carregaTabelas();
 
