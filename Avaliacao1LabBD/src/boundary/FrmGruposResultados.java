@@ -5,7 +5,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -17,9 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-
 import util.ModeloTabela;
 import control.CtrlGrupos;
 import control.CtrlResultados;
@@ -79,12 +76,9 @@ public class FrmGruposResultados {
 		
 		rebaixados = controleResultados.rebaixados();
 		
-		for (int i = 0; i < rebaixados.length; i++) {
-			System.out.println(rebaixados[i]);
-		}
-
 		grupoA = new JTable() {
-			
+			private static final long serialVersionUID = 1L;
+
 		@Override
 		public Component prepareRenderer(TableCellRenderer renderer,
 				int row, int column) {
@@ -116,6 +110,8 @@ public class FrmGruposResultados {
 		scrollPaneA.setViewportView(grupoA);
 
 		grupoB = new JTable(){
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int row, int column) {
@@ -146,6 +142,8 @@ public class FrmGruposResultados {
 		scrollPaneB.setViewportView(grupoB);
 
 		grupoC = new JTable() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int row, int column) {
@@ -176,6 +174,8 @@ public class FrmGruposResultados {
 		scrollPaneC.setViewportView(grupoC);
 
 		grupoD = new JTable() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Component prepareRenderer(TableCellRenderer renderer,
 					int row, int column) {
