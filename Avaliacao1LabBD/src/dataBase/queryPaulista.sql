@@ -2,7 +2,6 @@ create database paulista
 go
 use paulista
 
-
 create table times(
 codigoTime int not null,
 nomeTime varchar(100) not null,
@@ -49,12 +48,9 @@ insert into times values
 ( 19, 'São Paulo', 'São Paulo', 'Morumbi' ),
 ( 20, 'XV de Piracicaba', 'Piracicaba', 'Barão de Serra Negra' )
 	
-	--------------------
 -----------------------------------------------------------------------------------------------
---FUNCIONANDO--
-exec sp_sorteioGrupos 
 
-alter procedure sp_sorteioGrupos
+create procedure sp_sorteioGrupos
 as
 
 truncate table grupos
@@ -139,12 +135,8 @@ truncate table grupos
 ----------------------fim da sp
 
 -----------------------------------------
---FUNCIONANDO
 
-
-
---
-alter procedure sp_jogos(@data datetime)
+create procedure sp_jogos(@data datetime)
 as
 
 declare @timeA int, @timeB int
@@ -293,15 +285,9 @@ select * from jogos where data = @data
 
 */
 ------------------------ fim da sp
---teste
-truncate table jogos
-exec sp_datasJogos
-select * from jogos
-
 
 --------------------------
---FUNCIONANDO
-alter procedure sp_datasJogos
+create procedure sp_datasJogos
 as
 
 truncate table jogos
@@ -329,12 +315,8 @@ end
 
 -------------fim da sp
 
+--   P2  -----------------------------------------------------
 
-/**   P2
-Partindo do domínio da Avaliação 1, criar uma Trigger que não permita INSERT, UPDATE ou
-DELETE nas tabelas TIMES e GRUPOS e uma Trigger semelhante, mas apenas para INSERT e
-DELETE na tabela jogos.
-*/
 --pausar a trigger
 disable trigger t_jogos on jogos
 disable trigger t_times on times
@@ -373,9 +355,8 @@ begin
 end
 
 ----------------
---funcionando (falta o where dos gols=null)
---calcula a quantidade do jogos disputados
-alter function fn_numJogosDisputados(@codigoTime int)
+--calcula o numero de jogos disputados por um determinado time
+create function fn_numJogosDisputados(@codigoTime int)
 returns int
 as
 begin
@@ -452,18 +433,7 @@ begin
 
 end
 ------------------------
-/**
-create table jogos(
-codigoJogo int identity not null,
-codigoTimeA int not null,
-codigoTimeB int not null,
-golsTimeA int,
-golsTimeB int,
-data datetime not null	
-primary key (codigoJogo))
-*/
-------------------------
---funcionando
+
 --calcula a quantidade de gols marcados por um determinado time
 alter function fn_gols_marcados(@codigoTime int)
 returns int
@@ -486,13 +456,9 @@ begin
 
 	return @A+@B
 end
-------------------------
-select * from jogos
-update jogos set golsTimeB = 5 where codigoJogo = 5 
-update jogos set golsTimeA = 3 where codigoJogo = 5 
+
 ------------------------
 --calcula a quantidade de gols sofridos por um determinado time
---funcionando
 create function fn_gols_sofrido(@codigoTime int)
 returns int
 as
@@ -533,18 +499,8 @@ end
 
 ------------------------
 
-declare @D int
-set @d = (select dbo.fn_gols_marcados(1)) - (select dbo.fn_gols_sofrido(1))
-print convert(varchar(2), @D )
-
-declare @fodase int
-set @fodase = (select dbo.fn_gols_marcados(1) )
-print convert(varchar(2), @fodase )
-select golsTimeB from jogos where codigoTimeB = 1 and golsTimeB is not null
-
--------------------
 --retorna um grupo ordenado pelos pontos
-alter function fn_grupo(@grupo varchar(1))
+create function fn_grupo(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -580,7 +536,7 @@ end
 select * from dbo.fn_campeonato()
 -----------------
 --retorna o rank do campeonato a partir dos pontos
-alter function fn_campeonato()
+create function fn_campeonato()
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -610,10 +566,8 @@ begin
 end
 
 -----------------
---retorna os 2 times que irão particiar de quarta de final(por grupo)
---ou seja, deve ser executada 4 vezes, uma para cara grupo como parametro
 
---------------
+--Retorna em 1 linha os times de um determinado grupo que irão se enfrentar nas quartas
 create function fn_quartas(@grupo varchar(1))
 returns @tabela table(
 timeA varchar(100),
@@ -631,14 +585,11 @@ begin
 	return
 
 end
-------------------------------
 
-select * from dbo.fn_quartas('B')
-
-select * from dbo.fn_quartasdefinal('B')
 ---------------------------------
-
-alter function fn_quartasdefinal(@grupo varchar(1))
+--retorna os 2 times que irão particiar de quarta de final(por grupo)
+--ou seja, deve ser executada 4 vezes, uma para cara grupo como parametro
+create function fn_quartasdefinal(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -694,58 +645,8 @@ begin
 	(select dbo.fn_pontos(tm.codigoTime)) as pontos from times tm
     inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
-	--where gp.grupo like @grupo
 	order by pontos, vitorias, gols_marcados, saldo_gols
 	return
 end
 ----------------
 
-select * from fn_rebaixados() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc
---
-GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
-gols_sofridos, saldo_gols**,pontos***)
-
-CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
-gols_marcados, gols_sofridos, saldo_gols**,pontos***)
-
-quartas de final
-
-/**
-Uma vez determinados os grupos e os jogos, as partidas serão disputadas e terão resultados
-em número de gols (Ex.: TimaA 3 X 0 TimeB). A cada rodada, os 10 jogos terão resultados.
-Fazer uma tela que, pelas datas dos jogos, seja possível inserir os resultados dos jogos, que
-fará um UPDATE na tabela jogos, que já terá os times e data, com os gols marcados por cada
-time.
-
-	Fazer uma tela de consulta com os 4 grupos e 4 JTables, que mostre a saída (para cada JTable)
-	de uma UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
-	saída:
-	GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
-	gols_sofridos, saldo_gols**,pontos***)
-
-O campeão de cada grupo se dará por aquele que tiver maior número de pontos. Em caso de
-empate, a ordem de desempate é por número de vitórias, depois por gols marcados e por fim,
-por saldo de gols.
-O critério de rebaixamento também é pouco convencional.
-Para definir os 4 rebaixados, se considera os times que tem menor pontuação dentre os 20
-times, independente de qual grupo que pertença.
-Na tela com as 4 JTables, deve-se mudar a cor de fundo da linha dos times que estiverem em
-condição de rebaixamento.
-
-	Deve-se fazer, para melhor visualização dos resultados, uma tela com a classificação geral,
-	numa UDF (User Defined FUNCTION), que receba o nome do grupo, valide-o e dê a seguinte
-	saída, para os 20 times do campeonato:
-	CAMPEONATO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas,
-	gols_marcados, gols_sofridos, saldo_gols**,pontos***)
-	A ordenação da saída se dá pelo mesmo critério anterior.
-
-	Por fim, uma tela deverá ser criada para ver a projeção das quartas de final. As quartas de final
-	serão disputadas entre o 1º e o 2º de cada grupo. Gerá-las a partir de UDF.
-	A qualquer momento, deve ser possível ver as tabelas e a projeção das quartas de final.
-
-			* O num_jogos_disputados é o número de jogos feitos por aquele time, até o presente instante. Jogos sem
-			resultados não devem ser considerados.
-			** Saldo de gols é a diferença entre gols marcados e gols sofridos
-			*** O total de pontos se dá somando os resultados, onde:
-			(Vitória = 3 pontos, Empate = 1 ponto , Derrota = 0 pontos)
-*/
