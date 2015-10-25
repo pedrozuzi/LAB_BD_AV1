@@ -73,23 +73,23 @@ public class FrmGruposResultados {
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(null);
 
-		grupoA = new JTable() {
-
-			@Override
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-				Component c = super.prepareRenderer(renderer, row, column);
-				System.out.println((grupoA.getValueAt(column, 0).toString().toLowerCase()));
-				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase("Ituano")) {
-					System.out.println("IF");
-					c.setBackground(new Color(192, 0, 0));
-					c.setForeground(Color.WHITE);
-				} else {
-					c.setForeground(getForeground());
-					System.out.println("ELSE");
-				}
-				return c;
-			}
-		};
+		grupoA = new JTable();// {
+//
+//			@Override
+//			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+//				Component c = super.prepareRenderer(renderer, row, column);
+//				System.out.println((grupoA.getValueAt(column, 0).toString().toLowerCase()));
+//				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase("Ituano")) {
+//					System.out.println("IF");
+//					c.setBackground(new Color(192, 0, 0));
+//					c.setForeground(Color.WHITE);
+//				} else {
+//					c.setForeground(getForeground());
+//					System.out.println("ELSE");
+//				}
+//				return c;
+//			}
+//		};
 
 		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoA.setBorder(new LineBorder(Color.BLACK));
@@ -165,12 +165,12 @@ public class FrmGruposResultados {
 		// linha.setBackground(Color.RED);
 		// grupoA.getColumnModel().getColumn(0).setCellRenderer(linha);
 
-		// //pinta as linhas dos rebaixados de vermelho
-		// CtrlResultados ctrl = new CtrlResultados();
-		// grupoA = ctrl.rebaixados(5, grupoA);
-		// grupoB = ctrl.rebaixados(5, grupoB);
-		// grupoC = ctrl.rebaixados(5, grupoC);
-		// grupoD = ctrl.rebaixados(5, grupoD);
+		 //pinta as linhas dos rebaixados de vermelho
+		 CtrlResultados ctrl = new CtrlResultados();
+		 grupoA = ctrl.rebaixados(5, grupoA);
+		 grupoB = ctrl.rebaixados(5, grupoB);
+		 grupoC = ctrl.rebaixados(5, grupoC);
+		 grupoD = ctrl.rebaixados(5, grupoD);
 
 		menuPrincipal.addActionListener(l -> {
 			janela.dispose();
