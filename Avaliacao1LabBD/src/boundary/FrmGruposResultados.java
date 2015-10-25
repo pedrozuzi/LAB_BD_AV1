@@ -49,6 +49,7 @@ public class FrmGruposResultados {
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
 	private CtrlResultados controleResultados;
+	private String[] rebaixados = new String[4];
 
 	public FrmGruposResultados() {
 		controleGrupos = new CtrlGrupos();
@@ -75,7 +76,12 @@ public class FrmGruposResultados {
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(null);
 		
-		String[] rebaixados = controleResultados.rebaixados();
+		
+		rebaixados = controleResultados.rebaixados();
+		
+		for (int i = 0; i < rebaixados.length; i++) {
+			System.out.println(rebaixados[i]);
+		}
 
 		grupoA = new JTable() {
 			
@@ -92,6 +98,7 @@ public class FrmGruposResultados {
 				c.setForeground(Color.WHITE);
 			}else{
 				c.setForeground(getForeground());
+				c.setBackground(getBackground());
 			}
 			return c;
 		}
@@ -114,14 +121,15 @@ public class FrmGruposResultados {
 					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 				
-				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+				if (grupoB.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoB.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoB.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoB.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
 					c.setBackground(new Color(192,0,0));
 					c.setForeground(Color.WHITE);
 				}else{
 					c.setForeground(getForeground());
+					c.setBackground(getBackground());
 				}
 				return c;
 			}
@@ -143,14 +151,15 @@ public class FrmGruposResultados {
 					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 				
-				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+				if (grupoC.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoC.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoC.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoC.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
 					c.setBackground(new Color(192,0,0));
 					c.setForeground(Color.WHITE);
 				}else{
 					c.setForeground(getForeground());
+					c.setBackground(getBackground());
 				}
 				return c;
 			}
@@ -172,14 +181,15 @@ public class FrmGruposResultados {
 					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 				
-				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
-						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+				if (grupoD.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoD.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoD.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoD.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
 					c.setBackground(new Color(192,0,0));
 					c.setForeground(Color.WHITE);
 				}else{
 					c.setForeground(getForeground());
+					c.setBackground(getBackground());
 				}
 				return c;
 			}
@@ -223,11 +233,11 @@ public class FrmGruposResultados {
 		// grupoA.getColumnModel().getColumn(0).setCellRenderer(linha);
 
 		 //pinta as linhas dos rebaixados de vermelho
-		 CtrlResultados ctrl = new CtrlResultados();
-		 grupoA = ctrl.rebaixados(5, grupoA);
-		 grupoB = ctrl.rebaixados(5, grupoB);
-		 grupoC = ctrl.rebaixados(5, grupoC);
-		 grupoD = ctrl.rebaixados(5, grupoD);
+//		 CtrlResultados ctrl = new CtrlResultados();
+//		 grupoA = ctrl.rebaixados(5, grupoA);
+//		 grupoB = ctrl.rebaixados(5, grupoB);
+//		 grupoC = ctrl.rebaixados(5, grupoC);
+//		 grupoD = ctrl.rebaixados(5, grupoD);
 
 		menuPrincipal.addActionListener(l -> {
 			janela.dispose();

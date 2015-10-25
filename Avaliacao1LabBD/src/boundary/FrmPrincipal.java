@@ -204,9 +204,12 @@ public class FrmPrincipal {
 		});
 		
 		btnGruposResultados.addActionListener(a -> {
+			janela.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			janela.dispose();
-			janela = null;
+			
 			new FrmGruposResultados();
+			janela.setCursor(Cursor.getDefaultCursor());
+			janela = null;
 		});
 		
 		btnQuartasdeFinal.addActionListener(a -> {
