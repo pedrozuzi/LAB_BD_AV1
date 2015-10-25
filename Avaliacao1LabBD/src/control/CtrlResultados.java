@@ -97,7 +97,6 @@ public class CtrlResultados {
 		String[] rebaixados = new String[4];
 		for (int i = 0; i < 4; i++) {
 			rebaixados[i] = lista.get(i).getNome_time();
-			System.out.println(i);
 		}
 		
 		return rebaixados;

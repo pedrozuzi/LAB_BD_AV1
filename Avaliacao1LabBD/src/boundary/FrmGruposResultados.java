@@ -84,7 +84,10 @@ public class FrmGruposResultados {
 				int row, int column) {
 			Component c = super.prepareRenderer(renderer, row, column);
 			
-			if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+			if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+					grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+					grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+					grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
 				c.setBackground(new Color(192,0,0));
 				c.setForeground(Color.WHITE);
 			}else{
