@@ -48,9 +48,11 @@ public class FrmGruposResultados {
 	private JMenuBar menuBarra;
 	private JMenu menu;
 	private JMenuItem menuPrincipal;
+	private CtrlResultados controleResultados;
 
 	public FrmGruposResultados() {
 		controleGrupos = new CtrlGrupos();
+		controleResultados = new  CtrlResultados();
 		janela = new JFrame("Grupos Paulistão");
 		panPrincipal = new JPanel();
 		panPrincipal.setBackground(Color.WHITE);
@@ -72,24 +74,25 @@ public class FrmGruposResultados {
 		panel_1 = new JPanel();
 		scrollPane.setViewportView(panel_1);
 		panel_1.setLayout(null);
+		
+		String[] rebaixados = controleResultados.rebaixados();
 
-		grupoA = new JTable();// {
-//
-//			@Override
-//			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-//				Component c = super.prepareRenderer(renderer, row, column);
-//				System.out.println((grupoA.getValueAt(column, 0).toString().toLowerCase()));
-//				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase("Ituano")) {
-//					System.out.println("IF");
-//					c.setBackground(new Color(192, 0, 0));
-//					c.setForeground(Color.WHITE);
-//				} else {
-//					c.setForeground(getForeground());
-//					System.out.println("ELSE");
-//				}
-//				return c;
-//			}
-//		};
+		grupoA = new JTable() {
+			
+		@Override
+		public Component prepareRenderer(TableCellRenderer renderer,
+				int row, int column) {
+			Component c = super.prepareRenderer(renderer, row, column);
+			
+			if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+				c.setBackground(new Color(192,0,0));
+				c.setForeground(Color.WHITE);
+			}else{
+				c.setForeground(getForeground());
+			}
+			return c;
+		}
+	};
 
 		grupoA.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoA.setBorder(new LineBorder(Color.BLACK));
