@@ -141,6 +141,95 @@ truncate table grupos
 -----------------------------------------
 --FUNCIONANDO
 
+
+
+--
+alter procedure sp_jogos(@data datetime)
+as
+
+declare @timeA int, @timeB int
+declare @count int, @count2 int
+set @count = 1
+set @count2 = 1
+--enquanto não acontecer 10 jogos nesta data
+while ( (select count(codigoJogo) from jogos where data = @data) < 10 )
+begin
+    --randomiza os 2 times
+	set @timeA = (select cast(RAND()*20 as int)+1)
+	set @timeB = (select cast(RAND()*20 as int)+1)
+
+	--verifica se são o mesmo time
+	while (@timeA = @timeB or
+
+	--verifica se são do mesmo grupo
+	((select id from grupos where codigoTime = @timeA) = (select id from grupos where codigoTime = @timeB)) or 
+
+	--verifica se já joraram na data
+	(exists(select codigoTimeA from jogos where (codigotimeA = @timeA) and data = @data) or
+	exists(select codigoTimeA from jogos where (codigotimeA = @timeb) and data = @data) or
+	exists(select codigoTimeB from jogos where (codigoTimeB = @timeA) and data = @data) or
+	exists(select codigoTimeB from jogos where (codigoTimeB = @timeB) and data = @data) ) or
+
+	--verica se ambos times já se enfrentaram  
+	( exists(select codigoJogo from jogos where codigoTimeA = @timeA and codigoTimeB = @timeB) or
+	exists(select codigoJogo from jogos where codigoTimeA = @timeB and codigoTimeB = @timeA)) 
+	)
+	begin
+	    set @timeA = (select cast(RAND()*20 as int)+1)
+		set @timeB = (select cast(RAND()*20 as int)+1)
+		set @count = @count +1
+		--print convert(varchar(5), @count)
+		--Caso a query entre em loop pelo motivo de
+		--o ultimo confronto, a ser sorteado na rodada,
+		--não pode ser sorteado pq já ocorreu em outra data
+		if(@count = 1500) --validação
+		begin
+		if not((select count(codigoJogo) from jogos) = 149 or (select count(codigoJogo) from jogos) = 139)
+			begin
+				delete from jogos where data = @data
+				set @count = (select count(codigoJogo) from jogos)
+				DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
+				print 'resetado'
+				set @count = 1
+			end
+			else --caso o ultimo jogo não possa ser efetuado
+			begin
+				if ((select count(codigoJogo) from jogos) = 139) --da uma chance ao 139 se recompor
+					begin
+					set @count2 = @count2 + 1
+					if(@count2 = 15)
+					begin
+						truncate table jogos
+						DBCC CHECKIDENT ('jogos', RESEED, 1) --reseta o indice identity das chaves
+						exec sp_datasJogos
+						return
+					end
+					else
+					begin
+					   	delete from jogos where data = @data
+						set @count = (select count(codigoJogo) from jogos)
+						DBCC CHECKIDENT ('jogos', RESEED, @count) --reseta o indice identity das chaves
+						print 'resetado'
+                    end
+				end
+				else
+					begin
+					truncate table jogos
+					DBCC CHECKIDENT ('jogos', RESEED, 1) --reseta o indice identity das chaves
+					exec sp_datasJogos
+					return
+				end
+			end
+			
+		end
+	end
+				insert into jogos values (@timeA, @timeb, null, null, @data) -- INSERIDO
+				print 'inserido'
+end
+
+select * from jogos where data = @data
+------------------------
+/* BACKUP
 alter procedure sp_jogos(@data datetime)
 as
 
@@ -201,8 +290,8 @@ begin
 end
 
 select * from jogos where data = @data
-------------------------
 
+*/
 ------------------------ fim da sp
 --teste
 truncate table jogos
