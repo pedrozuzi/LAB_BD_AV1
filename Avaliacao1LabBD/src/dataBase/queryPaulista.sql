@@ -588,7 +588,8 @@ begin
 end
 ----------------
 
-select * from fn_rebaixados()
+select * from fn_rebaixados() 
+--
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)
 
