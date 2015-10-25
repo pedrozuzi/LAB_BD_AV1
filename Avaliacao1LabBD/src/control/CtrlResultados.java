@@ -8,6 +8,8 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import entity.QuartasdeFinal;
+
 //import com.sun.prism.paint.Color;
 
 import entity.Resultados;
@@ -24,10 +26,10 @@ public class CtrlResultados {
 		return lista;
 	}
 
-	public List<Resultados> quartasdeFinal(String grupo) {
+	public List<QuartasdeFinal> quartasdeFinal(String grupo) {
 
 		ResultadosDao rDao = new ResultadosDaoImpl();
-		List<Resultados> lista = new ArrayList<Resultados>();
+		List<QuartasdeFinal> lista = new ArrayList<QuartasdeFinal>();
 		lista = rDao.quartasDeFinal(grupo);
 		return lista;
 	}

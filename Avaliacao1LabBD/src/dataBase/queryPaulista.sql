@@ -523,6 +523,28 @@ end
 -----------------
 --retorna os 2 times que irão particiar de quarta de final(por grupo)
 --ou seja, deve ser executada 4 vezes, uma para cara grupo como parametro
+
+--------------
+create function fn_quartas(@grupo varchar(1))
+returns @tabela table(
+timeA varchar(100),
+timeB varchar(100)
+)
+begin
+	declare @timeA varchar(100)
+	declare @timeB varchar(100)
+	set @timeA = (select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo) ) as timeA order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc)
+	set @timeB = (select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo)) as timeB order by pontos, vitorias, gols_marcados, saldo_gols)
+	insert into @tabela values (@timeA, @timeB)
+	return
+
+end
+------------------------------
+
+select * from fn_quartas('A')
+
+
+
 create function fn_quartasdefinal(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
@@ -549,12 +571,9 @@ begin
 		inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
 	where gp.grupo like @grupo
-	order by pontos desc
-
-
-
+	order by pontos, vitorias, gols_marcados, saldo_gols
 	return
-
+end
 -----------------
 --rebaixados
 --retorna os 4 times rebaixados

@@ -209,6 +209,12 @@ public class FrmPrincipal {
 			new FrmGruposResultados();
 		});
 		
+		btnQuartasdeFinal.addActionListener(a -> {
+			janela.dispose();
+			janela = null;
+			new FrmQuartasdeFinal();
+		});
+		
 	}
 	
 	private void geraNovasRodadas() {

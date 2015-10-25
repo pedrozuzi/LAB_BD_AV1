@@ -9,6 +9,7 @@ import java.util.List;
 
 import connection.ConnectionImpl;
 import connection.GenericConnection;
+import entity.QuartasdeFinal;
 import entity.Resultados;
 
 public class ResultadosDaoImpl implements ResultadosDao {
@@ -89,9 +90,9 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	}
 
 	@Override
-	public List<Resultados> quartasDeFinal(String grupo) {
-		List<Resultados> lista = new ArrayList<>(); 
-		String query = "select * from dbo.fn_quartasdefinal(?)";
+	public List<QuartasdeFinal> quartasDeFinal(String grupo) {
+		List<QuartasdeFinal> lista = new ArrayList<>(); 
+		String query = "select * from dbo.fn_quartas(?)";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement( query );
@@ -100,18 +101,13 @@ public class ResultadosDaoImpl implements ResultadosDao {
 			
 			
 			while( rs.next() ) {
-			Resultados r = new Resultados();
+				
+				QuartasdeFinal qt = new QuartasdeFinal();
 
-			r.setNome_time(rs.getString("nome_time"));
-			r.setNum_jogos_disputados(rs.getInt("num_jogos_disputados"));
-			r.setVitorias(rs.getInt("vitorias"));
-			r.setEmpates(rs.getInt("empates"));
-			r.setDerrotas(rs.getInt("derrotas"));
-			r.setGols_marcados(rs.getInt("gols_marcados"));
-			r.setGols_sofridos(rs.getInt("gols_sofridos"));
-			r.setSaldo_gols(rs.getInt("saldo_gols"));
-			r.setPontos(rs.getInt("pontos"));
-			lista.add(r);
+				qt.setTimeA(rs.getString("timeA"));
+				qt.setTimeB(rs.getString("timeB"));
+
+			lista.add(qt);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
