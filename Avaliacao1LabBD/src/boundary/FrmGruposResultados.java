@@ -108,7 +108,24 @@ public class FrmGruposResultados {
 		scrollPaneA.getViewport().setBorder(null);
 		scrollPaneA.setViewportView(grupoA);
 
-		grupoB = new JTable();
+		grupoB = new JTable(){
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				
+				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+					c.setBackground(new Color(192,0,0));
+					c.setForeground(Color.WHITE);
+				}else{
+					c.setForeground(getForeground());
+				}
+				return c;
+			}
+		};
 		grupoB.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoB.setBorder(new LineBorder(Color.BLACK));
 		grupoB.setGridColor(Color.BLACK);
@@ -120,7 +137,24 @@ public class FrmGruposResultados {
 		scrollPaneB.getViewport().setBorder(null);
 		scrollPaneB.setViewportView(grupoB);
 
-		grupoC = new JTable();
+		grupoC = new JTable() {
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				
+				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+					c.setBackground(new Color(192,0,0));
+					c.setForeground(Color.WHITE);
+				}else{
+					c.setForeground(getForeground());
+				}
+				return c;
+			}
+		};
 		grupoC.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoC.setBorder(new LineBorder(Color.BLACK));
 		grupoC.setGridColor(Color.BLACK);
@@ -132,7 +166,24 @@ public class FrmGruposResultados {
 		scrollPaneC.getViewport().setBorder(null);
 		scrollPaneC.setViewportView(grupoC);
 
-		grupoD = new JTable();
+		grupoD = new JTable() {
+			@Override
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
+				Component c = super.prepareRenderer(renderer, row, column);
+				
+				if (grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[0]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[1]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[2]) ||
+						grupoA.getValueAt(row, 0).toString().toLowerCase().equalsIgnoreCase(rebaixados[3])) {
+					c.setBackground(new Color(192,0,0));
+					c.setForeground(Color.WHITE);
+				}else{
+					c.setForeground(getForeground());
+				}
+				return c;
+			}
+		};
 		grupoD.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		grupoD.setBorder(new LineBorder(Color.BLACK));
 		grupoD.setGridColor(Color.BLACK);
