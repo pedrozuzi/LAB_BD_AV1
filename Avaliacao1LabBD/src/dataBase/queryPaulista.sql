@@ -523,7 +523,7 @@ end
 -----------------
 --retorna os 2 times que irão particiar de quarta de final(por grupo)
 --ou seja, deve ser executada 4 vezes, uma para cara grupo como parametro
-alter function fn_quartasdefinal(@grupo varchar(1))
+create function fn_quartasdefinal(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -558,7 +558,7 @@ begin
 -----------------
 --rebaixados
 --retorna os 4 times rebaixados
-alter function fn_rebaixados()
+create function fn_rebaixados()
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
