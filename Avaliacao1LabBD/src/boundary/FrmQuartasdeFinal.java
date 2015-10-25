@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
+
 import control.CtrlResultados;
 import entity.QuartasdeFinal;
 import util.ModeloTabela;
@@ -60,32 +62,52 @@ public class FrmQuartasdeFinal {
 		janela.setContentPane(panPrincipal);
 		
 		JScrollPane scrollPaneA = new JScrollPane();
-		scrollPaneA.setBounds(65, 137, 275, 45);
+		scrollPaneA.setBounds(65, 137, 275, 41);
 		panPrincipal.add(scrollPaneA);
 		
 		tblA = new JTable();
 		scrollPaneA.setViewportView(tblA);
 		
 		JScrollPane scrollPaneB = new JScrollPane();
-		scrollPaneB.setBounds(406, 137, 275, 45);
+		scrollPaneB.setBounds(406, 137, 275, 41);
 		panPrincipal.add(scrollPaneB);
 		
 		tblB = new JTable();
 		scrollPaneB.setViewportView(tblB);
 		
 		JScrollPane scrollPaneC = new JScrollPane();
-		scrollPaneC.setBounds(67, 266, 275, 45);
+		scrollPaneC.setBounds(67, 266, 275, 41);
 		panPrincipal.add(scrollPaneC);
 		
 		tblC = new JTable();
 		scrollPaneC.setViewportView(tblC);
 		
 		JScrollPane scrollPaneD = new JScrollPane();
-		scrollPaneD.setBounds(408, 266, 275, 45);
+		scrollPaneD.setBounds(408, 266, 275, 41);
 		panPrincipal.add(scrollPaneD);
 		
 		tblD = new JTable();
 		scrollPaneD.setViewportView(tblD);
+		
+		tblA.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tblA.setBorder(new LineBorder(Color.BLACK));
+		tblA.setGridColor(Color.BLACK);
+		tblA.setShowGrid(true);
+		
+		tblB.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tblB.setBorder(new LineBorder(Color.BLACK));
+		tblB.setGridColor(Color.BLACK);
+		tblB.setShowGrid(true);
+		
+		tblC.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tblC.setBorder(new LineBorder(Color.BLACK));
+		tblC.setGridColor(Color.BLACK);
+		tblC.setShowGrid(true);
+		
+		tblD.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tblD.setBorder(new LineBorder(Color.BLACK));
+		tblD.setGridColor(Color.BLACK);
+		tblD.setShowGrid(true);
 		
 		JLabel lblNewLabel = new JLabel("Grupo A");
 		lblNewLabel.setBackground(Color.BLACK);
