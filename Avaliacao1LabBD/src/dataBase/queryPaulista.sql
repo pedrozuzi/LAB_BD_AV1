@@ -533,19 +533,23 @@ timeB varchar(100)
 begin
 	declare @timeA varchar(100)
 	declare @timeB varchar(100)
-	set @timeA = (select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo) ) as timeA order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc)
-	set @timeB = (select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo)) as timeB order by pontos, vitorias, gols_marcados, saldo_gols)
+	set @timeA = (select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo)) as timeA order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc)
+	set @timeB = ((select top 2 nome_time from (select * from dbo.fn_quartasdefinal(@grupo)) as timeB
+	order by pontos asc, vitorias asc, gols_marcados asc, saldo_gols asc)
+	EXCEPT 
+	(select top 1 nome_time from (select * from dbo.fn_quartasdefinal(@grupo)) as timeA order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc))
 	insert into @tabela values (@timeA, @timeB)
 	return
 
 end
 ------------------------------
 
-select * from fn_quartas('A')
+select * from dbo.fn_quartas('B')
 
+select * from dbo.fn_quartasdefinal('B')
+---------------------------------
 
-
-create function fn_quartasdefinal(@grupo varchar(1))
+alter function fn_quartasdefinal(@grupo varchar(1))
 returns @tabela table(
 nome_time varchar(100),
 num_jogos_disputados int,
@@ -571,7 +575,7 @@ begin
 		inner join grupos gp
 	on gp.codigoTime = tm.codigoTime 
 	where gp.grupo like @grupo
-	order by pontos, vitorias, gols_marcados, saldo_gols
+	order by pontos asc, vitorias asc, gols_marcados asc, saldo_gols asc
 	return
 end
 -----------------
@@ -607,7 +611,7 @@ begin
 end
 ----------------
 
-select * from fn_rebaixados() 
+select * from fn_rebaixados() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc
 --
 GRUPO (nome_time, num_jogos_disputados*, vitorias, empates, derrotas, gols_marcados,
 gols_sofridos, saldo_gols**,pontos***)

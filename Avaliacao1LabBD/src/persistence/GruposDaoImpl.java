@@ -68,7 +68,7 @@ public class GruposDaoImpl implements GruposDao{
 	@Override
 	public List<GruposResultados> buscarGruposResultados(String grupo) {
 		List<GruposResultados> lista = new ArrayList<GruposResultados>();
-		String query ="select * from dbo.fn_grupo(?)";
+		String query ="select * from dbo.fn_grupo(?) order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
 		try {
 			PreparedStatement ps = c.prepareStatement( query );
 			ps.setString(1, grupo);

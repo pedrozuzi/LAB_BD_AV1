@@ -25,7 +25,7 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	@Override
 	public List<Resultados> resultadosGrupos(String grupo) {
 		List<Resultados> lista = new ArrayList<>(); 
-		String query = "select * from dbo.grupo(?)";
+		String query = "select * from dbo.grupo(?) ";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement( query );
@@ -121,7 +121,7 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	@Override
 	public List<Resultados> rebaixados() {
 		List<Resultados> lista = new ArrayList<>(); 
-		String query = "select * from dbo.fn_rebaixados() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
+		String query = "select * from dbo.fn_rebaixados() ";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement( query );
