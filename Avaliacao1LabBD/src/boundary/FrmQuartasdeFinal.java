@@ -114,11 +114,6 @@ public class FrmQuartasdeFinal {
 		lblNewLabel_3.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblNewLabel_3.setBounds(499, 106, 76, 20);
 		panPrincipal.add(lblNewLabel_3);
-		janela.setSize(752,453);
-		janela.setLocationRelativeTo(null);
-        janela.setResizable(false);
-		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		janela.setVisible(true);
 		
 		CtrlResultados ctrl = new CtrlResultados();
 		List<QuartasdeFinal> listaquarta = new ArrayList<QuartasdeFinal>();
@@ -148,6 +143,11 @@ public class FrmQuartasdeFinal {
 		lblNewLabel_4.setBounds(-489, -105, 1245, 542);
 		panPrincipal.add(lblNewLabel_4);
 		
+		janela.setSize(752,453);
+		janela.setLocationRelativeTo(null);
+        janela.setResizable(false);
+		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		janela.setVisible(true);
 
 		
 		btnVoltar.addActionListener(l -> {

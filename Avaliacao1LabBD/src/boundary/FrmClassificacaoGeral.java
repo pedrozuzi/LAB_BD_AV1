@@ -99,10 +99,11 @@ public class FrmClassificacaoGeral {
 		
 		janela.setContentPane(panPrincipal);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(FrmClassificacaoGeral.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
-		lblNewLabel.setBounds(-474, -124, 1421, 690);
-		panPrincipal.add(lblNewLabel);
+		JLabel lblbackground = new JLabel("");
+		lblbackground.setIcon(new ImageIcon(FrmClassificacaoGeral.class.getResource("/img/Fotolia_66427946_Stadium-lights.jpg")));
+		lblbackground.setBounds(-474, -124, 1421, 690);
+		panPrincipal.add(lblbackground);
+		
 		janela.setSize(755,569);
 		janela.setLocationRelativeTo(null);
         janela.setResizable(false);
