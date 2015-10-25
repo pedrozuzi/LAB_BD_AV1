@@ -1,29 +1,22 @@
 package boundary;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import control.CtrlResultados;
 import entity.Resultados;
 import util.ModeloTabela;
-
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
-public class FrmClassificacaoGeral extends JFrame {
+public class FrmClassificacaoGeral {
 
 	private JPanel panPrincipal;
 	private JTable tabelaResultadoGeral;
