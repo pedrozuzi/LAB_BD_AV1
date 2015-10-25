@@ -65,7 +65,8 @@ public class FrmClassificacaoGeral extends JFrame {
 		
 		tabelaResultadoGeral.getTableHeader().setReorderingAllowed(false);
 		tabelaResultadoGeral.setModel(modelo);
-		tabelaResultadoGeral = ctrl.rebaixados("A", tabelaResultadoGeral);
+		//deixa os rebaixados em vermelho
+		tabelaResultadoGeral = ctrl.rebaixados(20, tabelaResultadoGeral);
 		
 		janela.setContentPane(panPrincipal);
 		janela.setSize(755,569);

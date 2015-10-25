@@ -14,6 +14,6 @@ public interface ResultadosDao {
 	
 	List<Resultados> quartasDeFinal(String grupo);
 	
-	List<Resultados> rebaixados(String grupo);
+	List<Resultados> rebaixados();
 	
 }

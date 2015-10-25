@@ -97,13 +97,12 @@ public class ResultadosDaoImpl implements ResultadosDao {
 	}
 
 	@Override
-	public List<Resultados> rebaixados(String grupo) {
+	public List<Resultados> rebaixados() {
 		List<Resultados> lista = new ArrayList<>(); 
-		String query = "select * from dbo.fn_rebaixados(?) order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
+		String query = "select * from dbo.fn_rebaixados() order by pontos desc, vitorias desc, gols_marcados desc, saldo_gols desc";
 		PreparedStatement ps;
 		try {
 			ps = c.prepareStatement( query );
-			ps.setString(1, grupo );
 			ResultSet rs = ps.executeQuery();
 			
 			
